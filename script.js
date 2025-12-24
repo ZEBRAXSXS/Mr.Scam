@@ -8,7 +8,7 @@ if (tg.initDataUnsafe?.user) {
   const user = tg.initDataUnsafe.user;
   username = user.username ? '@' + user.username : user.first_name || 'User';
 }
-usernameEl.textContent = username;
+usernameEl.textContent = 'Профиль: ' + username;
 
 const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
   manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
@@ -23,7 +23,6 @@ tonConnectUI.onStatusChange(wallet => {
   const statusEl = document.getElementById('wallet-status');
   if (wallet) {
     connectedWallet = wallet.account.address;
-    // Ручная сборка строки — 100% без сырого кода!
     statusEl.textContent = 'Кошелёк подключён: ' + connectedWallet.slice(0,8) + '...' + connectedWallet.slice(-6);
     document.getElementById('payment-section').style.display = 'block';
   } else {
