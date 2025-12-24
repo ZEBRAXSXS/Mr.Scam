@@ -1,11 +1,7 @@
 {
-  "name": "Mr.Scam Game",
-  "icon": "https://example.com/icon.png",
-  "description": "Telegram Mini App с TonConnect",
-  "developer": {
-    "name": "YourName",
-    "url": "https://example.com"
-  },
-  "permissions": ["ton"],
-  "uiPreferences": { "theme": "dark" }
+  "url": "https://mr-scam.vercel.app",
+  "name": "Mr. Scam Game",
+  "iconUrl": "https://mr-scam.vercel.app/icon.png",
+  "termsOfUseUrl": "https://mr-scam.vercel.app/terms.html",
+  "privacyPolicyUrl": "https://mr-scam.vercel.app/privacy.html"
 }

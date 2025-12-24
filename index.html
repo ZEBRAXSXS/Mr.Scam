@@ -3,35 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MR. SCAM Game</title>
+<title>Mr. Scam Game</title>
 <style>
-body { background: #000; color: #0f0; font-family: monospace; text-align: center; padding: 20px; margin: 0; }
-h1 { font-size: 2.5em; margin: 20px 0; }
-button { background: #0f0; color: #000; border: none; padding: 15px; margin: 10px; font-size: 1.2em; border-radius: 10px; cursor: pointer; }
-.status { margin: 20px; font-size: 1.2em; color: #ff0; }
-#leaderboard table { width: 90%; margin: auto; border-collapse: collapse; }
-#leaderboard th, td { border: 1px solid #0f0; padding: 8px; }
+body { background:#000; color:#0f0; font-family:monospace; text-align:center; padding:20px; margin:0; }
+h1 { font-size:2.5em; margin:20px 0; }
+button { background:#0f0; color:#000; border:none; padding:15px 30px; margin:15px; font-size:1.2em; cursor:pointer; border-radius:15px; }
+#profile { margin:30px; font-size:1.4em; }
 </style>
-<script src="tonconnect-ui.min.js"></script>
+<script src="/tonconnect-ui.min.js"></script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-<h1>🎮 MR. SCAM GAME 🎮</h1>
-<p>Профиль Telegram</p>
-<div class="status" id="profile">Статус: кошелёк не подключён</div>
-<button id="connect-ton">💸 Подключить TON Wallet</button>
-<button id="pay-ton">💸 Отправить TON</button>
+🕹️ <span style="font-size:2em;">MR. SCAM GAME</span> 🕹️
 
-<div id="leaderboard">
-<h2>Лидерборд</h2>
-<table>
-<thead>
-<tr><th>Username</th><th>Баланс TON</th></tr>
-</thead>
-<tbody id="leader-table"></tbody>
-</table>
+<div id="profile">
+  Профиль Telegram: <strong><span id="username">Загрузка...</span></strong><br><br>
+  Статус: кошелёк <span id="wallet-status">не подключён</span>
 </div>
 
-<script type="module" src="script.js"></script>
+<div id="connect-wallet"></div> <!-- Официальная кнопка TonConnect -->
+
+<button id="send-ton">💰 Отправить TON</button>
+
+<h2>Лидерборд</h2>
+<table style="width:90%; margin:auto; border-collapse:collapse;">
+<thead style="background:#003300;"><tr><th>Username</th><th>Баланс TON</th></tr></thead>
+<tbody id="leader-table"><tr><td>Загрузка...</td><td></td></tr></tbody>
+</table>
+
+<script src="/script.js"></script>
 </body>
 </html>
