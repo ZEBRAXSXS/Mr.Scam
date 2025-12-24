@@ -5,8 +5,7 @@ tg.ready();
 tg.expand();
 
 const tonConnectUI = new TonConnectUI({
-    manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect-button'  // Это добавит автоматическую кнопку подключения
+    manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json'
 });
 
 const statusEl = document.getElementById('status');
@@ -19,6 +18,11 @@ tonConnectUI.onStatusChange(wallet => {
         statusEl.textContent = 'Статус: кошелёк не подключён';
     }
 });
+
+// Ручная кнопка подключения
+document.getElementById('connect').onclick = async () => {
+    await tonConnectUI.openModal();  // Открывает модалку вручную
+};
 
 // Платёж TON
 document.getElementById('pay-ton').onclick = async () => {
