@@ -20,15 +20,15 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
 
 let connectedWallet = null;
 tonConnectUI.onStatusChange(wallet => {
+  const walletStatusEl = document.getElementById('wallet-status');
   if (wallet) {
     connectedWallet = wallet.account.address;
-    // ТОЛЬКО textContent — никакой innerHTML, чтобы не было сырого кода!
-    document.getElementById('wallet-status').textContent = 
-      `Кошелёк подключён: \( {connectedWallet.slice(0,8)}... \){connectedWallet.slice(-6)}`;
+    // 100% чистый текст — шаблонная строка интерполируется правильно
+    walletStatusEl.textContent = `Кошелёк подключён: \( {connectedWallet.slice(0,8)}... \){connectedWallet.slice(-6)}`;
     document.getElementById('payment-section').style.display = 'block';
   } else {
     connectedWallet = null;
-    document.getElementById('wallet-status').textContent = 'Кошелёк: не подключён';
+    walletStatusEl.textContent = 'Кошелёк: не подключён';
     document.getElementById('payment-section').style.display = 'none';
   }
 });
