@@ -2,63 +2,71 @@ import { TonConnectUI } from './tonconnect-ui.min.js';
 
 const tg = window.Telegram.WebApp;
 tg.ready();
-tg.expand();
 
-// TonConnect UI
+const user = tg.initDataUnsafe?.user;
+let userId = 'guest';
+let username = 'guest';
+
+if (user) {
+    userId = user.id;
+    username = user.username || `guest${Math.floor(Math.random()*1000)}`;
+    const firstName = user.first_name || '';
+    document.getElementById('profile').textContent = `Профиль: ${firstName} (@${username})`;
+} else {
+    document.getElementById('profile').textContent = 'Профиль: Гость';
+}
+
+// TonConnect
 const tonConnectUI = new TonConnectUI({
     manifestUrl: './tonconnect-manifest.json',
     buttonRootId: 'ton-connect-button'
 });
 
-const statusEl = document.getElementById('status');
+const balanceEl = document.getElementById('balance');
+let balance = parseInt(localStorage.getItem('balance')) || 0;
+balanceEl.textContent = `Баланс: ${balance} TON`;
 
-tonConnectUI.onStatusChange(wallet => {
-    if (wallet) {
-        const addr = wallet.account.address;
-        statusEl.textContent = `Подключён кошелёк: ${addr}`;
-    } else {
-        statusEl.textContent = 'Статус: кошелёк не подключён';
-    }
-});
+function updateBalance(amount) {
+    balance += amount;
+    localStorage.setItem('balance', balance);
+    balanceEl.textContent = `Баланс: ${balance} TON`;
+}
 
-// Telegram профиль
-const userId = tg.initDataUnsafe?.user?.id;
-const username = tg.initDataUnsafe?.user?.username || 'guest';
-const firstName = tg.initDataUnsafe?.user?.first_name || '';
-document.getElementById('profile').textContent = `Профиль: ${username} (${firstName})`;
-
-// Кнопка для тестового перевода TON
+// TON Payment
 document.getElementById('pay-ton').onclick = async () => {
     if (!tonConnectUI.connected) {
-        alert('⚠ Сначала подключите кошелёк!');
-        return;
+        return alert('⚠ Сначала подключи кошелёк!');
     }
 
     const transaction = {
         validUntil: Math.floor(Date.now() / 1000) + 300,
         messages: [{
-            address: "UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD",
-            amount: "1000000" // 0.001 TON
+            address: "ВАШ_ТОН_АДРЕС",
+            amount: "1000000" // 0.01 TON
         }]
     };
 
     try {
         await tonConnectUI.sendTransaction(transaction);
+        updateBalance(1); // увеличиваем баланс для примера
         alert('✅ Платёж прошёл!');
-    } catch (err) {
-        alert('❌ Ошибка: ' + err.message);
+    } catch (e) {
+        alert('❌ Ошибка: ' + e.message);
     }
 };
 
 // Лидерборд
-async function updateLeaderboard() {
-    try {
-        const res = await fetch('./api/leaderboard.js');
-        const data = await res.json();
-        const table = document.getElementById('leader-table');
-        table.innerHTML = data.leaderboard.map(u => `<tr><td>${u.username}</td><td>${u.balance}</td></tr>`).join('');
-    } catch (err) {
-        console.error(err);
+const leaderTable = document.getElementById('leader-table');
+function updateLeaderBoard() {
+    let leaders = localStorage.getItem('leaders') ? JSON.parse(localStorage.getItem('leaders')) : [];
+    let userIndex = leaders.findIndex(l => l.id === userId);
+    if (userIndex !== -1) {
+        leaders[userIndex].balance = balance;
+    } else {
+        leaders.push({ id: userId, username: username, balance: balance });
     }
+    leaders.sort((a,b) => b.balance - a.balance);
+    localStorage.setItem('leaders', JSON.stringify(leaders));
+    leaderTable.innerHTML = leaders.map(l => `<tr><td>${l.username}</td><td>${l.balance}</td></tr>`).join('');
 }
-updateLeaderboard();
+updateLeaderBoard();
