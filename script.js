@@ -5,7 +5,7 @@ tg.ready();
 tg.expand();
 
 const tonConnectUI = new TonConnectUI({
-    manifestUrl: 'https://raw.githubusercontent.com/ton-community/tonconnect-manifests/main/manifests/template.json'
+    manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json'
 });
 
 const statusEl = document.getElementById('status');
@@ -39,6 +39,7 @@ document.getElementById('pay-ton').onclick = async () => {
     try {
         await tonConnectUI.sendTransaction(transaction);
         alert('✅ Платёж прошёл! Деньги пришли ко мне 💰');
+        tg.close();
     } catch (e) {
         alert('❌ Ошибка: ' + e.message);
     }
