@@ -2,78 +2,158 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Mr. Scam Game</title>
-<style>
-body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-.container { flex:1; padding:20px; text-align:center; }
-.card { background:#fff; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px 10px; }
-#username { font-size:1.6em; font-weight:bold; margin-bottom:30px; }
-#connect-container { margin:40px 0; }
-.stats { display:flex; justify-content:space-around; margin:30px 0; }
-.stat { background:#f0f0f0; padding:12px; border-radius:12px; flex:1; margin:0 8px; text-align:center; }
-.stat strong { display:block; font-size:1.6em; color:#4caf50; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
-.tabs { display:flex; justify-content:center; margin:30px 0; }
-.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
-.tab.active { background:#4caf50; color:#fff; }
-.bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
-.nav-item { color:#888; text-align:center; }
-.nav-item.active { color:#4caf50; font-weight:bold; }
-#payment-section { display:none; }
-
-/* Блокировка для браузера */
-#blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
-</style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<style>
+    /* --- ОСНОВНОЙ ДИЗАЙН --- */
+    :root {
+        --bg-color: #050505;
+        --text-color: #e0e0e0;
+        --accent-color: #00ff88; /* Неоновый зеленый */
+        --button-bg: #1a1a1a;
+        --error-color: #ff3333;
+    }
+
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        font-family: 'Courier New', Courier, monospace; /* Хакерский стиль */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Экран блокировки (если не в Telegram) */
+    #blocked-screen {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        color: var(--error-color);
+    }
+
+    /* Основной экран приложения */
+    #app-screen {
+        display: none; /* Скрыто по умолчанию, пока идет проверка */
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        text-shadow: 0 0 10px var(--accent-color);
+    }
+
+    p {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 30px;
+    }
+
+    /* --- СТИЛЬ КНОПКИ --- */
+    .wallet-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .connect-btn {
+        background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+        color: #000;
+        border: none;
+        border-radius: 25px; /* Закругленная форма */
+        padding: 10px 24px;  /* Компактный размер */
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+        transition: transform 0.1s ease, box-shadow 0.2s ease;
+        font-family: sans-serif; /* Более читаемый шрифт для кнопки */
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .connect-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 8px rgba(0, 255, 136, 0.2);
+    }
+
+    /* Контейнер для игры (сюда будет рендериться твой real-app.js) */
+    #game-container {
+        margin-top: 20px;
+        border: 1px solid #333;
+        border-radius: 10px;
+        min-height: 200px;
+        background: #0a0a0a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #555;
+    }
+</style>
 </head>
 <body>
 
-<!-- Нормальный контент приложения -->
-<div id="app">
-  <div class="header">MR. SCAM GAME</div>
-
-  <div class="container">
-    <div class="card">
-      <div id="username">Профиль: Загрузка...</div>
-      <div id="connect-container"></div>
+    <div id="blocked-screen">
+        <h1>🚫 ERROR</h1>
+        <p>Access Denied.<br>Please open inside Telegram.</p>
     </div>
 
-    <div class="stats">
-      <div class="stat"><strong>0.00</strong> Wallet</div>
-      <div class="stat"><strong>0</strong> Volume</div>
-      <div class="stat"><strong>0</strong> Referrals</div>
+    <div id="app-screen">
+        <h1>MR. SCAM</h1>
+        <p>System Initialized...</p>
+
+        <div class="wallet-container">
+            <button class="connect-btn" onclick="connectWallet()">Connect Wallet</button>
+        </div>
+
+        <div id="game-container">
+            Game Area
+        </div>
     </div>
 
-    <div class="tabs">
-      <div class="tab active">Stickers</div>
-      <div class="tab">Gifts</div>
-      <div class="tab">+</div>
-    </div>
+    <script>
+        // Функция подключения (заглушка)
+        function connectWallet() {
+            const btn = document.querySelector('.connect-btn');
+            btn.innerText = "Connecting...";
+            setTimeout(() => {
+                btn.innerText = "0x12...F4A"; // Имитация подключения
+                btn.style.background = "#fff";
+            }, 1000);
+        }
 
-    <div id="payment-section">
-      <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
-    </div>
-  </div>
+        // Логика проверки Telegram
+        window.onload = function() {
+            const tg = window.Telegram.WebApp;
+            
+            // Простая проверка платформы
+            const isTelegram = tg.initData || tg.initDataUnsafe?.user;
 
-  <div class="bottom-nav">
-    <div class="nav-item">Market</div>
-    <div class="nav-item">Events</div>
-    <div class="nav-item active">Profile</div>
-    <div class="nav-item">Giveaway</div>
-  </div>
-</div>
-
-<!-- Сообщение для браузера -->
-<div id="blocked">
-  <h1>🚫 Доступ запрещён</h1>
-  <p>Mr. Scam Game работает только внутри Telegram.</p>
-  <p>Откройте через бота и наслаждайтесь игрой 😈</p>
-</div>
-
-<script src="/script.js?v=11"></script>
+            if (isTelegram) {
+                // Мы в Telegram
+                document.getElementById('app-screen').style.display = 'block';
+                tg.expand(); // Раскрыть на весь экран
+                tg.ready();  // Сообщить Telegram, что приложение готово
+                
+                // Динамическая подгрузка твоего основного скрипта игры
+                var script = document.createElement('script');
+                script.src = 'real-app.js?v=' + Date.now(); // Date.now() чтобы избежать кэша
+                document.body.appendChild(script);
+            } else {
+                // Мы НЕ в Telegram
+                document.getElementById('blocked-screen').style.display = 'block';
+            }
+        };
+    </script>
 </body>
 </html>
