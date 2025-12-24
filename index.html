@@ -6,28 +6,34 @@
 <title>Mr. Scam Game</title>
 <style>
 body { background:#000; color:#0f0; font-family:monospace; text-align:center; padding:20px; margin:0; }
-h1 { font-size:2.5em; margin:30px 0; }
-#profile { margin:30px; font-size:1.4em; }
-#connect-container { margin:50px 0; } /* Для большой официальной кнопки */
-#payment-btn { background:#0f0; color:#000; border:none; padding:15px 30px; margin:20px; font-size:1.4em; cursor:pointer; border-radius:15px; }
+h1 { font-size:2.8em; margin:40px 0; letter-spacing:2px; }
+#profile { margin:40px 0; font-size:1.6em; }
+#wallet-status { font-size:1.4em; margin:20px 0; }
+#connect-container { margin:60px 0; } /* Большая официальная кнопка здесь */
+#payment-section { display:none; margin:40px 0; } /* Показываем только после подключения */
+#payment-btn { background:#0f0; color:#000; border:none; padding:18px 40px; font-size:1.6em; cursor:pointer; border-radius:20px; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<!-- Библиотека TonConnect с CDN (обходит 415 ошибку Vercel) -->
+<!-- TonConnect с CDN (обходит все проблемы Vercel) -->
 <script type="module" src="https://cdn.jsdelivr.net/npm/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-🎮 <span style="font-size:2em;">MR. SCAM GAME</span> 🎮
+🎮 <span style="font-size:3em;">MR. SCAM GAME</span> 🎮
 
 <div id="profile">
-  Профиль: <strong><span id="username">Загрузка...</span></strong><br><br>
-  Кошелёк: <span id="wallet-status">не подключён</span>
+  Профиль: <strong><span id="username">Загрузка...</span></strong>
 </div>
 
-<!-- Официальная кнопка и модалка появятся здесь автоматически -->
+<div id="wallet-status">Кошелёк: не подключён</div>
+
+<!-- Официальная кнопка подключения (модалка как в топовых играх) -->
 <div id="connect-container"></div>
 
-<button id="payment-btn">💸 Внести 0.05 TON в игру</button>
+<!-- Раздел оплаты — показываем только после подключения -->
+<div id="payment-section">
+  <button id="payment-btn">💸 Внести 0.05 TON в игру</button>
+</div>
 
-<script src="/script.js"></script>
+<script type="module" src="/script.js"></script>
 </body>
 </html>
