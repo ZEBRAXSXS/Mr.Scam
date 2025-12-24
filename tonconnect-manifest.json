@@ -1,7 +1,7 @@
 {
   "name": "Mr. Scam Mini App",
-  "description": "Telegram Mini App с кликером, TON и Stars",
-  "icons":["icon.png"],
-  "defaultBlockchain":"ton",
-  "manifestVersion":"1.0"
+  "description": "Mini App с TON Connect",
+  "icons": ["icon.png"],
+  "defaultBlockchain": "ton",
+  "manifestVersion": "1.0"
 }
