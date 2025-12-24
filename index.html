@@ -6,16 +6,17 @@
 <title>Mr. Scam Game</title>
 <style>
 body { background:#000; color:#0f0; font-family:monospace; text-align:center; padding:20px; margin:0; }
-h1 { font-size:2.8em; margin:40px 0; letter-spacing:2px; }
+h1 { font-size:2.8em; margin:40px 0; }
 #profile { margin:40px 0; font-size:1.6em; }
 #wallet-status { font-size:1.4em; margin:20px 0; }
-#connect-container { margin:60px 0; } /* Большая официальная кнопка здесь */
-#payment-section { display:none; margin:40px 0; } /* Показываем только после подключения */
+#connect-container { margin:60px 0; }
+#payment-section { display:none; margin:40px 0; }
 #payment-btn { background:#0f0; color:#000; border:none; padding:18px 40px; font-size:1.6em; cursor:pointer; border-radius:20px; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<!-- TonConnect с CDN (обходит все проблемы Vercel) -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<!-- Non-module SDK для совместимости с Telegram Mini App -->
+<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 🎮 <span style="font-size:3em;">MR. SCAM GAME</span> 🎮
@@ -26,14 +27,12 @@ h1 { font-size:2.8em; margin:40px 0; letter-spacing:2px; }
 
 <div id="wallet-status">Кошелёк: не подключён</div>
 
-<!-- Официальная кнопка подключения (модалка как в топовых играх) -->
 <div id="connect-container"></div>
 
-<!-- Раздел оплаты — показываем только после подключения -->
 <div id="payment-section">
   <button id="payment-btn">💸 Внести 0.05 TON в игру</button>
 </div>
 
-<script type="module" src="/script.js"></script>
+<script src="/script.js"></script>
 </body>
 </html>
