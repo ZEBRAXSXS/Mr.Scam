@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mr. Scam</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script type="module" src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <style>
+        body { background: #000; color: #0f0; font-family: monospace; text-align: center; padding: 20px; margin: 0; }
+        h1 { font-size: 2.5em; margin: 30px 0; }
+        button { background: #0f0; color: #000; border: none; padding: 18px; margin: 15px; font-size: 1.3em; width: 90%; border-radius: 12px; font-weight: bold; }
+        .status { margin: 30px; font-size: 1.2em; color: #ff0; }
+    </style>
+</head>
+<body>
+    <h1>🎰 MR. SCAM 🎰</h1>
+    <p>Подключи кошелёк и плати TON или Stars</p>
+    
+    <div class="status" id="status">Статус: кошелёк не подключён</div>
+    
+    <button id="connect">🔗 Подключить TON кошелёк</button>
+    <button id="pay-ton">💸 Отправить 0.05 TON</button>
+    <button id="pay-stars">⭐ Оплатить 50 Telegram Stars</button>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
