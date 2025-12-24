@@ -1,6 +1,21 @@
 import { TonConnectUI } from '@tonconnect/ui';
+const tg = Telegram.WebApp;
+tg.ready();
 
-const tg = window.Telegram.WebApp;
+const user = tg.initDataUnsafe?.user;
+
+if (!user) {
+    alert("❌ Нет данных пользователя Telegram");
+} else {
+    const userId = user.id;
+    const username = user.username || "guest";
+    console.log("User:", userId, username);
+}
+if (!window.Telegram || !Telegram.WebApp) {
+    alert("❌ Открой Mini App через Telegram!");
+} else {
+    console.log("✅ Telegram Mini App OK");
+}const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
