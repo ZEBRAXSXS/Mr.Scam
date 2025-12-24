@@ -1,7 +1,11 @@
 {
   "headers": [
     {
-      "source": "/(.*)\\.js",
+      "source": "/tonconnect-ui.min.js",
+      "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
+    },
+    {
+      "source": "/script.js",
       "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
     },
     {
