@@ -1,54 +1,49 @@
-import { TonConnectUI } from './tonconnect-ui.min.js';
-
 const tg = window.Telegram.WebApp;
-tg.ready();
 tg.expand();
+tg.ready();
 
-let userId = tg.initDataUnsafe.user.id;
-let username = tg.initDataUnsafe.user.username || "guest";
-
-const profileEl = document.getElementById('profile');
-const leaderTable = document.getElementById('leader-table');
-let tonConnectUI = null;
-let wallet = null;
-
-// Инициализация TonConnect
-document.getElementById('connect-ton').onclick = async () => {
-  if(!tonConnectUI) {
-    tonConnectUI = new TonConnectUI({ manifestUrl: './tonconnect-manifest.json', buttonRootId: 'connect-ton' });
-    tonConnectUI.onStatusChange(w => {
-      wallet = w;
-      if(wallet) profileEl.textContent = `Подключён: ${username} (${wallet.account.address.slice(0,6)}...${wallet.account.address.slice(-4)})`;
-      else profileEl.textContent = 'Статус: кошелёк не подключён';
-    });
-  }
-  await tonConnectUI.connect();
-};
-
-// Отправка TON
-document.getElementById('pay-ton').onclick = async () => {
-  if(!wallet) return alert('⚠ Подключите кошелёк!');
-  try {
-    const tx = {
-      validUntil: Math.floor(Date.now()/1000) + 300,
-      messages: [{ address: "UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD", amount: "50000000" }]
-    };
-    await tonConnectUI.sendTransaction(tx);
-    alert('✅ Платёж отправлен!');
-  } catch(e) {
-    alert('❌ Ошибка: ' + e.message);
-  }
-};
-
-// Лидерборд
-async function updateLeaderBoard() {
-  try {
-    const res = await fetch('/api/leaderboard.js');
-    const data = await res.json();
-    leaderTable.innerHTML = data.map(u => `<tr><td>${u.username}</td><td>${u.balance}</td></tr>`).join('');
-  } catch(e) {
-    console.log('Ошибка лидерборда', e);
-  }
+const usernameEl = document.getElementById('username');
+let username = 'Guest';
+if (tg.initDataUnsafe?.user) {
+  const user = tg.initDataUnsafe.user;
+  username = user.username ? `@${user.username}` : user.first_name || 'User';
 }
+usernameEl.textContent = username;
 
-updateLeaderBoard();
+// TonConnect UI
+const tonConnectUI = new TonConnectUI({
+  manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
+  buttonRootId: 'connect-wallet'
+});
+
+let connectedWallet = null;
+tonConnectUI.onStatusChange(wallet => {
+  if (wallet) {
+    connectedWallet = wallet.account.address;
+    document.getElementById('wallet-status').textContent = connectedWallet.slice(0,6) + '...' + connectedWallet.slice(-4);
+  } else {
+    connectedWallet = null;
+    document.getElementById('wallet-status').textContent = 'не подключён';
+  }
+});
+
+// Отправка 0.05 TON НА ТВОЙ АДРЕС
+document.getElementById('send-ton').onclick = async () => {
+  if (!connectedWallet) return alert('⚠️ Сначала подключите кошелёк!');
+
+  const transaction = {
+    validUntil: Math.floor(Date.now() / 1000) + 360,
+    messages: [{
+      address: 'UQBpBH_apAYKPChl7V1wfEeZ1JovWFIr2VXfzTVUVQfDXHrZ',  // ← Твой адрес, всё ок!
+      amount: '50000000'  // 0.05 TON в нанотонах
+    }]
+  };
+
+  try {
+    await tonConnectUI.sendTransaction(transaction);
+    alert('✅ Успешно внесено 0.05 TON в Mr.Scam!\nДеньги пришли на твой кошелёк 😈');
+    // Позже добавим начисление бонусов в игру
+  } catch (e) {
+    alert('❌ Ошибка или отменено: ' + (e.message || ''));
+  }
+};
