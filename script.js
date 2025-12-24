@@ -20,14 +20,11 @@ const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
 
 let connectedWallet = null;
 tonConnectUI.onStatusChange(wallet => {
-  const statusEl = document.getElementById('wallet-status');
   if (wallet) {
     connectedWallet = wallet.account.address;
-    statusEl.textContent = 'Кошелёк подключён: ' + connectedWallet.slice(0,8) + '...' + connectedWallet.slice(-6);
     document.getElementById('payment-section').style.display = 'block';
   } else {
     connectedWallet = null;
-    statusEl.textContent = 'Кошелёк: не подключён';
     document.getElementById('payment-section').style.display = 'none';
   }
 });

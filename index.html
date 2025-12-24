@@ -9,8 +9,8 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 .header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
 .container { flex:1; padding:20px; }
 .card { background:#fff; border-radius:16px; padding:20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:20px; }
-#username { font-size:1.4em; font-weight:bold; margin-bottom:15px; }
-#wallet-block { font-size:1.2em; margin:20px 0; }
+#username { font-size:1.4em; font-weight:bold; margin-bottom:20px; }
+#connect-container { margin:20px 0; } /* Только кнопка подключения здесь */
 .stats { display:flex; justify-content:space-around; margin:20px 0; }
 .stat { background:#f0f0f0; padding:12px; border-radius:12px; flex:1; margin:0 8px; text-align:center; }
 .stat strong { display:block; font-size:1.6em; color:#4caf50; }
@@ -33,10 +33,7 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 <div class="container">
   <div class="card">
     <div id="username">Профиль: Загрузка...</div>
-    <div id="wallet-block">
-      <div id="wallet-status">Кошелёк: не подключён</div>
-      <div id="connect-container"></div> <!-- Кнопка подключения здесь -->
-    </div>
+    <div id="connect-container"></div> <!-- Только официальная кнопка с адресом -->
   </div>
 
   <div class="stats">
@@ -63,6 +60,6 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
   <div class="nav-item">Giveaway</div>
 </div>
 
-<script src="/script.js?v=4"></script>
+<script src="/script.js?v=6"></script>
 </body>
 </html>
