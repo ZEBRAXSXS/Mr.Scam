@@ -20,7 +20,46 @@ tonConnectUI.onStatusChange(wallet => {
     }
 });
 
-// Платёж TON (работает без токена)
+// Получаем ID Telegram пользователя
+const userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id : 'guest' + Math.random().toString(36).substr(2, 9);
+
+// Кликер с бустом
+let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;
+let boost = 1;
+document.getElementById('score').textContent = `Очки: ${score}`;
+document.getElementById('clicker').onclick = () => {
+    score += boost;
+    document.getElementById('score').textContent = `Очки: ${score}`;
+    localStorage.setItem('score', score);
+    updateLeaderBoard();
+};
+
+// Буст
+document.getElementById('boost').onclick = () => {
+    boost = 2;
+    setTimeout(() => boost = 1, 10000); // 10 сек
+};
+
+// Лидерборд (локальный, с ID Telegram)
+const leaderTable = document.getElementById('leader-table');
+function updateLeaderBoard() {
+    let leaders = localStorage.getItem('leaders') ? JSON.parse(localStorage.getItem('leaders')) : [];
+    let userIndex = leaders.findIndex(l => l.id === userId);
+    if (userIndex !== -1) {
+        leaders[userIndex].score = score;
+    } else {
+        leaders.push({ id: userId, score: score });
+    }
+    leaders.sort((a, b) => b.score - a.score);
+    localStorage.setItem('leaders', JSON.stringify(leaders));
+    leaderTable.innerHTML = leaders.map(l => `<tr><td>\( {l.id}</td><td> \){l.score}</td></tr>`).join('');
+}
+updateLeaderBoard();
+
+// Онлайн (фейк, для реального нужен сервер с websocket)
+document.getElementById('online').textContent = `Онлайн: ${Math.floor(Math.random() * 10 + 1)}`; // Фейк онлайн 1-10
+
+// Платёж TON
 document.getElementById('pay-ton').onclick = async () => {
     if (!tonConnectUI.connected) {
         return alert('⚠ Сначала подключи кошелёк!');
@@ -42,16 +81,15 @@ document.getElementById('pay-ton').onclick = async () => {
     }
 };
 
-// Платёж Stars — теперь с токеном бота
+// Платёж Stars (с твоим токеном)
 document.getElementById('pay-stars').onclick = () => {
-    const botToken = '8359777141:AAH9OntSa1yv52OGCntaKUrszTvAcHp1tnA'; // Твой токен
-
+    const botToken = '8359777141:AAH9OntSa1yv52OGCntaKUrszTvAcHp1tnA';
     tg.sendInvoice(
         botToken,
-        'Премиум в Mr. Scam', // title
-        'Получи премиум-функции за 50 Stars', // description
-        'payload_50_stars', // payload
-        'XTR', // currency = Telegram Stars
-        [{ label: '50 Stars', amount: 5000 }] // 50 Stars = 5000 cents
+        'Премиум в Mr. Scam',
+        'Получи премиум за 50 Stars',
+        'payload_50_stars',
+        'XTR',
+        [{ label: '50 Stars', amount: 5000 }]
     );
 };
