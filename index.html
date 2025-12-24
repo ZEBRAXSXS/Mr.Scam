@@ -4,14 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mr. Scam Game</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-// Проверка: если НЕ в Telegram — редирект на бота
-if (typeof Telegram === 'undefined' || !Telegram.WebApp || !Telegram.WebApp.initDataUnsafe) {
-  // Редирект на твой бот
-  window.location.href = "https://t.me/MrScam_bot";
-} 
-</script>
 <style>
 body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
 .header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
@@ -24,13 +16,14 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 .stat strong { display:block; font-size:1.6em; color:#4caf50; }
 .green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
 .tabs { display:flex; justify-content:center; margin:30px 0; }
-.tab { background:#e0e0f0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
+.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
 .tab.active { background:#4caf50; color:#fff; }
 .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
 #payment-section { display:none; }
 </style>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
@@ -67,6 +60,6 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
   <div class="nav-item">Giveaway</div>
 </div>
 
-<script src="/script.js?v=12"></script>
+<script src="/script.js?v=13"></script>
 </body>
 </html>
