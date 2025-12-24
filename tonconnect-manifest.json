@@ -1,7 +1,7 @@
 {
-  "name": "Mr. Scam Mini App",
-  "description": "Mini App с TON Connect",
-  "icons": ["icon.png"],
-  "defaultBlockchain": "ton",
-  "manifestVersion": "1.0"
+  "name": "TON Clicker",
+  "icon": "https://i.ibb.co/6v6yWQH/ton.png",
+  "developer": "Xiom",
+  "description": "Мини игра с TON и Telegram",
+  "permissions": ["ton_send"]
 }

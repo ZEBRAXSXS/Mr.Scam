@@ -1,23 +1,31 @@
 import fetch from 'node-fetch';
 
-export default async function handler(req,res){
-    if(req.method!=='POST') return res.status(405).json({message:'Method not allowed'});
-    const { userId } = JSON.parse(req.body);
-    const botToken = process.env.BOT_TOKEN;
-    const chatId = userId;
-    const response = await fetch(`https://api.telegram.org/bot${botToken}/sendInvoice`,{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
-            chat_id:chatId,
-            title:"Премиум в Mr. Scam",
-            description:"50 Stars",
-            payload:"payload_50_stars",
-            provider_token:process.env.PROVIDER_TOKEN,
-            currency:"XTR",
-            prices:[{label:"50 Stars",amount:5000}]
-        })
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).end();
+
+  const { user_id, amount } = JSON.parse(req.body);
+  const BOT_TOKEN = process.env.BOT_TOKEN; // из переменных Vercel
+  const PROVIDER_TOKEN = process.env.PROVIDER_TOKEN; // из переменных Vercel
+
+  try {
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendInvoice`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: user_id,
+        title: 'Premium in Mr. Scam',
+        description: `${amount} Stars`,
+        payload: `payload_${amount}`,
+        provider_token: PROVIDER_TOKEN,
+        start_parameter: 'premium',
+        currency: 'XTR',
+        prices: [{ label: `${amount} Stars`, amount: amount * 100 }]
+      })
     });
+
     const data = await response.json();
-    res.status(200).json({message:data.ok?"Invoice отправлен!":"Ошибка при отправке"});
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 }

@@ -2,46 +2,35 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <title>Mr. Scam</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <title>🔥 TON Clicker 🔥</title>
     <script src="./tonconnect-ui.min.js"></script>
     <style>
-        body { background: #000; color: #0f0; font-family: monospace; text-align: center; padding: 20px; margin: 0; touch-action: manipulation; }
-        h1 { font-size: 2.5em; margin: 30px 0; }
-        button { background: #0f0; color: #000; border: none; padding: 18px; margin: 15px; font-size: 1.3em; width: 90%; border-radius: 12px; font-weight: bold; cursor: pointer; }
-        .status { margin: 30px; font-size: 1.2em; color: #ff0; }
-        #ton-connect-button { margin: 20px auto; width: 90%; }
-        #clicker { font-size: 2em; cursor: pointer; }
-        #score { font-size: 1.5em; }
-        #leaderboard { margin-top: 30px; text-align: left; }
-        table { width: 90%; margin: auto; border-collapse: collapse; }
+        body { background: #111; color: #0f0; font-family: monospace; text-align: center; padding: 20px; margin:0; }
+        h1 { font-size: 2em; margin: 20px 0; }
+        button { padding: 15px; margin: 10px; font-size: 1.2em; border-radius: 10px; cursor: pointer; }
+        #status { margin: 15px; color: #ff0; }
+        #score { font-size: 1.5em; margin: 15px; }
+        table { margin: 15px auto; border-collapse: collapse; width: 90%; }
         th, td { border: 1px solid #0f0; padding: 8px; }
     </style>
 </head>
 <body>
-    <h1>🎰 MR . SCAM 🎰</h1>
-    <p>Тапай, бусти и плати TON</p>
-
-    <div class="status" id="status">Статус: кошелёк не подключён</div>
+    <h1>🔥 TON Clicker 🔥</h1>
+    <p id="welcome">Привет, пользователь!</p>
+    <div id="status">Статус: кошелёк не подключён</div>
     <div id="ton-connect-button"></div>
 
-    <div id="clicker">🖱 Тапни здесь!</div>
+    <div id="clicker" style="font-size:2em; cursor:pointer; margin:20px;">🖱 Кликни!</div>
     <p id="score">Очки: 0</p>
-    <button id="boost">🚀 Буст (x2 на 10 сек)</button>
+    <button id="boost">🚀 Буст x2 (10 сек)</button>
     <button id="pay-ton">💸 Отправить 0.05 TON</button>
 
-    <div id="leaderboard">
-        <h2>Лидерборд</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID Telegram</th>
-                    <th>Очки</th>
-                </tr>
-            </thead>
-            <tbody id="leader-table"></tbody>
-        </table>
-    </div>
+    <h2>Лидерборд</h2>
+    <table>
+        <thead><tr><th>ID Telegram</th><th>Очки</th></tr></thead>
+        <tbody id="leader-table"></tbody>
+    </table>
     <p id="online">Онлайн: 0</p>
 
     <script type="module" src="script.js"></script>

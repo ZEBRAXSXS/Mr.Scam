@@ -4,11 +4,12 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-// Telegram пользователь
+// Telegram user
 const user = tg.initDataUnsafe?.user;
-if (!user) alert("❌ Нет данных пользователя Telegram");
-const userId = user?.id || 'guest' + Math.random().toString(36).substr(2, 9);
+const userId = user?.id || 'guest' + Math.random().toString(36).substr(2, 6);
 const username = user?.username || 'guest';
+const firstName = user?.first_name || 'Игрок';
+document.getElementById('welcome').textContent = `Привет, ${firstName}! @${username}`;
 
 // TonConnect
 const tonConnectUI = new TonConnectUI({
@@ -38,6 +39,7 @@ document.getElementById('clicker').onclick = () => {
     updateLeaderBoard();
 };
 
+// Буст
 document.getElementById('boost').onclick = () => {
     boost = 2;
     setTimeout(() => boost = 1, 10000);
@@ -49,14 +51,14 @@ function updateLeaderBoard() {
     let leaders = localStorage.getItem('leaders') ? JSON.parse(localStorage.getItem('leaders')) : [];
     let userIndex = leaders.findIndex(l => l.id === userId);
     if (userIndex !== -1) leaders[userIndex].score = score;
-    else leaders.push({ id: userId, score });
+    else leaders.push({id: userId, score});
     leaders.sort((a,b) => b.score - a.score);
     localStorage.setItem('leaders', JSON.stringify(leaders));
     leaderTable.innerHTML = leaders.map(l => `<tr><td>${l.id}</td><td>${l.score}</td></tr>`).join('');
 }
 updateLeaderBoard();
 
-// Онлайн (фейк)
+// Онлайн фейковый
 document.getElementById('online').textContent = `Онлайн: ${Math.floor(Math.random()*10+1)}`;
 
 // Платёж TON
