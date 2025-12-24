@@ -6,7 +6,7 @@ tg.expand();
 
 const tonConnectUI = new TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'ton-connect-button'  // Автоматическая кнопка SDK
+    buttonRootId: 'ton-connect-button'
 });
 
 const statusEl = document.getElementById('status');
@@ -20,7 +20,7 @@ tonConnectUI.onStatusChange(wallet => {
     }
 });
 
-// Платёж TON
+// Платёж TON (работает без токена)
 document.getElementById('pay-ton').onclick = async () => {
     if (!tonConnectUI.connected) {
         return alert('⚠ Сначала подключи кошелёк!');
@@ -42,11 +42,16 @@ document.getElementById('pay-ton').onclick = async () => {
     }
 };
 
-// Платёж Stars
+// Платёж Stars — теперь с токеном бота
 document.getElementById('pay-stars').onclick = () => {
-    tg.showPopup({
-        title: "Оплата Stars",
-        message: "Купить премиум за 50 Telegram Stars?",
-        buttons: [{ type: "pay", text: "Оплатить 50 ⭐" }]
-    });
+    const botToken = '8359777141:AAH9OntSa1yv52OGCntaKUrszTvAcHp1tnA'; // Твой токен
+
+    tg.sendInvoice(
+        botToken,
+        'Премиум в Mr. Scam', // title
+        'Получи премиум-функции за 50 Stars', // description
+        'payload_50_stars', // payload
+        'XTR', // currency = Telegram Stars
+        [{ label: '50 Stars', amount: 5000 }] // 50 Stars = 5000 cents
+    );
 };
