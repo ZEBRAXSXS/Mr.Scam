@@ -22,7 +22,7 @@ let connectedWallet = null;
 tonConnectUI.onStatusChange(wallet => {
   if (wallet) {
     connectedWallet = wallet.account.address;
-    // ЧИСТЫЙ ТЕКСТ — никакого кода в выводе!
+    // ТОЛЬКО textContent — никакой innerHTML, чтобы не было сырого кода!
     document.getElementById('wallet-status').textContent = 
       `Кошелёк подключён: \( {connectedWallet.slice(0,8)}... \){connectedWallet.slice(-6)}`;
     document.getElementById('payment-section').style.display = 'block';
@@ -34,6 +34,11 @@ tonConnectUI.onStatusChange(wallet => {
 });
 
 document.getElementById('payment-btn').onclick = async () => {
+  if (!connectedWallet) {
+    alert('⚠️ Подключите кошелёк сначала!');
+    return;
+  }
+
   const transaction = {
     validUntil: Math.floor(Date.now() / 1000) + 600,
     messages: [{
