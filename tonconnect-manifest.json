@@ -1,7 +1,7 @@
 {
-  "url": "https://mr-scam.vercel.app",
-  "name": "Mr. Scam",
-  "iconUrl": "https://mr-scam.vercel.app/icon.png",
-  "termsOfUseUrl": "https://mr-scam.vercel.app/terms",
-  "privacyPolicyUrl": "https://mr-scam.vercel.app/privacy"
+  "name": "Mr. Scam Mini App",
+  "description": "Telegram Mini App с кликером, TON и Stars",
+  "icons":["icon.png"],
+  "defaultBlockchain":"ton",
+  "manifestVersion":"1.0"
 }
