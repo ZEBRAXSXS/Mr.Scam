@@ -1,7 +1,13 @@
 {
-  "name": "TON Clicker",
-  "icon": "https://i.ibb.co/6v6yWQH/ton.png",
-  "developer": "Xiom",
-  "description": "Мини игра с TON и Telegram",
-  "permissions": ["ton_send"]
+  "name": "Mr.Scam",
+  "icon": "https://example.com/icon.png",
+  "description": "Telegram Mini App with TonConnect",
+  "developer": {
+    "name": "YourName",
+    "url": "https://example.com"
+  },
+  "permissions": ["ton"],
+  "uiPreferences": {
+    "theme": "dark"
+  }
 }
