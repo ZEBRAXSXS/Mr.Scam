@@ -5,9 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mr. Scam Game</title>
 <style>
-body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-#telegram-button { display:none; background:#0088cc; color:#fff; border:none; padding:15px 30px; font-size:1.5em; border-radius:8px; cursor:pointer; text-decoration:none; box-shadow:0 4px 8px rgba(0,136,204,0.2); }
-#main-app { display:none; width:100%; height:100%; }
+body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.blocked-screen { display:none; }
+.blocked-screen h1 { font-size:2.5em; margin-bottom:20px; }
+.blocked-screen p { font-size:1.4em; margin:20px; }
+.telegram-btn { background:#0088cc; color:#fff; border:none; padding:18px 40px; font-size:1.6em; border-radius:12px; cursor:pointer; text-decoration:none; display:inline-block; margin-top:30px; box-shadow:0 6px 12px rgba(0,136,204,0.3); }
+#main-app { display:none; width:100%; height:100%; background:#000; color:#0f0; }
 .header { padding:20px; font-size:2.5em; text-align:center; }
 .container { flex:1; padding:20px; text-align:center; }
 .card { padding:30px; }
@@ -25,10 +28,14 @@ body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; 
 </head>
 <body>
 
-<!-- Кнопка для браузера -->
-<a id="telegram-button" href="https://t.me/MrScam_bot">Открыть в Telegram</a>
+<!-- Экран блокировки для браузера -->
+<div id="blocked-screen" class="blocked-screen">
+  <h1>🚫 Доступ запрещён</h1>
+  <p>Mr. Scam Game работает только внутри Telegram</p>
+  <a href="https://t.me/MrScam_bot" class="telegram-btn">Открыть в Telegram</a>
+</div>
 
-<!-- Основной контент Mini App -->
+<!-- Основной интерфейс Mini App -->
 <div id="main-app">
   <div class="header">MR. SCAM GAME</div>
 
@@ -51,6 +58,6 @@ body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; 
   </div>
 </div>
 
-<script src="/script.js?v=15"></script>
+<script src="/script.js?v=16"></script>
 </body>
 </html>

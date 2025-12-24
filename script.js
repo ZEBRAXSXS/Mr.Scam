@@ -2,12 +2,12 @@ window.addEventListener('load', () => {
   const tg = window.Telegram?.WebApp;
 
   if (!tg || !tg.initDataUnsafe) {
-    // В браузере — показываем кнопку "Открыть в Telegram"
-    document.getElementById('telegram-button').style.display = 'block';
+    // В браузере — показываем блокировку с кнопкой
+    document.getElementById('blocked-screen').style.display = 'block';
     document.getElementById('main-app').style.display = 'none';
   } else {
-    // В Telegram — показываем Mini App
-    document.getElementById('telegram-button').style.display = 'none';
+    // В Telegram — показываем приложение
+    document.getElementById('blocked-screen').style.display = 'none';
     document.getElementById('main-app').style.display = 'block';
 
     tg.expand();
