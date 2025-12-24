@@ -93,3 +93,4 @@ document.getElementById('pay-stars').onclick = () => {
         [{ label: '50 Stars', amount: 5000 }]
     );
 };
+ 
