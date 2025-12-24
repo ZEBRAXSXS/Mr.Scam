@@ -8,21 +8,23 @@
 body { background:#000; color:#0f0; font-family:monospace; text-align:center; padding:20px; margin:0; }
 h1 { font-size:2.5em; margin:30px 0; }
 #profile { margin:30px; font-size:1.4em; }
-#connect-container { margin:40px 0; } /* Для официальной кнопки TonConnect */
+#connect-container { margin:50px 0; } /* Для большой официальной кнопки */
 #payment-btn { background:#0f0; color:#000; border:none; padding:15px 30px; margin:20px; font-size:1.4em; cursor:pointer; border-radius:15px; }
 </style>
-<script src="/tonconnect-ui.min.js"></script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<!-- Библиотека TonConnect с CDN (обходит 415 ошибку Vercel) -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-<h1>🎮 MR. SCAM GAME 🎮</h1>
+🎮 <span style="font-size:2em;">MR. SCAM GAME</span> 🎮
 
 <div id="profile">
   Профиль: <strong><span id="username">Загрузка...</span></strong><br><br>
   Кошелёк: <span id="wallet-status">не подключён</span>
 </div>
 
-<div id="connect-container"></div> /* Официальная кнопка появится здесь */
+<!-- Официальная кнопка и модалка появятся здесь автоматически -->
+<div id="connect-container"></div>
 
 <button id="payment-btn">💸 Внести 0.05 TON в игру</button>
 
