@@ -2,21 +2,11 @@
   "headers": [
     {
       "source": "/(.*)\\.js",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/javascript; charset=utf-8"
-        }
-      ]
+      "headers": [{ "key": "Content-Type", "value": "application/javascript" }]
     },
     {
       "source": "/(.*)\\.json",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json; charset=utf-8"
-        }
-      ]
+      "headers": [{ "key": "Content-Type", "value": "application/json" }]
     }
   ]
 }
