@@ -5,21 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mr. Scam Game</title>
 <style>
-body { background:#f5f5f5; color:#000; font-family:sans-serif; margin:0; padding:0; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; padding:20px; text-align:center; font-size:2em; font-weight:bold; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-.profile-section { padding:20px; text-align:center; background:#fff; margin:10px 10px 0; border-radius:15px 15px 0 0; box-shadow:0 4px 10px rgba(0,0,0,0.05); }
-#connect-container { margin:30px 0; }
-.stats { display:flex; justify-content:space-around; margin:20px 10px; }
-.stat-box { background:#eee; padding:12px; border-radius:12px; text-align:center; flex:1; margin:0 5px; font-size:0.9em; }
-.stat-box strong { display:block; font-size:1.4em; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:15px 30px; font-size:1.2em; border-radius:30px; cursor:pointer; margin:10px 0; }
-.tabs { display:flex; justify-content:space-around; margin:20px 10px; }
-.tab { background:#e0e0e0; padding:12px; border-radius:20px; flex:1; text-align:center; margin:0 5px; font-weight:bold; }
+body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+.header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+.container { flex:1; padding:20px; }
+.card { background:#fff; border-radius:16px; padding:20px; text-align:center; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin-bottom:20px; }
+#username { font-size:1.4em; font-weight:bold; }
+#wallet-status { font-size:1.2em; margin:20px 0; color:#333; }
+.stats { display:flex; justify-content:space-around; margin:20px 0; }
+.stat { background:#f0f0f0; padding:12px; border-radius:12px; flex:1; margin:0 8px; text-align:center; }
+.stat strong { display:block; font-size:1.6em; color:#4caf50; }
+.green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
+.tabs { display:flex; justify-content:center; margin:20px 0; }
+.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
 .tab.active { background:#4caf50; color:#fff; }
-.bottom-nav { position:fixed; bottom:0; width:100%; background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 10px rgba(0,0,0,0.1); font-size:0.9em; }
-.nav-item { text-align:center; color:#888; }
+.bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
+.nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
-#payment-section { display:none; text-align:center; margin:30px 0; }
+#payment-section { display:none; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -28,30 +30,29 @@ body { background:#f5f5f5; color:#000; font-family:sans-serif; margin:0; padding
 <body>
 <div class="header">MR. SCAM GAME</div>
 
-<div class="profile-section">
-  <div style="font-size:1.4em; margin-bottom:10px;">Профиль: <strong><span id="username">Загрузка...</span></strong></div>
-  <div id="wallet-status" style="font-size:1.2em; margin:20px 0;">Кошелёк: не подключён</div>
-  <div id="connect-container"></div>
-</div>
+<div class="container">
+  <div class="card">
+    <div id="username">Профиль: Загрузка...</div>
+    <div id="wallet-status">Кошелёк: не подключён</div>
+    <div id="connect-container"></div>
+  </div>
 
-<div class="stats">
-  <div class="stat-box"><strong>0.00</strong> Wallet</div>
-  <div class="stat-box"><strong>0</strong> Volume</div>
-  <div class="stat-box"><strong>0</strong> Referrals</div>
-  <div class="stat-box"><button class="green-btn" style="padding:8px 16px; font-size:0.9em;">Share</button></div>
-</div>
+  <div class="stats">
+    <div class="stat"><strong>0.00</strong> Wallet</div>
+    <div class="stat"><strong>0</strong> Volume</div>
+    <div class="stat"><strong>0</strong> Referrals</div>
+  </div>
 
-<div class="tabs">
-  <div class="tab active">Stickers</div>
-  <div class="tab">Gifts</div>
-  <div class="tab">+</div>
-</div>
+  <div class="tabs">
+    <div class="tab active">Stickers</div>
+    <div class="tab">Gifts</div>
+    <div class="tab">+</div>
+  </div>
 
-<div id="payment-section">
-  <button id="payment-btn" class="green-btn">💸 Внести 0.05 TON в игру</button>
+  <div id="payment-section">
+    <button id="payment-btn" class="green-btn">💸 Внести 0.05 TON в игру</button>
+  </div>
 </div>
-
-<div style="flex:1;"></div>
 
 <div class="bottom-nav">
   <div class="nav-item">Market</div>
@@ -60,6 +61,6 @@ body { background:#f5f5f5; color:#000; font-family:sans-serif; margin:0; padding
   <div class="nav-item">Giveaway</div>
 </div>
 
-<script src="/script.js"></script>
+<script src="/script.js?v=3"></script> <!-- ?v=3 чтобы принудительно обновить кэш -->
 </body>
 </html>
