@@ -1,13 +1,11 @@
 {
   "name": "Mr.Scam Game",
   "icon": "https://example.com/icon.png",
-  "description": "Telegram Mini App with TonConnect",
+  "description": "Telegram Mini App с TonConnect",
   "developer": {
     "name": "YourName",
     "url": "https://example.com"
   },
   "permissions": ["ton"],
-  "uiPreferences": {
-    "theme": "dark"
-  }
+  "uiPreferences": { "theme": "dark" }
 }
