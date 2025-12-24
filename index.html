@@ -6,20 +6,17 @@
 <title>Mr. Scam Game</title>
 <style>
 body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; }
-#loading-screen { text-align:center; width:100%; }
-#loading-text { font-size:1.8em; margin:30px; }
-.progress-bar { width:80%; background:#333; border-radius:10px; overflow:hidden; margin:20px auto; }
-.progress { height:20px; background:#0f0; width:0%; transition:width 1s; border-radius:10px; }
+#telegram-button { display:none; background:#0088cc; color:#fff; border:none; padding:15px 30px; font-size:1.5em; border-radius:8px; cursor:pointer; text-decoration:none; box-shadow:0 4px 8px rgba(0,136,204,0.2); }
 #main-app { display:none; width:100%; height:100%; }
-.header { background:#111; text-align:center; padding:20px; font-size:2em; font-weight:bold; }
+.header { padding:20px; font-size:2.5em; text-align:center; }
 .container { flex:1; padding:20px; text-align:center; }
-.card { background:#111; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,255,0,0.2); margin:20px 10px; }
+.card { padding:30px; }
 #username { font-size:1.6em; font-weight:bold; margin-bottom:30px; }
 #connect-container { margin:40px 0; }
-.green-btn { background:#0f0; color:#000; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
-.bottom-nav { background:#111; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,255,0,0.2); font-size:0.9em; color:#0f0; }
+.green-btn { background:#0f0; color:#000; border:none; padding:16px 32px; font-size:1.3em; border-radius:10px; cursor:pointer; width:90%; margin:20px auto; display:block; }
+.bottom-nav { background:#111; display:flex; justify-content:space-around; padding:15px 0; font-size:0.9em; color:#0f0; box-shadow:0 -2px 8px rgba(0,255,0,0.2); }
 .nav-item { text-align:center; }
-.nav-item.active { color:#0f0; font-weight:bold; }
+.nav-item.active { font-weight:bold; }
 #payment-section { display:none; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -28,14 +25,10 @@ body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; 
 </head>
 <body>
 
-<!-- Экран загрузки с проверкой -->
-<div id="loading-screen">
-  <h1>MR. SCAM GAME</h1>
-  <div id="loading-text">Проверка аккаунта...</div>
-  <div class="progress-bar"><div class="progress" id="progress"></div></div>
-</div>
+<!-- Кнопка для браузера -->
+<a id="telegram-button" href="https://t.me/MrScam_bot">Открыть в Telegram</a>
 
-<!-- Основной интерфейс (скрыт сначала) -->
+<!-- Основной контент Mini App -->
 <div id="main-app">
   <div class="header">MR. SCAM GAME</div>
 
@@ -58,6 +51,6 @@ body { margin:0; padding:0; background:#000; color:#0f0; font-family:monospace; 
   </div>
 </div>
 
-<script src="/script.js?v=14"></script>
+<script src="/script.js?v=15"></script>
 </body>
 </html>

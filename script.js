@@ -2,42 +2,15 @@ window.addEventListener('load', () => {
   const tg = window.Telegram?.WebApp;
 
   if (!tg || !tg.initDataUnsafe) {
-    // Не в Telegram — редирект на бота
-    window.location.href = "https://t.me/MrScam_bot";
-    return;
-  }
+    // В браузере — показываем кнопку "Открыть в Telegram"
+    document.getElementById('telegram-button').style.display = 'block';
+    document.getElementById('main-app').style.display = 'none';
+  } else {
+    // В Telegram — показываем Mini App
+    document.getElementById('telegram-button').style.display = 'none';
+    document.getElementById('main-app').style.display = 'block';
 
-  // В Telegram — запускаем экран загрузки
-  tg.expand();
-
-  const loadingText = document.getElementById('loading-text');
-  const progress = document.getElementById('progress');
-
-  let step = 0;
-  const steps = [
-    "Проверка аккаунта...",
-    "Проверка возраста (18+)...",
-    "Загрузка игры...",
-    "Добро пожаловать в Mr. Scam 😈"
-  ];
-
-  const interval = setInterval(() => {
-    step++;
-    progress.style.width = (step * 25) + '%';
-
-    if (step < steps.length) {
-      loadingText.textContent = steps[step];
-    } else {
-      clearInterval(interval);
-      document.getElementById('loading-screen').style.display = 'none';
-      document.getElementById('main-app').style.display = 'block';
-
-      // Запускаем основную логику приложения
-      initApp();
-    }
-  }, 1000); // 1 секунда на шаг
-
-  function initApp() {
+    tg.expand();
     tg.ready();
 
     const usernameEl = document.getElementById('username');
