@@ -5,7 +5,8 @@ tg.ready();
 tg.expand();
 
 const tonConnectUI = new TonConnectUI({
-    manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json'
+    manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
+    buttonRootId: 'ton-connect-button'  // Это добавит автоматическую кнопку подключения
 });
 
 const statusEl = document.getElementById('status');
@@ -19,10 +20,7 @@ tonConnectUI.onStatusChange(wallet => {
     }
 });
 
-document.getElementById('connect').onclick = async () => {
-    await tonConnectUI.connectWallet();
-};
-
+// Платёж TON
 document.getElementById('pay-ton').onclick = async () => {
     if (!tonConnectUI.connected) {
         return alert('⚠ Сначала подключи кошелёк!');
@@ -39,12 +37,12 @@ document.getElementById('pay-ton').onclick = async () => {
     try {
         await tonConnectUI.sendTransaction(transaction);
         alert('✅ Платёж прошёл! Деньги пришли ко мне 💰');
-        tg.close();
     } catch (e) {
         alert('❌ Ошибка: ' + e.message);
     }
 };
 
+// Платёж Stars
 document.getElementById('pay-stars').onclick = () => {
     tg.showPopup({
         title: "Оплата Stars",
