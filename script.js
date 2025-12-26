@@ -10,14 +10,20 @@ window.addEventListener('load', () => {
   tg.expand();
   tg.ready();
 
-  const usernameEl = document.getElementById('username');
+  // Загрузка аватара и имени пользователя
   let username = 'Guest';
+  let avatarUrl = 'https://via.placeholder.com/60';
   if (tg.initDataUnsafe.user) {
     const user = tg.initDataUnsafe.user;
     username = user.username ? '@' + user.username : user.first_name || 'User';
+    if (user.photo_url) {
+      avatarUrl = user.photo_url;
+    }
   }
-  usernameEl.textContent = 'Профиль: ' + username;
+  document.getElementById('username').textContent = username;
+  document.getElementById('user-avatar').src = avatarUrl;
 
+  // TonConnect
   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
@@ -30,13 +36,16 @@ window.addEventListener('load', () => {
   tonConnectUI.onStatusChange(wallet => {
     if (wallet) {
       connectedWallet = wallet.account.address;
+      document.getElementById('wallet-address').textContent = connectedWallet.substring(0, 4) + '...' + connectedWallet.substring(connectedWallet.length - 4);
       document.getElementById('payment-section').style.display = 'block';
     } else {
       connectedWallet = null;
+      document.getElementById('wallet-address').textContent = 'Not connected';
       document.getElementById('payment-section').style.display = 'none';
     }
   });
 
+  // Оплата TON
   document.getElementById('payment-btn').onclick = async () => {
     if (!connectedWallet) {
       alert('⚠️ Подключите кошелёк сначала!');
@@ -47,26 +56,28 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '300000000'
+        amount: '300000000' // 0.3 TON
       }]
     };
 
     try {
       await tonConnectUI.sendTransaction(transaction);
       alert('✅ 0.3 TON успешно внесено!');
+      // Здесь можно обновить баланс TON (фейк)
+      document.getElementById('ton-balance').textContent = (parseFloat(document.getElementById('ton-balance').textContent) + 0.3).toFixed(2);
     } catch (e) {
       alert('❌ Транзакция отменена или ошибка');
     }
   };
 
-  // Рабочая оплата Stars через backend (теперь работает после активации в DurgerKing)
+  // Оплата Stars
   document.getElementById('pay-stars-btn').onclick = () => {
     fetch('https://mr-scam.vercel.app/api/create-stars-invoice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title: 'Поддержка разработчику',
-        description: '1 Telegram Star для Mr. Scam Game ❤️',
+        description: '1 Telegram Star для Mr. Scam Game',
         payload: 'stars_support_1',
         amount: 1
       })
@@ -77,23 +88,42 @@ window.addEventListener('load', () => {
         tg.openInvoice(data.invoice_link, (status) => {
           if (status === 'paid') {
             alert('✅ Спасибо огромное за поддержку! ❤️');
+            // Здесь можно обновить баланс Stars (фейк)
+            document.getElementById('stars-balance').textContent = parseInt(document.getElementById('stars-balance').textContent) + 1;
           } else if (status === 'cancelled') {
             alert('Оплата отменена');
           }
         });
       } else {
-        alert('❌ Ошибка: ' + (data.error || 'неизвестно'));
+        alert('❌ Ошибка создания инвойса: ' + (data.error || 'неизвестно'));
       }
     })
-    .catch(err => {
-      alert('❌ Ошибка сети: ' + err.message);
-    });
+    .catch(e => alert('❌ Ошибка: ' + e.message));
   };
 
-  // Дополнительный алерт при закрытии инвойса
+  // Рабочие меню-итемы (алерты для примера)
+  document.getElementById('news-btn').onclick = () => alert('Новости: Пока пусто!');
+  document.getElementById('support-btn').onclick = () => alert('Поддержка: Напишите в бот!');
+  document.getElementById('settings-btn').onclick = () => alert('Настройки: Пока нет опций!');
+
+  // Приглашение друзей (фейк)
+  document.getElementById('invite-btn').onclick = () => {
+    tg.showShareMenu({
+      message: 'Присоединяйся к Mr. Scam Game!',
+      url: 'https://t.me/mrscam_test_bot'
+    });
+    alert('Ссылка для приглашения скопирована! +25 Stars за друга');
+  };
+
+  // Нижняя навигация (алерты для примера)
+  document.getElementById('market-btn').onclick = () => alert('Market: Coming soon!');
+  document.getElementById('events-btn').onclick = () => alert('Events: No events yet!');
+  document.getElementById('giveaway-btn').onclick = () => alert('Giveaway: Participate now!');
+
   tg.onEvent('invoiceClosed', (event) => {
     if (event.status === 'paid') {
       alert('✅ Спасибо огромное за поддержку! ❤️');
+      document.getElementById('stars-balance').textContent = parseInt(document.getElementById('stars-balance').textContent) + 1;
     }
   });
 });
