@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mr. Scam Game</title>
 <style>
-body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; touch-action: manipulation; }
+body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
 .header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
 .container { flex:1; padding:20px; text-align:center; }
 .card { background:#fff; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px 10px; }
@@ -16,15 +16,12 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 .stat strong { display:block; font-size:1.6em; color:#4caf50; }
 .green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
 .tabs { display:flex; justify-content:center; margin:30px 0; }
-.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; cursor:pointer; }
+.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
 .tab.active { background:#4caf50; color:#fff; }
 .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
-.nav-item { color:#888; text-align:center; cursor:pointer; }
+.nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
-#clicker-area { font-size:3em; margin:40px 0; cursor:pointer; }
-#leaderboard table { width:100%; border-collapse:collapse; margin-top:20px; }
-#leaderboard th, #leaderboard td { border:1px solid #ccc; padding:10px; }
-#stickers-gallery img { width:100px; margin:10px; }
+#payment-section { display:none; }
 #blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -42,34 +39,20 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
     </div>
 
     <div class="stats">
-      <div class="stat"><strong id="score">0</strong> Очки</div>
-      <div class="stat"><strong id="wallet-balance">0.00</strong> Wallet</div>
-      <div class="stat"><strong id="online-count">0</strong> Онлайн</div>
+      <div class="stat"><strong>0.00</strong> Wallet</div>
+      <div class="stat"><strong>0</strong> Volume</div>
+      <div class="stat"><strong>0</strong> Referrals</div>
     </div>
-
-    <div id="clicker-area">🖱 ТАПАЙ ЗДЕСЬ!</div>
-    <button class="green-btn" id="boost">🚀 Буст x2 (10 сек)</button>
 
     <div class="tabs">
-      <div class="tab active" data-tab="stickers">Stickers</div>
-      <div class="tab" data-tab="leaderboard">Лидерборд</div>
-      <div class="tab" data-tab="payment">Платежи</div>
+      <div class="tab active">Stickers</div>
+      <div class="tab">Gifts</div>
+      <div class="tab">+</div>
     </div>
 
-    <div id="stickers" class="tab-content">
-      <div id="stickers-gallery"></div>
-    </div>
-
-    <div id="leaderboard" class="tab-content" style="display:none;">
-      <table>
-        <thead><tr><th>Ранг</th><th>ID Telegram</th><th>Очки</th></tr></thead>
-        <tbody id="leader-table"></tbody>
-      </table>
-    </div>
-
-    <div id="payment" class="tab-content" style="display:none;">
-      <button class="green-btn" id="pay-ton">💸 Внести 1 TON в игру</button>
-      <button class="green-btn" id="pay-stars">⭐ Оплатить 50 Telegram Stars</button>
+    <div id="payment-section">
+      <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
+      <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 10 Telegram Stars</button>
     </div>
   </div>
 

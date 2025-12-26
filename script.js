@@ -1,114 +1,73 @@
-const tg = window.Telegram.WebApp;
-tg.ready();
-tg.expand();
+window.addEventListener('load', () => {
+  const tg = window.Telegram.WebApp;
 
-if (!tg.initDataUnsafe.user) {
+  if (!tg.initDataUnsafe || !tg.initData) {
     document.getElementById('app').style.display = 'none';
     document.getElementById('blocked').style.display = 'block';
     return;
-}
+  }
 
-// Пользователь Telegram
-const user = tg.initDataUnsafe.user;
-const userId = user.id;
-const username = user.username ? '@' + user.username : user.first_name || 'User';
-document.getElementById('username').textContent = 'Профиль: ' + username;
+  tg.expand();
+  tg.ready();
 
-// TON Connect (твой рабочий)
-const tonConnectUI = new TonConnectUI({
+  const usernameEl = document.getElementById('username');
+  let username = 'Guest';
+  if (tg.initDataUnsafe.user) {
+    const user = tg.initDataUnsafe.user;
+    username = user.username ? '@' + user.username : user.first_name || 'User';
+  }
+  usernameEl.textContent = 'Профиль: ' + username;
+
+  const tonConnectUI = new TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'connect-container'
-});
-
-// Тапалка
-let score = parseInt(localStorage.getItem(`score_${userId}`)) || 0;
-let multiplier = 1;
-document.getElementById('score').textContent = score;
-
-document.getElementById('clicker-area').onclick = () => {
-    score += multiplier;
-    document.getElementById('score').textContent = score;
-    localStorage.setItem(`score_${userId}`, score);
-    updateLeaderboard();
-};
-
-// Буст
-document.getElementById('boost').onclick = () => {
-    multiplier = 2;
-    setTimeout(() => multiplier = 1, 10000);
-    alert('Буст x2 активирован на 10 сек!');
-};
-
-// Лидерборд (локальный, по userId)
-function updateLeaderboard() {
-    let leaders = JSON.parse(localStorage.getItem('leaders') || '[]');
-    const userEntry = leaders.find(l => l.id === userId);
-    if (userEntry) {
-        userEntry.score = score;
-    } else {
-        leaders.push({ id: userId, username, score });
+    buttonRootId: 'connect-container',
+    actionsConfiguration: {
+      twaReturnUrl: 'https://t.me/твой_бот_username'  // Замени на username бота, например @MrScamGame_bot
     }
-    leaders.sort((a, b) => b.score - a.score);
-    localStorage.setItem('leaders', JSON.stringify(leaders));
+  });
 
-    const table = document.getElementById('leader-table');
-    table.innerHTML = leaders.slice(0, 10).map((l, i) => `<tr><td>\( {i+1}</td><td> \){l.username || l.id}</td><td>${l.score}</td></tr>`).join('');
-}
-updateLeaderboard();
+  let connectedWallet = null;
+  tonConnectUI.onStatusChange(wallet => {
+    if (wallet) {
+      connectedWallet = wallet.account.address;
+      document.getElementById('payment-section').style.display = 'block';
+    } else {
+      connectedWallet = null;
+      document.getElementById('payment-section').style.display = 'none';
+    }
+  });
 
-// Онлайн (фейк)
-document.getElementById('online-count').textContent = Math.floor(Math.random() * 50 + 10);
-
-// Tabs
-document.querySelectorAll('.tab').forEach(tab => {
-    tab.onclick = () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
-        document.getElementById(tab.dataset.tab).style.display = 'block';
-    };
-});
-
-// Стикеры (если папка /stickers с изображениями stickers/1.png, 2.png и т.д.)
-const gallery = document.getElementById('stickers-gallery');
-for (let i = 1; i <= 10; i++) { // Замени на реальное количество
-    const img = document.createElement('img');
-    img.src = `stickers/${i}.png`;
-    img.alt = `Sticker ${i}`;
-    gallery.appendChild(img);
-}
-
-// Платёж TON (твой рабочий)
-document.getElementById('pay-ton').onclick = async () => {
-    if (!tonConnectUI.connected) {
-        alert('Подключи кошелёк!');
-        return;
+  document.getElementById('payment-btn').onclick = async () => {
+    if (!connectedWallet) {
+      alert('⚠️ Подключите кошелёк сначала!');
+      return;
     }
 
     const transaction = {
-        validUntil: Math.floor(Date.now() / 1000) + 600,
-        messages: [{
-            address: "UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD",
-            amount: "1000000000" // 1 TON
-        }]
+      validUntil: Math.floor(Date.now() / 1000) + 600,
+      messages: [{
+        address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
+        amount: '1000000000' // 1 TON
+      }]
     };
 
     try {
-        await tonConnectUI.sendTransaction(transaction);
-        alert('1 TON внесено!');
+      await tonConnectUI.sendTransaction(transaction);
+      alert('✅ 1 TON успешно внесено!');
     } catch (e) {
-        alert('Ошибка: ' + e.message);
+      alert('❌ Ошибка или отменено');
     }
-};
+  };
 
-// Платёж Stars (без токена в коде — работает в Mini App)
-document.getElementById('pay-stars').onclick = () => {
+  // Кнопка оплаты 10 Telegram Stars
+  document.getElementById('pay-stars-btn').onclick = () => {
     tg.sendInvoice(
-        'Премиум в Mr. Scam',
-        'Получи буст и стикеры за 50 Stars',
-        'payload_stars_50',
-        '', // пусто для Stars
-        'XTR',
-        [{ label: '50 Stars', amount: 5000 }]
+      'Премиум буст', // title
+      'Получи буст и бонусы за 10 Telegram Stars', // description
+      'payload_10_stars', // payload
+      '', // provider_token пусто для Stars
+      'XTR', // currency = Telegram Stars
+      [{ label: '10 Stars', amount: 1000 }] // 10 Stars = 1000 cents (1 Star = 100 cents)
     );
-};
+  };
+});
