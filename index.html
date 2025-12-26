@@ -35,8 +35,8 @@
     #connect-container { background:var(--card); padding:8px 16px; border-radius:14px; font-size:0.95em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); }
     .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
-    .section-sticker { width:220px; height:220px; margin:30px auto; }
-    .section-text { font-size:1.3em; color:var(--text-sec); margin-top:20px; }
+    .profile-sticker { width:180px; height:180px; margin:30px auto 10px; }
+    .section-text { font-size:1.3em; color:var(--text-sec); }
     .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--bg); display:flex; justify-content:space-around; padding:12px 0 24px 0; border-top:1px solid #1e2030; z-index:10; }
     .nav-item { display:flex; flex-direction:column; align-items:center; color:var(--text-sec); font-size:0.85em; cursor:pointer; gap:4px; }
     .nav-item.active { color:#fff; font-weight:700; }
@@ -44,7 +44,6 @@
     #profile-section { display:block; }
     #blocked { display:none; text-align:center; padding:50px; background:var(--bg); min-height:100vh; color:var(--text); }
   </style>
-  <!-- Библиотека для анимированных .tgs стикеров -->
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -55,7 +54,7 @@
   <div id="app">
     <div class="header">
       <div class="header-title">
-        <lottie-player src="/stickers/2_5361597813799030888.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
+        <lottie-player src="/stickers/2_5361597813799030885.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
         Mr. Scam Game
       </div>
       <div class="balances">
@@ -82,23 +81,24 @@
           <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
           <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
         </div>
+
+        <!-- Стикер в профиле -->
+        <lottie-player src="/stickers/2_5361597813799030881.tgs" background="transparent" speed="1" class="profile-sticker" loop autoplay></lottie-player>
       </div>
 
       <!-- Играть -->
       <div id="play-section" class="section">
-        <lottie-player src="/stickers/2_5361597813799030874.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
 
       <!-- Стейкинг -->
       <div id="staking-section" class="section">
-        <lottie-player src="/stickers/2_5361597813799030875.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
 
       <!-- Задания -->
       <div id="tasks-section" class="section">
-        <lottie-player src="/stickers/2_5361597813799030876.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
+        <lottie-player src="/stickers/2_5361597813799030886.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
     </div>
@@ -129,6 +129,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=24"></script>
+  <script src="/script.js?v=25"></script>
 </body>
 </html>
