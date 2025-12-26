@@ -5,56 +5,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Mr. Scam Game</title>
   <style>
+    * { -webkit-tap-highlight-color: transparent; outline: none; }
     :root {
       --bg: #0a0a1a;
       --card: #121225;
       --text: #e0e0ff;
-      --text-secondary: #a0a0d0;
+      --text-secondary: #8888aa;
       --accent-start: #5e72e4;
       --accent-end: #8ab4f8;
-      --shadow: rgba(94, 114, 228, 0.15);
+      --shadow: rgba(94, 114, 228, 0.1);
     }
     body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui,sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
     #app { flex:1; display:flex; flex-direction:column; overflow:hidden; }
     .main-content { flex:1; overflow-y:auto; padding-bottom:30px; -webkit-overflow-scrolling:touch; }
-    .header { position:sticky; top:0; background:var(--bg); padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; z-index:10; flex-shrink:0; }
-    .header-title { font-size:1.45em; font-weight:800; }
-    .balances { display:flex; gap:10px; align-items:center; }
-    .balance { background:var(--card); padding:6px 12px; border-radius:18px; font-weight:700; font-size:0.95em; display:flex; align-items:center; box-shadow:0 2px 6px var(--shadow); }
-    .balance img { width:18px; height:18px; margin-right:6px; }
-    .profile-section { padding:14px 16px; flex-shrink:0; }
-    .profile-card { background:var(--card); border-radius:18px; padding:14px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 4px 12px var(--shadow); }
+    .header { padding:10px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; flex-shrink:0; }
+    .header-title { font-size:1.4em; font-weight:700; }
+    .balances { display:flex; gap:8px; }
+    .balance { background:var(--card); padding:5px 10px; border-radius:16px; font-size:0.9em; font-weight:600; display:flex; align-items:center; }
+    .balance img { width:16px; height:16px; margin-right:5px; }
+    .profile-section { padding:12px 14px; flex-shrink:0; }
+    .profile-card { background:var(--card); border-radius:16px; padding:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
-    .avatar { width:52px; height:52px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
+    .avatar { width:48px; height:48px; border-radius:50%; margin-right:10px; flex-shrink:0; }
     .user-details { min-width:0; flex:1; }
-    .username { font-size:1.1em; font-weight:600; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .wallet-address { color:var(--text-secondary); font-size:0.85em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
-    #connect-container { background:var(--card); padding:8px 14px; border-radius:14px; font-size:0.9em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); }
-    .payments { margin-top:16px; display:flex; flex-direction:column; gap:10px; }
-    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.1em; font-weight:600; width:100%; cursor:pointer; box-shadow:0 4px 12px var(--shadow); transition:transform 0.2s; }
-    .green-btn:active { transform:scale(0.98); }
-    .menu { padding:0 16px; margin-top:8px; flex-shrink:0; }
-    .menu-item { display:flex; align-items:center; justify-content:space-between; padding:14px; background:var(--card); border-radius:16px; margin-bottom:10px; cursor:pointer; box-shadow:0 2px 8px var(--shadow); transition:transform 0.2s; }
-    .menu-item:active { transform:scale(0.98); }
-    .menu-item-left { display:flex; align-items:center; min-width:0; }
-    .menu-icon { font-size:1.4em; margin-right:12px; }
-    .referrals { padding:14px 16px; flex-shrink:0; }
-    .ref-title { font-size:1.2em; font-weight:700; margin-bottom:12px; }
-    .ref-stats { display:flex; justify-content:space-around; margin-bottom:16px; }
-    .ref-stat { text-align:center; flex:1; }
-    .ref-stat strong { font-size:1.5em; display:block; background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-weight:700; }
-    .ref-stat div { font-size:0.85em; color:var(--text-secondary); margin-top:4px; }
-    .ref-card { background:var(--card); border-radius:16px; padding:14px; text-align:center; margin-bottom:16px; box-shadow:0 2px 8px var(--shadow); font-size:0.95em; line-height:1.4; }
-    .invite-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.15em; font-weight:600; width:100%; cursor:pointer; box-shadow:0 4px 12px var(--shadow); transition:transform 0.2s; }
-    .invite-btn:active { transform:scale(0.98); }
-    .bottom-nav { position:sticky; bottom:0; background:var(--bg); display:flex; justify-content:space-around; padding:10px 0 20px 0; border-top:1px solid #1e2030; z-index:10; flex-shrink:0; }
-    .nav-item { text-align:center; color:var(--text-secondary); font-size:0.9em; cursor:pointer; padding:8px; transition:color 0.2s; }
-    .nav-item.active { color:#fff; font-weight:700; }
-    #blocked { display:none; text-align:center; padding:50px; background:var(--bg); min-height:100vh; color:var(--text); }
+    .username { font-size:1em; font-weight:500; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .wallet-address { color:var(--text-secondary); font-size:0.8em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+    /* Скрываем стрелку ▼ от TonConnect */
+    #connect-container ::slotted([part="arrow"]) { display:none !important; }
+    #connect-container { background:var(--card); padding:6px 12px; border-radius:12px; font-size:0.85em; font-weight:600; color:var(--text); }
+    .payments { margin-top:12px; gap:8px; display:flex; flex-direction:column; }
+    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); padding:12px; border-radius:14px; font-size:1em; font-weight:600; }
+    .menu { padding:0 14px; margin-top:6px; }
+    .menu-item { padding:12px; border-radius:14px; margin-bottom:8px; background:var(--card); }
+    .referrals { padding:12px 14px; }
+    .ref-title { font-size:1.1em; margin-bottom:10px; }
+    .ref-stats { margin-bottom:12px; }
+    .ref-stat strong { font-size:1.4em; }
+    .ref-card { padding:12px; border-radius:14px; font-size:0.9em; margin-bottom:12px; }
+    .invite-btn { padding:12px; border-radius:14px; font-size:1.05em; }
+    .bottom-nav { padding:8px 0 18px 0; border-top:1px solid #1e2030; }
+    .nav-item { font-size:0.85em; padding:6px; }
+    .section { display:none; text-align:center; padding:40px 20px; }
+    .section.active { display:block; }
+    .section img { width:200px; height:200px; margin:20px auto; }
+    .section p { font-size:1.2em; color:var(--text-secondary); }
+    #profile-section { display:block; } /* Профиль по умолчанию */
   </style>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
@@ -62,80 +58,72 @@
     <div class="header">
       <div class="header-title">Mr. Scam Game 😈</div>
       <div class="balances">
-        <div class="balance"><img src="https://telegram.org/img/stars/logo_stars.png" alt="⭐"><span id="stars-balance">0</span></div>
-        <div class="balance"><img src="https://ton.org/download/ton_symbol.png" alt="TON"><span id="ton-balance">0.00</span></div>
+        <div class="balance"><img src="https://telegram.org/img/stars/logo_stars.png"><span id="stars-balance">0</span></div>
+        <div class="balance"><img src="https://ton.org/download/ton_symbol.png"><span id="ton-balance">0.00</span></div>
       </div>
     </div>
 
     <div class="main-content">
-      <div class="profile-section">
-        <div class="profile-card">
-          <div class="profile-info">
-            <img id="user-avatar" src="" class="avatar">
-            <div class="user-details">
-              <div id="username" class="username">Загрузка...</div>
-              <div id="wallet-address" class="wallet-address">Not connected</div>
+      <!-- Профиль -->
+      <div id="profile-section" class="section active">
+        <div class="profile-section">
+          <div class="profile-card">
+            <div class="profile-info">
+              <img id="user-avatar" src="" class="avatar">
+              <div class="user-details">
+                <div id="username" class="username">Загрузка...</div>
+                <div id="wallet-address" class="wallet-address">Not connected</div>
+              </div>
             </div>
+            <div id="connect-container">Connect</div>
           </div>
-          <div id="connect-container">Connect</div>
+
+          <div class="payments">
+            <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON</button>
+            <button id="pay-stars-btn" class="green-btn">⭐ 1 Telegram Star</button>
+          </div>
         </div>
 
-        <div class="payments">
-          <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
-          <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
+        <div class="menu">
+          <div class="menu-item" id="news-btn"><div class="menu-item-left"><span class="menu-icon">📰</span> News</div>></div>
+          <div class="menu-item" id="support-btn"><div class="menu-item-left"><span class="menu-icon">💬</span> Support</div>></div>
+          <div class="menu-item" id="settings-btn"><div class="menu-item-left"><span class="menu-icon">⚙️</span> Settings</div>></div>
+        </div>
+
+        <div class="referrals">
+          <div class="ref-title">Referrals</div>
+          <div class="ref-stats">
+            <div class="ref-stat"><strong id="invited-friends">0</strong><div>Invited friends</div></div>
+            <div class="ref-stat"><strong id="ref-reward">0 TON</strong><div>Your reward</div></div>
+          </div>
+          <div class="ref-card"><strong>You earn 1.5%</strong><br>from friends activity</div>
+          <button id="invite-btn" class="invite-btn">Invite friends ⭐ +25</button>
         </div>
       </div>
 
-      <div class="menu">
-        <div class="menu-item" id="news-btn">
-          <div class="menu-item-left"><span class="menu-icon">📰</span> News</div>
-          <span>></span>
-        </div>
-        <div class="menu-item" id="support-btn">
-          <div class="menu-item-left"><span class="menu-icon">💬</span> Support</div>
-          <span>></span>
-        </div>
-        <div class="menu-item" id="settings-btn">
-          <div class="menu-item-left"><span class="menu-icon">⚙️</span> Settings</div>
-          <span>></span>
-        </div>
+      <!-- Другие разделы -->
+      <div id="play-section" class="section">
+        <img src="/stickers/2_5361597813799030874.tgs" alt="Sticker">
+        <p>Здесь идёт разработка 😈</p>
       </div>
-
-      <div class="referrals">
-        <div class="ref-title">Referrals</div>
-        <div class="ref-stats">
-          <div class="ref-stat">
-            <strong id="invited-friends">0</strong>
-            <div>Invited friends</div>
-          </div>
-          <div class="ref-stat">
-            <strong id="ref-reward">0 TON</strong>
-            <div>Your reward</div>
-          </div>
-        </div>
-
-        <div class="ref-card">
-          <strong>You earn 1.5%</strong><br>from friends and their activity
-        </div>
-
-        <button id="invite-btn" class="invite-btn">Invite friends ⭐ +25</button>
+      <div id="staking-section" class="section">
+        <img src="/stickers/2_5361597813799030875.tgs" alt="Sticker">
+        <p>Здесь идёт разработка 😈</p>
+      </div>
+      <div id="tasks-section" class="section">
+        <img src="/stickers/2_5361597813799030876.tgs" alt="Sticker">
+        <p>Здесь идёт разработка 😈</p>
       </div>
     </div>
 
     <div class="bottom-nav">
-      <div class="nav-item" id="market-btn">Market</div>
-      <div class="nav-item" id="events-btn">Events</div>
-      <div class="nav-item active" id="profile-btn">Profile</div>
-      <div class="nav-item" id="giveaway-btn">Giveaway</div>
+      <div class="nav-item" id="market-btn">Играть</div>
+      <div class="nav-item" id="events-btn">Стейкинг</div>
+      <div class="nav-item active" id="profile-btn">Профиль</div>
+      <div class="nav-item" id="giveaway-btn">Задания</div>
     </div>
   </div>
 
-  <div id="blocked">
-    <h1>🚫 Доступ запрещён</h1>
-    <p>Mr. Scam Game работает только внутри Telegram.</p>
-    <p>Откройте через бота 😈</p>
-  </div>
-
-  <script src="/script.js?v=19"></script>
+  <script src="/script.js?v=20"></script>
 </body>
 </html>
