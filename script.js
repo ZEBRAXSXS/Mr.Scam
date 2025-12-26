@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
     actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/твой_бот_username'  // Замени на username бота, например @MrScamGame_bot
+      twaReturnUrl: 'https://t.me/твой_бот_username_bot' // Замени на username бота
     }
   });
 
@@ -33,9 +33,13 @@ window.addEventListener('load', () => {
       document.getElementById('payment-section').style.display = 'block';
     } else {
       connectedWallet = null;
-      document.getElementById('payment-section').style.display = 'none';
     }
   });
+
+  // Ручная кнопка подключения (если встроенная не появилась)
+  document.getElementById('manual-connect').onclick = () => {
+    tonConnectUI.openModal();
+  };
 
   document.getElementById('payment-btn').onclick = async () => {
     if (!connectedWallet) {
@@ -59,15 +63,15 @@ window.addEventListener('load', () => {
     }
   };
 
-  // Кнопка оплаты 10 Telegram Stars
+  // Оплата 10 Telegram Stars
   document.getElementById('pay-stars-btn').onclick = () => {
     tg.sendInvoice(
-      'Премиум буст', // title
-      'Получи буст и бонусы за 10 Telegram Stars', // description
-      'payload_10_stars', // payload
-      '', // provider_token пусто для Stars
-      'XTR', // currency = Telegram Stars
-      [{ label: '10 Stars', amount: 1000 }] // 10 Stars = 1000 cents (1 Star = 100 cents)
+      'Буст в Mr. Scam',
+      'Получи буст за 10 Telegram Stars',
+      'payload_10_stars',
+      '', // пусто для Stars
+      'XTR',
+      [{ label: '10 Stars', amount: 1000 }] // 10 Stars = 1000 cents
     );
   };
 });
