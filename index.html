@@ -2,21 +2,23 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mr. Scam Game</title>
 <style>
 body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; text-align:center; padding:12px; font-size:1.6em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-.container { flex:1; padding:10px; display:flex; flex-direction:column; justify-content:center; align-items:center; }
-.card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08); width:92%; max-width:400px; text-align:center; }
-#username { font-size:1.5em; font-weight:bold; margin:10px 0; }
-#connect-container { margin:20px 0; }
-.balance { font-size:1.8em; font-weight:bold; color:#4caf50; margin:15px 0; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:16px; font-size:1.4em; border-radius:30px; cursor:pointer; width:100%; box-shadow:0 4px 10px rgba(76,175,80,0.3); margin:20px 0; }
+.header { background:#fff; text-align:center; padding:15px; font-size:1.8em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.profile-info { display:flex; justify-content:space-between; align-items:center; padding:20px; background:#fff; border-radius:16px; margin:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
+.left-info { display:flex; flex-direction:column; align-items:flex-start; }
+#username { font-size:1.4em; font-weight:bold; color:#000; }
+.balance { font-size:1.6em; font-weight:bold; color:#4caf50; margin-top:10px; }
+.right-info { display:flex; flex-direction:column; align-items:flex-end; }
+#connect-container { margin-bottom:10px; }
+.container { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+#payment-section { display:none; width:90%; margin:20px 0; }
+.green-btn { background:#4caf50; color:#fff; border:none; padding:18px; font-size:1.6em; border-radius:40px; cursor:pointer; width:100%; box-shadow:0 6px 15px rgba(76,175,80,0.3); }
 .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.08); font-size:0.85em; z-index:1000; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
-#payment-section { display:none; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -27,13 +29,18 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
 <div class="header">MR. SCAM GAME</div>
 
 <div class="container">
-  <div class="card">
-    <div id="username">Профиль: Загрузка...</div>
-    <div id="connect-container"></div>
-    <div class="balance">Баланс: 0.00 TON</div>
-    <div id="payment-section">
-      <button class="green-btn">💸 Внести 1 TON в игру</button>
+  <div class="profile-info">
+    <div class="left-info">
+      <div id="username">Профиль: Загрузка...</div>
+      <div class="balance">Баланс: 0.00 TON</div>
     </div>
+    <div class="right-info">
+      <div id="connect-container"></div>
+    </div>
+  </div>
+
+  <div id="payment-section">
+    <button class="green-btn">💸 Внести 1 TON в игру</button>
   </div>
 </div>
 
@@ -44,6 +51,6 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
   <div class="nav-item">Стейкинг</div>
 </div>
 
-<script src="/script.js?v=35"></script>
+<script src="/script.js?v=36"></script>
 </body>
 </html>

