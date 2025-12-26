@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
     actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // Замени на username твоего бота
+      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на юзернейм бота!
     }
   });
 
@@ -47,27 +47,41 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '1000000000' // 0.3 TON
+        amount: '1000000000' // 1 TON
       }]
     };
 
     try {
       await tonConnectUI.sendTransaction(transaction);
-      alert('✅ 0.3 TON успешно внесено!');
+      alert('✅ 1 TON успешно внесено!');
     } catch (e) {
       alert('❌ Ошибка или отменено');
     }
   };
 
-  // Отдельная кнопка Stars (всегда доступна)
+  // Оплата 10 Telegram Stars (через backend)
   document.getElementById('pay-stars-btn').onclick = () => {
-    tg.sendInvoice(
-      'Поддержка разработчику',
-      'Спасибо за поддержку Mr. Scam Game! 10 Telegram Stars',
-      'payload_support_10_stars',
-      '', // пусто для Stars
-      'XTR',
-      [{ label: '10 Stars', amount: 1000 }]
-    );
+    fetch('https://mr-scam.vercel.app/api/create-stars-invoice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: tg.initDataUnsafe.user.id,
+        title: 'Поддержка разработчику',
+        description: '10 Telegram Stars для Mr. Scam',
+        payload: 'stars_support_10',
+        amount: 10
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.invoice_link) {
+        tg.openInvoice(data.invoice_link, (status) => {
+          if (status === 'paid') alert('✅ Спасибо за поддержку!');
+        });
+      } else {
+        alert('❌ Ошибка создания инвойса');
+      }
+    })
+    .catch(e => alert('❌ Ошибка: ' + e.message));
   };
 });
