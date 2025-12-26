@@ -6,19 +6,20 @@
 <title>Mr. Scam Game</title>
 <style>
 body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-.left-side { display:flex; align-items:center; }
-#username { font-size:1.5em; font-weight:bold; color:#000; margin-left:10px; }
-.right-side { display:flex; align-items:center; gap:15px; }
-.balance { font-size:1.1em; color:#4caf50; font-weight:bold; }
-.wallet-btn { min-width:120px; } /* Для TonConnect кнопки */
-.invite-btn { background:#4caf50; color:#fff; border:none; width:40px; height:40px; border-radius:50%; font-size:1.4em; cursor:pointer; box-shadow:0 4px 8px rgba(76,175,80,0.3); }
-.container { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; }
-#payment-section { display:none; width:90%; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:18px; font-size:1.6em; border-radius:40px; cursor:pointer; width:100%; box-shadow:0 6px 15px rgba(76,175,80,0.3); }
-.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.08); font-size:0.85em; z-index:1000; }
+.header { background:#fff; text-align:center; padding:15px; font-size:1.8em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.container { flex:1; padding:10px; overflow-y:auto; }
+.card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:10px; text-align:center; }
+#username { font-size:1.5em; font-weight:bold; margin:10px 0; }
+#connect-container { margin:20px 0; }
+.balance-card { font-size:1.2em; margin:15px 0; }
+.balance { font-size:2em; font-weight:bold; color:#4caf50; margin:10px 0; }
+.referral { font-size:1.1em; margin:15px 0; }
+.referral-link { color:#4caf50; word-break:break-all; margin:10px 0; font-size:1em; }
+.green-btn { background:#4caf50; color:#fff; border:none; padding:14px 30px; font-size:1.3em; border-radius:30px; cursor:pointer; width:85%; margin:20px auto; display:block; box-shadow:0 4px 10px rgba(76,175,80,0.3); }
+.bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.08); font-size:0.85em; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
+#payment-section { display:none; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -26,19 +27,27 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
 </head>
 <body>
 
-<div class="header">
-  <div class="left-side">
-    <div class="green-circle" style="width:36px; height:36px; background:#4caf50; border-radius:50%;"></div>
-    <div id="username">Загрузка...</div>
-  </div>
-  <div class="right-side">
-    <div class="balance">Баланс: 0.00 TON</div>
-    <div id="connect-container" class="wallet-btn"></div>
-    <button class="invite-btn">👥</button>
-  </div>
-</div>
+<div class="header">MR. SCAM GAME</div>
 
 <div class="container">
+  <div class="card">
+    <div id="username">Профиль: Загрузка...</div>
+    <div id="connect-container"></div>
+  </div>
+
+  <div class="card balance-card">
+    <h2>Баланс</h2>
+    <div class="balance">0.00 TON</div>
+  </div>
+
+  <div class="card referral">
+    <h2>Реферальная система</h2>
+    <p>Приглашайте друзей и получайте бонусы!</p>
+    <p>Ваша ссылка:</p>
+    <div id="referral-link" class="referral-link">Загрузка...</div>
+    <p>Рефералов: 0</p>
+  </div>
+
   <div id="payment-section">
     <button class="green-btn">💸 Внести 1 TON в игру</button>
   </div>
@@ -51,6 +60,6 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
   <div class="nav-item">Стейкинг</div>
 </div>
 
-<script src="/script.js?v=33"></script>
+<script src="/script.js?v=29"></script>
 </body>
 </html>
