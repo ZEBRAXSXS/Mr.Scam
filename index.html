@@ -24,7 +24,8 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 #payment-section { display:none; }
 
 /* Блокировка для браузера */
-#blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
+#blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#f8f9fa; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+.telegram-btn { background:#0088cc; color:#fff; border:none; padding:18px 40px; font-size:1.6em; border-radius:12px; cursor:pointer; text-decoration:none; margin-top:30px; box-shadow:0 6px 12px rgba(0,136,204,0.3); }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -67,13 +68,13 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
   </div>
 </div>
 
-<!-- Сообщение для браузера -->
+<!-- Блокировка для браузера с кнопкой -->
 <div id="blocked">
   <h1>🚫 Доступ запрещён</h1>
   <p>Mr. Scam Game работает только внутри Telegram.</p>
-  <p>Откройте через бота и наслаждайтесь игрой 😈</p>
+  <a href="https://t.me/MrScam_bot" class="telegram-btn">Открыть в Telegram</a>
 </div>
 
-<script src="/script.js?v=11"></script>
+<script src="/script.js?v=18"></script>
 </body>
 </html>
