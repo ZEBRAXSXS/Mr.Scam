@@ -59,28 +59,41 @@ window.addEventListener('load', () => {
     }
   };
 
-  // Новая оплата Stars — напрямую через WebApp (без backend, без промо-страниц)
+  // Рабочая оплата Stars через backend (теперь работает после активации в DurgerKing)
   document.getElementById('pay-stars-btn').onclick = () => {
-    tg.sendInvoice(
-      'support_1_star',                          // payload (уникальный)
-      'Поддержка разработчику',                  // title
-      'Спасибо за 1 Telegram Star! ❤️',          // description
-      'XTR',                                     // currency
-      [{ label: 'Поддержка', amount: 1 }],       // цена: 1 Star
-      {                                      // опции
-        need_name: false,
-        need_phone_number: false,
-        need_email: false,
-        need_shipping_address: false,
-        is_flexible: false
-      },
-      (invoiceStatus) => {
-        if (invoiceStatus === 'paid') {
-          alert('✅ Спасибо огромное за поддержку! ❤️');
-        } else if (invoiceStatus === 'cancelled') {
-          alert('Оплата отменена');
-        }
+    fetch('https://mr-scam.vercel.app/api/create-stars-invoice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: 'Поддержка разработчику',
+        description: '1 Telegram Star для Mr. Scam Game ❤️',
+        payload: 'stars_support_1',
+        amount: 1
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.invoice_link) {
+        tg.openInvoice(data.invoice_link, (status) => {
+          if (status === 'paid') {
+            alert('✅ Спасибо огромное за поддержку! ❤️');
+          } else if (status === 'cancelled') {
+            alert('Оплата отменена');
+          }
+        });
+      } else {
+        alert('❌ Ошибка: ' + (data.error || 'неизвестно'));
       }
-    );
+    })
+    .catch(err => {
+      alert('❌ Ошибка сети: ' + err.message);
+    });
   };
+
+  // Дополнительный алерт при закрытии инвойса
+  tg.onEvent('invoiceClosed', (event) => {
+    if (event.status === 'paid') {
+      alert('✅ Спасибо огромное за поддержку! ❤️');
+    }
+  });
 });
