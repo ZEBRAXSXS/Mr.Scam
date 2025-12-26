@@ -32,7 +32,6 @@ window.addEventListener('load', () => {
   tonConnectUI.onStatusChange(wallet => {
     if (wallet) {
       connectedWallet = wallet.account.address;
-      // Чистый короткий адрес без префикса и лишних символов
       const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
       const shortAddr = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
       document.getElementById('wallet-address').textContent = shortAddr;
@@ -93,6 +92,16 @@ window.addEventListener('load', () => {
     })
     .catch(e => alert('❌ Ошибка: ' + e.message));
   };
+
+  // Переключение табов в профиле (Стикеры / Подарки)
+  document.querySelectorAll('.profile-tab').forEach(tab => {
+    tab.onclick = () => {
+      document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.profile-tab-content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    };
+  });
 
   // Навигация по разделам
   const sections = {

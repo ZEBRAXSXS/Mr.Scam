@@ -32,10 +32,20 @@
     .user-details { min-width:0; flex:1; }
     .username { font-size:1.1em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .wallet-address { color:var(--text-sec); font-size:0.85em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
-    #connect-container { background:var(--card); padding:8px 16px; border-radius:14px; font-size:0.95em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); }
-    .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
+    #connect-container { background:transparent; padding:0; border:none; box-shadow:none; }
+    #connect-container * { background:transparent !important; border:none !important; box-shadow:none !important; }
+    .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
-    .profile-sticker { width:220px; height:220px; margin:20px auto; }
+    .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
+    .profile-tab { background:var(--card); padding:10px 20px; border-radius:25px; font-weight:600; flex:1; text-align:center; max-width:140px; }
+    .profile-tab.active { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; }
+    .profile-tab-content { display:none; text-align:center; }
+    .profile-tab-content.active { display:block; }
+    .profile-tab-content img { width:180px; height:180px; margin:20px auto; }
+    .transactions { margin-top:30px; padding:16px; background:var(--card); border-radius:18px; box-shadow:0 4px 12px var(--shadow); }
+    .transactions-title { font-size:1.2em; font-weight:600; margin-bottom:12px; text-align:left; }
+    .transaction-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #1e2030; color:var(--text-sec); font-size:0.9em; }
+    .transaction-item:last-child { border-bottom:none; }
     .section-sticker { width:220px; height:220px; margin:40px auto 20px; }
     .section-text { font-size:1.3em; color:var(--text-sec); }
     .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--bg); display:flex; justify-content:space-around; padding:12px 0 24px 0; border-top:1px solid #1e2030; z-index:10; }
@@ -83,7 +93,36 @@
           <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
         </div>
 
-        <lottie-player src="/stickers/2_5361597813799030881.tgs" background="transparent" speed="1" class="profile-sticker" loop autoplay></lottie-player>
+        <div class="profile-tabs">
+          <div class="profile-tab active" data-tab="stickers-tab">Стикеры</div>
+          <div class="profile-tab" data-tab="gifts-tab">Подарки</div>
+        </div>
+
+        <div id="stickers-tab" class="profile-tab-content active">
+          <lottie-player src="/stickers/2_5361597813799030874.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
+          <p>Ваши стикеры 😈</p>
+        </div>
+
+        <div id="gifts-tab" class="profile-tab-content">
+          <lottie-player src="/stickers/2_5361597813799030875.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
+          <p>Ваши подарки 😈</p>
+        </div>
+
+        <div class="transactions">
+          <div class="transactions-title">История транзакций</div>
+          <div class="transaction-item">
+            <span>+0.3 TON</span>
+            <span>26.12.2025</span>
+          </div>
+          <div class="transaction-item">
+            <span>+1 Star</span>
+            <span>26.12.2025</span>
+          </div>
+          <div class="transaction-item">
+            <span>Нет транзакций</span>
+            <span>-</span>
+          </div>
+        </div>
       </div>
 
       <!-- Играть -->
@@ -131,6 +170,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=27"></script>
+  <script src="/script.js?v=28"></script>
 </body>
 </html>
