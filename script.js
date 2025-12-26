@@ -45,19 +45,19 @@ window.addEventListener('load', () => {
       }
 
       const transaction = {
-        validUntil: Math.floor(Date.now() / 1000) + 360, // 6 минут
+        validUntil: Math.floor(Date.now() / 1000) + 600,
         messages: [{
           address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-          amount: '1000000000' // 1 TON в нанотонах
+          amount: '1000000000' // 1 TON
         }]
       };
 
       try {
-        const result = await tonConnectUI.sendTransaction(transaction);
-        alert('✅ 1 TON успешно отправлено! Транзакция: ' + result);
+        await tonConnectUI.sendTransaction(transaction);
+        alert('✅ 1 TON успешно отправлено на твой адрес!');
       } catch (e) {
         console.error(e);
-        alert('❌ Ошибка отправки: ' + (e.message || 'Отменено'));
+        alert('❌ Ошибка или отменено пользователем');
       }
     };
   }
