@@ -16,18 +16,23 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 .stat strong { display:block; font-size:1.6em; color:#4caf50; }
 .green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
 .tabs { display:flex; justify-content:center; margin:30px 0; }
-.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
+.tab { background:#e0e0f0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
 .tab.active { background:#4caf50; color:#fff; }
 .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
 #payment-section { display:none; }
 
-/* Блокировка для браузера — компактная кнопка */
-#blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#f8f9fa; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+/* Блокировка для браузера — адаптивная кнопка */
+#blocked { display:none; text-align:center; padding:40px 20px; font-size:1.4em; color:#333; background:#f8f9fa; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; }
 #blocked h1 { font-size:2.2em; margin-bottom:20px; }
-#blocked p { font-size:1.2em; margin:15px 0; }
-.telegram-btn { background:#0088cc; color:#fff; border:none; padding:14px 32px; font-size:1.3em; border-radius:10px; cursor:pointer; text-decoration:none; margin-top:30px; box-shadow:0 4px 10px rgba(0,136,204,0.3); }
+#blocked p { font-size:1.1em; margin:15px 0; max-width:80%; }
+.telegram-btn { background:#0088cc; color:#fff; border:none; padding:14px 28px; font-size:1.4em; border-radius:12px; cursor:pointer; text-decoration:none; margin-top:30px; box-shadow:0 4px 10px rgba(0,136,204,0.3); white-space:nowrap; }
+@media (max-width: 480px) {
+  #blocked h1 { font-size:1.8em; }
+  #blocked p { font-size:1em; }
+  .telegram-btn { padding:12px 24px; font-size:1.2em; }
+}
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -70,13 +75,13 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
   </div>
 </div>
 
-<!-- Блокировка для браузера с компактной кнопкой -->
+<!-- Блокировка для браузера с адаптивной кнопкой -->
 <div id="blocked">
   <h1>🚫 Доступ запрещён</h1>
   <p>Mr. Scam Game работает только внутри Telegram.</p>
   <a href="https://t.me/MrScam_bot" class="telegram-btn">Открыть в Telegram</a>
 </div>
 
-<script src="/script.js?v=19"></script>
+<script src="/script.js?v=20"></script>
 </body>
 </html>
