@@ -6,24 +6,20 @@
 <title>Mr. Scam Game</title>
 <style>
 body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-.green-circle { width:36px; height:36px; background:#4caf50; border-radius:50%; }
-#username { font-size:1.5em; font-weight:bold; color:#000; margin-left:10px; max-width:60%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-#connect-container { margin-right:8px; }
-.stats { display:flex; justify-content:space-around; margin:16px 16px 8px; }
-.stat { background:#f0f0f0; padding:12px 8px; border-radius:15px; flex:1; margin:0 6px; text-align:center; font-size:0.9em; box-shadow:0 2px 6px rgba(0,0,0,0.05); }
-.stat strong { display:block; font-size:1.6em; color:#4caf50; margin-bottom:4px; }
-#payment-section { display:none; margin:20px; text-align:center; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:16px; font-size:1.4em; border-radius:30px; cursor:pointer; width:90%; box-shadow:0 4px 10px rgba(76,175,80,0.3); }
-.bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.08); font-size:0.85em; }
-.nav-item { color:#888; text-align:center; }
-.nav-item.active { color:#4caf50; font-weight:bold; }
-
-/* Блокировка для браузера — полный экран, ничего не видно при прокрутке */
-#blocked { display:none; text-align:center; padding:40px 20px; background:#f5f5f5; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; position:fixed; top:0; left:0; width:100%; z-index:9999; }
-#blocked h1 { font-size:2em; color:#333; margin-bottom:20px; }
-#blocked p { font-size:1.2em; color:#555; margin-bottom:30px; max-width:80%; }
-.telegram-btn { background:#0088cc; color:#fff; border:none; padding:14px 36px; font-size:1.4em; border-radius:12px; cursor:pointer; text-decoration:none; box-shadow:0 4px 10px rgba(0,136,204,0.3); }
+.header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+.container { flex:1; padding:20px; text-align:center; overflow-y:auto; }
+.section { display:none; }
+.section.active { display:block; }
+.card { background:#fff; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px 10px; text-align:center; }
+#username { font-size:1.6em; font-weight:bold; margin-bottom:30px; }
+#connect-container { margin:40px 0; }
+.green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
+.referral { margin:30px 0; font-size:1.2em; }
+.referral-link { color:#4caf50; word-break:break-all; margin:15px 0; }
+.bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 10px rgba(0,0,0,0.1); font-size:0.9em; }
+.nav-item { color:#888; text-align:center; padding:8px; }
+.nav-item.active { color:#4caf50; font-weight:bold; border-top:3px solid #4caf50; }
+.placeholder { font-size:1.4em; color:#888; margin:50px 0; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -31,41 +27,64 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
 </head>
 <body>
 
-<!-- Блокировка для браузера — полный экран -->
-<div id="blocked">
-  <h1>🚫 Доступ запрещён</h1>
-  <p>Mr. Scam Game работает только внутри Telegram.</p>
-  <a href="https://t.me/MrScam_bot" class="telegram-btn">Открыть в Telegram</a>
-</div>
+<div class="header">MR. SCAM GAME</div>
 
-<!-- Основной контент Mini App -->
-<div id="app">
-  <div class="header">
-    <div style="display:flex; align-items:center;">
-      <div class="green-circle"></div>
-      <div id="username">Загрузка...</div>
+<div class="container">
+
+  <!-- Раздел Профиль (основной) -->
+  <div id="profile" class="section active">
+    <div class="card">
+      <div id="username">Профиль: Загрузка...</div>
+      <div id="connect-container"></div>
     </div>
-    <div id="connect-container"></div>
+
+    <div class="card">
+      <h2>Баланс</h2>
+      <p><strong>0.00 TON</strong></p>
+    </div>
+
+    <div class="card referral">
+      <h2>Реферальная система</h2>
+      <p>Приглашайте друзей и получайте бонусы!</p>
+      <p>Ваша ссылка:</p>
+      <div id="referral-link" class="referral-link">Загрузка...</div>
+      <p>Рефералов: 0</p>
+    </div>
+
+    <div class="card">
+      <h2>Подарки и стикеры</h2>
+      <p>В разработке...</p>
+    </div>
+
+    <div id="payment-section">
+      <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
+    </div>
   </div>
 
-  <div class="stats">
-    <div class="stat"><strong>0.00</strong> Wallet</div>
-    <div class="stat"><strong>0</strong> Volume</div>
-    <div class="stat"><strong>0</strong> Referrals</div>
+  <!-- Раздел Игра -->
+  <div id="game" class="section">
+    <div class="placeholder">Игра в разработке...</div>
   </div>
 
-  <div id="payment-section">
-    <button class="green-btn">💸 Внести 1 TON в игру</button>
+  <!-- Раздел Задания -->
+  <div id="tasks" class="section">
+    <div class="placeholder">Задания в разработке...</div>
   </div>
 
-  <div class="bottom-nav">
-    <div class="nav-item">Market</div>
-    <div class="nav-item">Events</div>
-    <div class="nav-item active">Profile</div>
-    <div class="nav-item">Giveaway</div>
+  <!-- Раздел Стейкинг -->
+  <div id="staking" class="section">
+    <div class="placeholder">Стейкинг в разработке...</div>
   </div>
+
 </div>
 
-<script src="/script.js?v=27"></script>
+<div class="bottom-nav">
+  <div class="nav-item" data-section="game">Игра</div>
+  <div class="nav-item" data-section="tasks">Задания</div>
+  <div class="nav-item active" data-section="profile">Профиль</div>
+  <div class="nav-item" data-section="staking">Стейкинг</div>
+</div>
+
+<script src="/script.js?v=28"></script>
 </body>
 </html>
