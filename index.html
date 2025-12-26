@@ -6,14 +6,16 @@
 <title>Mr. Scam Game</title>
 <style>
 body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; text-align:center; padding:15px; font-size:1.8em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-.profile-header { display:flex; justify-content:space-between; align-items:center; padding:20px; background:#fff; border-radius:16px; margin:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
-#username { font-size:1.5em; font-weight:bold; color:#000; }
-.balance { font-size:1.2em; color:#4caf50; font-weight:bold; }
-#connect-container { margin:40px 0; text-align:center; } /* Кнопка подключения большая по центру */
-.invite-btn { background:#4caf50; color:#fff; border:none; width:60px; height:60px; border-radius:50%; font-size:2em; cursor:pointer; margin:40px auto; display:block; box-shadow:0 4px 10px rgba(76,175,80,0.3); }
-#payment-section { display:none; text-align:center; margin:30px 10px; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:16px; font-size:1.4em; border-radius:30px; cursor:pointer; width:90%; box-shadow:0 4px 10px rgba(76,175,80,0.3); }
+.header { background:#fff; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.left-side { display:flex; align-items:center; }
+#username { font-size:1.5em; font-weight:bold; color:#000; margin-left:10px; }
+.right-side { display:flex; align-items:center; gap:15px; }
+.balance { font-size:1.1em; color:#4caf50; font-weight:bold; }
+.wallet-btn { min-width:120px; } /* Для TonConnect кнопки */
+.invite-btn { background:#4caf50; color:#fff; border:none; width:40px; height:40px; border-radius:50%; font-size:1.4em; cursor:pointer; box-shadow:0 4px 8px rgba(76,175,80,0.3); }
+.container { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; }
+#payment-section { display:none; width:90%; }
+.green-btn { background:#4caf50; color:#fff; border:none; padding:18px; font-size:1.6em; border-radius:40px; cursor:pointer; width:100%; box-shadow:0 6px 15px rgba(76,175,80,0.3); }
 .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.08); font-size:0.85em; z-index:1000; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
@@ -24,18 +26,19 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
 </head>
 <body>
 
-<div class="header">MR. SCAM GAME</div>
+<div class="header">
+  <div class="left-side">
+    <div class="green-circle" style="width:36px; height:36px; background:#4caf50; border-radius:50%;"></div>
+    <div id="username">Загрузка...</div>
+  </div>
+  <div class="right-side">
+    <div class="balance">Баланс: 0.00 TON</div>
+    <div id="connect-container" class="wallet-btn"></div>
+    <button class="invite-btn">👥</button>
+  </div>
+</div>
 
 <div class="container">
-  <div class="profile-header">
-    <div id="username">Профиль: Загрузка...</div>
-    <div class="balance">Баланс: 0.00 TON</div>
-  </div>
-
-  <div id="connect-container"></div>
-
-  <button class="invite-btn">👥</button>
-
   <div id="payment-section">
     <button class="green-btn">💸 Внести 1 TON в игру</button>
   </div>
@@ -48,6 +51,6 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
   <div class="nav-item">Стейкинг</div>
 </div>
 
-<script src="/script.js?v=32"></script>
+<script src="/script.js?v=33"></script>
 </body>
 </html>
