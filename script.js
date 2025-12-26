@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
     const user = tg.initDataUnsafe.user;
     username = user.username ? '@' + user.username : user.first_name || 'User';
   }
-  usernameEl.textContent = 'Профиль: ' + username;
+  usernameEl.textContent = username;
 
   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
