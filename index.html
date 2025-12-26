@@ -26,30 +26,40 @@
     .balance img, .balance lottie-player { width:18px; height:18px; margin-right:6px; }
     .section { display:none; padding:20px; text-align:center; }
     .section.active { display:block; }
-    .profile-card { background:var(--card); border-radius:18px; padding:16px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; }
-    .profile-info { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-    .avatar { width:60px; height:60px; border-radius:50%; margin-right:14px; object-fit:cover; flex-shrink:0; }
-    .user-details { min-width:0; flex:1; }
+    .profile-card { background:var(--card); border-radius:18px; padding:16px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+    .profile-info { display:flex; align-items:center; gap:12px; flex:1; }
+    .avatar { width:60px; height:60px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+    .user-details { flex:1; min-width:0; }
+    .username-row { display:flex; align-items:center; gap:8px; }
     .username { font-size:0.95em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
-    .wallet-container { display:flex; align-items:center; gap:8px; }
-    .wallet-lottie { width:22px; height:22px; }
+    .status-dot { width:10px; height:10px; border-radius:50%; box-shadow:0 0 8px currentColor; flex-shrink:0; }
+    .status-off { background:#ff3b30; } /* красная - отключен */
+    .status-on { background:#00c853; }  /* зелёная - подключен */
+    .wallet-lottie { width:24px; height:24px; display:none; margin-left:8px; }
+    .wallet-lottie.connected { display:inline-block; }
     #connect-container { 
-      min-width:110px; 
-      background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); 
-      border-radius:14px; 
-      padding:8px 12px; 
-      font-size:0.85em; 
-      font-weight:600; 
-      color:white; 
-      box-shadow:0 3px 8px var(--shadow); 
-      text-align:center; 
+      background:transparent !important; 
+      border:none !important; 
+      box-shadow:none !important; 
+      padding:0 !important; 
+      font-size:0.9em !important; 
       cursor:pointer; 
+      display:flex; 
+      align-items:center; 
     }
-    #connect-container.connected { 
-      background:linear-gradient(135deg, #00c853, #009624); 
-      font-size:0.8em; 
+    #connect-container button { 
+      background:linear-gradient(135deg, var(--accent-start), var(--accent-end)) !important; 
+      border:none !important; 
+      border-radius:14px !important; 
+      padding:8px 14px !important; 
+      color:white !important; 
+      font-weight:600 !important; 
+      box-shadow:0 3px 8px var(--shadow) !important; 
+      font-size:0.85em !important; 
     }
-    #wallet-address { font-size:0.8em; color:var(--text-sec); max-width:140px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    #connect-container.connected button { 
+      background:linear-gradient(135deg, #00c853, #009624) !important; 
+    }
     .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
     .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
@@ -99,13 +109,14 @@
           <div class="profile-info">
             <img id="user-avatar" src="" class="avatar">
             <div class="user-details">
-              <div id="username" class="username">Загрузка...</div>
+              <div class="username-row">
+                <div id="username" class="username">Загрузка...</div>
+                <span id="status-dot" class="status-dot status-off"></span>
+              </div>
             </div>
           </div>
-          <div class="wallet-container">
-            <lottie-player src="/stickers/walletton.tgs" background="transparent" speed="1" class="wallet-lottie" loop autoplay></lottie-player>
-            <div id="connect-container">Подключить кошелёк</div>
-          </div>
+          <div id="connect-container">Подключить кошелёк</div>
+          <lottie-player id="wallet-lottie" src="/stickers/walletton.tgs" background="transparent" speed="1" class="wallet-lottie" loop autoplay></lottie-player>
         </div>
 
         <div class="payments">
@@ -166,6 +177,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=30"></script>
+  <script src="/script.js?v=31"></script>
 </body>
 </html>
