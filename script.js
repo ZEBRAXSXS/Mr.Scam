@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
     actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на юзернейм бота!
+      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← ОБЯЗАТЕЛЬНО замени на свой, например https://t.me/mrscamgame_bot
     }
   });
 
@@ -47,27 +47,30 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '1000000000' // 1 TON
+        amount: '300000000' // 0.3 TON
       }]
     };
 
     try {
       await tonConnectUI.sendTransaction(transaction);
-      alert('✅ 1 TON успешно внесено!');
+      alert('✅ 0.3 TON успешно внесено!');
     } catch (e) {
-      alert('❌ Ошибка или отменено');
+      alert('❌ Транзакция отменена или ошибка');
     }
   };
 
-  // Оплата 10 Telegram Stars (через backend)
   document.getElementById('pay-stars-btn').onclick = () => {
+    if (!tg.initDataUnsafe?.user?.id) {
+      alert('Ошибка: не удалось получить ID пользователя');
+      return;
+    }
+
     fetch('https://mr-scam.vercel.app/api/create-stars-invoice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        userId: tg.initDataUnsafe.user.id,
         title: 'Поддержка разработчику',
-        description: '10 Telegram Stars для Mr. Scam',
+        description: '10 Telegram Stars для Mr. Scam Game',
         payload: 'stars_support_10',
         amount: 10
       })
@@ -76,12 +79,18 @@ window.addEventListener('load', () => {
     .then(data => {
       if (data.invoice_link) {
         tg.openInvoice(data.invoice_link, (status) => {
-          if (status === 'paid') alert('✅ Спасибо за поддержку!');
+          if (status === 'paid') {
+            alert('✅ Спасибо огромное за поддержку! ❤️');
+          } else if (status === 'cancelled') {
+            alert('Оплата отменена');
+          }
         });
       } else {
-        alert('❌ Ошибка создания инвойса');
+        alert('❌ Ошибка создания инвойса: ' + (data.error || 'неизвестно'));
       }
     })
-    .catch(e => alert('❌ Ошибка: ' + e.message));
+    .catch(err => {
+      alert('❌ Ошибка сети: ' + err.message);
+    });
   };
 });

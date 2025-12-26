@@ -1,82 +1,77 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mr. Scam Game</title>
-<style>
-body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-.header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-.container { flex:1; padding:20px; text-align:center; }
-.card { background:#fff; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px 10px; }
-#username { font-size:1.6em; font-weight:bold; margin-bottom:30px; }
-#connect-container { margin:40px 0; }
-.stats { display:flex; justify-content:space-around; margin:30px 0; }
-.stat { background:#f0f0f0; padding:12px; border-radius:12px; flex:1; margin:0 8px; text-align:center; }
-.stat strong { display:block; font-size:1.6em; color:#4caf50; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
-.tabs { display:flex; justify-content:center; margin:30px 0; }
-.tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
-.tab.active { background:#4caf50; color:#fff; }
-.bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
-.nav-item { color:#888; text-align:center; }
-.nav-item.active { color:#4caf50; font-weight:bold; }
-#payment-section { display:none; }
-
-/* Блокировка для браузера */
-#blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
-</style>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mr. Scam Game</title>
+  <style>
+    body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+    .header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    .container { flex:1; padding:20px; text-align:center; }
+    .card { background:#fff; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px 10px; }
+    #username { font-size:1.6em; font-weight:bold; margin-bottom:30px; }
+    #connect-container { margin:40px 0; }
+    .stats { display:flex; justify-content:space-around; margin:30px 0; }
+    .stat { background:#f0f0f0; padding:12px; border-radius:12px; flex:1; margin:0 8px; text-align:center; }
+    .stat strong { display:block; font-size:1.6em; color:#4caf50; }
+    .green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
+    .tabs { display:flex; justify-content:center; margin:30px 0; }
+    .tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
+    .tab.active { background:#4caf50; color:#fff; }
+    .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
+    .nav-item { color:#888; text-align:center; }
+    .nav-item.active { color:#4caf50; font-weight:bold; }
+    #payment-section { display:none; }
+    #blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
+  </style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
-<!-- Нормальный контент приложения -->
-<div id="app">
-  <div class="header">MR. SCAM GAME</div>
+  <div id="app">
+    <div class="header">MR. SCAM GAME</div>
 
-  <div class="container">
-    <div class="card">
-      <div id="username">Профиль: Загрузка...</div>
-      <div id="connect-container"></div>
+    <div class="container">
+      <div class="card">
+        <div id="username">Профиль: Загрузка...</div>
+        <div id="connect-container"></div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><strong>0.00</strong> Wallet</div>
+        <div class="stat"><strong>0</strong> Volume</div>
+        <div class="stat"><strong>0</strong> Referrals</div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active">Stickers</div>
+        <div class="tab">Gifts</div>
+        <div class="tab">+</div>
+      </div>
+
+      <div id="payment-section">
+        <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
+      </div>
+
+      <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 10 Telegram Stars (поддержка разработчику)</button>
     </div>
 
-    <div class="stats">
-      <div class="stat"><strong>0.00</strong> Wallet</div>
-      <div class="stat"><strong>0</strong> Volume</div>
-      <div class="stat"><strong>0</strong> Referrals</div>
+    <div class="bottom-nav">
+      <div class="nav-item">Market</div>
+      <div class="nav-item">Events</div>
+      <div class="nav-item active">Profile</div>
+      <div class="nav-item">Giveaway</div>
     </div>
-
-    <div class="tabs">
-      <div class="tab active">Stickers</div>
-      <div class="tab">Gifts</div>
-      <div class="tab">+</div>
-    </div>
-
-    <div id="payment-section">
-      <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
-    </div>
-
-    <!-- Добавленная кнопка Stars (всегда видна) -->
-    <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 10 Telegram Stars (поддержка разработчику)</button>
   </div>
 
-  <div class="bottom-nav">
-    <div class="nav-item">Market</div>
-    <div class="nav-item">Events</div>
-    <div class="nav-item active">Profile</div>
-    <div class="nav-item">Giveaway</div>
+  <div id="blocked">
+    <h1>🚫 Доступ запрещён</h1>
+    <p>Mr. Scam Game работает только внутри Telegram.</p>
+    <p>Откройте через бота и наслаждайтесь игрой 😈</p>
   </div>
-</div>
 
-<!-- Сообщение для браузера -->
-<div id="blocked">
-  <h1>🚫 Доступ запрещён</h1>
-  <p>Mr. Scam Game работает только внутри Telegram.</p>
-  <p>Откройте через бота и наслаждайтесь игрой 😈</p>
-</div>
-
-<script src="/script.js?v=11"></script>
+  <script src="/script.js?v=12"></script>
 </body>
 </html>
