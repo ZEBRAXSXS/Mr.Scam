@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
     actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на свой бот!
+      twaReturnUrl: 'https://t.me/mrscam_test_bot'  // Теперь правильный бот
     }
   });
 
@@ -60,11 +60,6 @@ window.addEventListener('load', () => {
   };
 
   document.getElementById('pay-stars-btn').onclick = () => {
-    if (!tg.initDataUnsafe?.user?.id) {
-      alert('Ошибка: не удалось получить ID пользователя');
-      return;
-    }
-
     fetch('https://mr-scam.vercel.app/api/create-stars-invoice', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -81,8 +76,6 @@ window.addEventListener('load', () => {
         tg.openInvoice(data.invoice_link, (status) => {
           if (status === 'paid') {
             alert('✅ Спасибо огромное за поддержку! ❤️');
-          } else if (status === 'cancelled') {
-            alert('Оплата отменена');
           }
         });
       } else {
@@ -93,4 +86,11 @@ window.addEventListener('load', () => {
       alert('❌ Ошибка сети: ' + err.message);
     });
   };
+
+  // Надёжный алерт после оплаты Stars даже в тестовой среде
+  tg.onEvent('invoiceClosed', (event) => {
+    if (event.status === 'paid') {
+      alert('✅ Спасибо огромное за поддержку! ❤️');
+    }
+  });
 });
