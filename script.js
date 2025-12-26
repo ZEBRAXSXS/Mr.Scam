@@ -44,39 +44,20 @@ window.addEventListener('load', () => {
       const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
       const shortAddr = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
 
-      if (dot) {
-        dot.classList.remove('status-off');
-        dot.classList.add('status-on');
-      }
-      if (lottie) {
-        lottie.classList.add('connected');
-      }
+      if (dot) dot.classList.remove('status-off'), dot.classList.add('status-on');
+      if (lottie) lottie.classList.add('connected');
       if (container) {
         container.classList.add('connected');
-        // Добавляем короткий адрес как текст кнопки, если его нет
-        if (!container.querySelector('.wallet-short')) {
-          const span = document.createElement('span');
-          span.className = 'wallet-short';
-          span.style.marginLeft = '8px';
-          span.style.fontSize = '0.8em';
-          span.textContent = shortAddr;
-          container.appendChild(span);
-        }
+        // Добавляем короткий адрес как текст кнопки
+        container.innerHTML = shortAddr;
       }
     } else {
       connectedWallet = null;
-      if (dot) {
-        dot.classList.remove('status-on');
-        dot.classList.add('status-off');
-      }
-      if (lottie) {
-        lottie.classList.remove('connected');
-      }
+      if (dot) dot.classList.remove('status-on'), dot.classList.add('status-off');
+      if (lottie) lottie.classList.remove('connected');
       if (container) {
         container.classList.remove('connected');
-        // Удаляем текст адреса при отключении
-        const shortSpan = container.querySelector('.wallet-short');
-        if (shortSpan) shortSpan.remove();
+        container.innerHTML = ''; // чистим кнопку
       }
     }
   });
@@ -161,7 +142,7 @@ window.addEventListener('load', () => {
   });
 
   tg.onEvent('invoiceClosed', (event) => {
-    if (event.status === 'paid') {
+    if (event.status = 'paid') {
       alert('✅ Спасибо огромное за поддержку! ❤️');
       document.getElementById('stars-balance').textContent = parseInt(document.getElementById('stars-balance').textContent) + 1;
     }
