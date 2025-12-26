@@ -32,9 +32,10 @@ window.addEventListener('load', () => {
   tonConnectUI.onStatusChange(wallet => {
     if (wallet) {
       connectedWallet = wallet.account.address;
-      // Показываем только короткий адрес без префикса типа "0:"
-      const shortAddr = connectedWallet.substring(connectedWallet.indexOf(':') + 1);
-      document.getElementById('wallet-address').textContent = shortAddr.substring(0, 6) + '...' + shortAddr.substring(shortAddr.length - 4);
+      // Чистый короткий адрес без префикса и лишних символов
+      const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
+      const shortAddr = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
+      document.getElementById('wallet-address').textContent = shortAddr;
     } else {
       connectedWallet = null;
       document.getElementById('wallet-address').textContent = 'Not connected';
