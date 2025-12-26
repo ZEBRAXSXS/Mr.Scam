@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
     actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/mrscam_test_bot'  // Теперь правильный бот
+      twaReturnUrl: 'https://t.me/mrscam_test_bot'
     }
   });
 
@@ -47,7 +47,7 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '300000000' // 0.3 TON
+        amount: '300000000'
       }]
     };
 
@@ -59,38 +59,28 @@ window.addEventListener('load', () => {
     }
   };
 
+  // Новая оплата Stars — напрямую через WebApp (без backend, без промо-страниц)
   document.getElementById('pay-stars-btn').onclick = () => {
-    fetch('https://mr-scam.vercel.app/api/create-stars-invoice', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: 'Поддержка разработчику',
-        description: '1 Telegram Star для Mr. Scam Game',
-        payload: 'stars_support_1',
-        amount: 1
-      })
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.invoice_link) {
-        tg.openInvoice(data.invoice_link, (status) => {
-          if (status === 'paid') {
-            alert('✅ Спасибо огромное за поддержку! ❤️');
-          }
-        });
-      } else {
-        alert('❌ Ошибка создания инвойса: ' + (data.error || 'неизвестно'));
+    tg.sendInvoice(
+      'support_1_star',                          // payload (уникальный)
+      'Поддержка разработчику',                  // title
+      'Спасибо за 1 Telegram Star! ❤️',          // description
+      'XTR',                                     // currency
+      [{ label: 'Поддержка', amount: 1 }],       // цена: 1 Star
+      {                                      // опции
+        need_name: false,
+        need_phone_number: false,
+        need_email: false,
+        need_shipping_address: false,
+        is_flexible: false
+      },
+      (invoiceStatus) => {
+        if (invoiceStatus === 'paid') {
+          alert('✅ Спасибо огромное за поддержку! ❤️');
+        } else if (invoiceStatus === 'cancelled') {
+          alert('Оплата отменена');
+        }
       }
-    })
-    .catch(err => {
-      alert('❌ Ошибка сети: ' + err.message);
-    });
+    );
   };
-
-  // Надёжный алерт после оплаты Stars даже в тестовой среде
-  tg.onEvent('invoiceClosed', (event) => {
-    if (event.status === 'paid') {
-      alert('✅ Спасибо огромное за поддержку! ❤️');
-    }
-  });
 });
