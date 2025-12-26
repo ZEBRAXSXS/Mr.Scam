@@ -2,8 +2,7 @@ window.addEventListener('load', () => {
   const tg = window.Telegram?.WebApp;
 
   if (!tg || !tg.initDataUnsafe) {
-    document.getElementById('app').style.display = 'none';
-    document.getElementById('blocked').style.display = 'block';
+    document.body.innerHTML = '<div style="text-align:center;padding:50px;font-size:1.5em;">🚫 Доступ запрещён<br><a href="https://t.me/MrScam_bot" style="background:#0088cc;color:#fff;padding:15px 30px;border-radius:8px;text-decoration:none;margin-top:20px;display:inline-block;">Открыть в Telegram</a></div>';
     return;
   }
 
@@ -16,11 +15,7 @@ window.addEventListener('load', () => {
     const user = tg.initDataUnsafe.user;
     username = user.username ? '@' + user.username : user.first_name || 'User';
   }
-  usernameEl.textContent = 'Профиль: ' + username;
-
-  // Реферальная ссылка
-  const userId = tg.initDataUnsafe.user.id || 'unknown';
-  document.getElementById('referral-link').textContent = `https://t.me/MrScam_bot?start=ref_${userId}`;
+  usernameEl.textContent = username;
 
   const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
