@@ -22,13 +22,10 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
 #payment-section { display:none; }
-
-/* Блокировка для браузера */
 #blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<script type="module" src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
@@ -56,6 +53,7 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 
     <div id="payment-section">
       <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
+      <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 10 Telegram Stars (поддержка разработчику)</button>
     </div>
   </div>
 
@@ -74,6 +72,6 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
   <p>Откройте через бота и наслаждайтесь игрой 😈</p>
 </div>
 
-<script src="/script.js?v=11"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
