@@ -40,7 +40,6 @@
     #connect-container { background:transparent !important; border:none !important; box-shadow:none !important; padding:0 !important; margin:0 !important; min-width:auto !important; width:auto !important; height:auto !important; display:flex; align-items:center; justify-content:center; }
     #connect-container button { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)) !important; border:none !important; border-radius:14px !important; padding:8px 14px !important; color:white !important; font-weight:600 !important; box-shadow:0 3px 8px var(--shadow) !important; font-size:0.85em !important; min-width:100px !important; }
     #connect-container.connected button { background:linear-gradient(135deg, #00c853, #009624) !important; }
-    #connect-container button span { display:none !important; } /* скрываем дефолтный текст */
     .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
     .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
@@ -108,8 +107,7 @@
         <div class="profile-tabs">
           <div class="profile-tab active" data-tab="stickers-tab">Стикеры</div>
           <div class="profile-tab" data-tab="gifts-tab">Подарки</div>
-        </div>
-
+        </style>
         <div id="stickers-tab" class="profile-tab-content active">
           <lottie-player src="/stickers/2_5361597813799030874.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
           <p>Ваши стикеры 😈</p>
