@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
     actionsConfiguration: { twaReturnUrl: 'https://t.me/mrscam_test_bot' }
   });
 
-  // Рендерим кнопку без лишнего текста
+  // Рендерим кнопку без текста
   tonConnectUI.renderButton({
     containerId: 'connect-container'
   });
@@ -41,6 +41,9 @@ window.addEventListener('load', () => {
 
     if (wallet) {
       connectedWallet = wallet.account.address;
+      const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
+      const shortAddr = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
+
       if (dot) {
         dot.classList.remove('status-off');
         dot.classList.add('status-on');
@@ -50,6 +53,15 @@ window.addEventListener('load', () => {
       }
       if (container) {
         container.classList.add('connected');
+        // Добавляем короткий адрес как текст кнопки, если его нет
+        if (!container.querySelector('.wallet-short')) {
+          const span = document.createElement('span');
+          span.className = 'wallet-short';
+          span.style.marginLeft = '8px';
+          span.style.fontSize = '0.8em';
+          span.textContent = shortAddr;
+          container.appendChild(span);
+        }
       }
     } else {
       connectedWallet = null;
@@ -62,6 +74,9 @@ window.addEventListener('load', () => {
       }
       if (container) {
         container.classList.remove('connected');
+        // Удаляем текст адреса при отключении
+        const shortSpan = container.querySelector('.wallet-short');
+        if (shortSpan) shortSpan.remove();
       }
     }
   });
