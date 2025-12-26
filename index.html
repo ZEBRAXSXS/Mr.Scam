@@ -7,59 +7,82 @@
 <style>
 body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
 .header { background:#fff; padding:15px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
-#connect-container { flex:1; text-align:right; padding-right:20px; }
-#username { font-size:1.6em; font-weight:bold; color:#000; padding-left:20px; }
-.invite-btn { background:#4caf50; color:#fff; border:none; padding:12px 20px; border-radius:30px; font-size:1.2em; cursor:pointer; display:flex; align-items:center; gap:8px; margin:20px auto; }
-.invite-btn::before { content:"👤"; font-size:1.4em; }
-.main-buttons { display:flex; justify-content:center; gap:30px; margin:40px 0; }
-.main-btn { background:#4caf50; color:#fff; border:none; padding:30px; border-radius:50%; width:120px; height:120px; font-size:1.2em; font-weight:bold; box-shadow:0 8px 20px rgba(76,175,80,0.3); display:flex; flex-direction:column; align-items:center; justify-content:center; }
-.main-btn img { width:50px; height:50px; margin-bottom:10px; }
-#payment-section { display:none; text-align:center; margin:40px 0; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:18px 40px; font-size:1.6em; border-radius:40px; cursor:pointer; width:85%; box-shadow:0 6px 15px rgba(76,175,80,0.3); }
+.green-circle { width:40px; height:40px; background:#4caf50; border-radius:50%; }
+#username { font-size:1.6em; font-weight:bold; color:#000; margin-left:10px; }
+#connect-container { margin-right:10px; }
+.stats { display:flex; justify-content:space-around; margin:20px 10px; }
+.stat { background:#f0f0f0; padding:15px; border-radius:15px; flex:1; margin:0 8px; text-align:center; }
+.stat strong { display:block; font-size:1.8em; color:#4caf50; }
+.share-btn { background:#4caf50; color:#fff; border:none; padding:8px 20px; border-radius:20px; font-size:1em; margin-top:10px; }
+.tabs { display:flex; justify-content:center; margin:30px 0; gap:15px; }
+.tab { background:#e0e0e0; padding:12px 30px; border-radius:30px; font-weight:bold; }
+.tab.active { background:#4caf50; color:#fff; }
+.toggle { display:flex; justify-content:center; margin:20px 0; }
+.toggle-btn { background:#e0f8e0; color:#4caf50; padding:10px 30px; border-radius:30px; flex:1; text-align:center; margin:0 10px; }
+.toggle-btn.active { background:#4caf50; color:#fff; }
+.content { text-align:center; margin:40px 20px; font-size:1.4em; color:#000; }
+.content p { margin:20px 0; }
+.transfer-btn { background:#4caf50; color:#fff; border:none; padding:15px 40px; font-size:1.4em; border-radius:30px; cursor:pointer; margin:30px 0; }
+.giveaway-btn { background:#4caf50; color:#fff; border:none; padding:15px 40px; font-size:1.4em; border-radius:30px; cursor:pointer; margin:30px 0; }
 .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 10px rgba(0,0,0,0.1); font-size:0.9em; }
-.nav-item { color:#888; text-align:center; display:flex; flex-direction:column; align-items:center; gap:5px; }
+.nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
-.nav-item::before { font-size:1.5em; }
-.nav-game::before { content:"🎮"; }
-.nav-staking::before { content:"💰"; }
-.nav-tasks::before { content:"✅"; }
-.nav-profile::before { content:"👤"; }
+#payment-section { display:none; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
 <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-
 <div class="header">
-  <div id="username">Профиль: Загрузка...</div>
+  <div style="display:flex; align-items:center;">
+    <div class="green-circle"></div>
+    <div id="username">Загрузка...</div>
+  </div>
   <div id="connect-container"></div>
 </div>
 
 <div class="container">
-  <button class="invite-btn">Пригласить друзей</button>
-
-  <div class="main-buttons">
-    <button class="main-btn">
-      <div>Stickers</div>
-    </button>
-    <button class="main-btn">
-      <div>Gifts</div>
-    </button>
+  <div class="stats">
+    <div class="stat"><strong>0.00</strong> Wallet</div>
+    <div class="stat"><strong>0</strong> Volume</div>
+    <div class="stat">
+      <strong>0</strong> Referrals
+      <button class="share-btn">Share</button>
+    </div>
   </div>
 
+  <div class="tabs">
+    <div class="tab active">Stickers</div>
+    <div class="tab">Gifts</div>
+    <div class="tab">+</div>
+  </div>
+
+  <div class="toggle">
+    <div class="toggle-btn active">Unlisted</div>
+    <div class="toggle-btn">Listed</div>
+  </div>
+
+  <div class="content">
+    <h2>Want to sell your stickers?</h2>
+    <p>Say "hi" and transfer it to<br>@MatchaRelayer</p>
+    <button class="transfer-btn">Transfer</button>
+  </div>
+
+  <button class="giveaway-btn">Giveaway</button>
+
   <div id="payment-section">
-    <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
+    <button class="green-btn">💸 Внести 1 TON в игру</button>
   </div>
 </div>
 
 <div class="bottom-nav">
-  <div class="nav-item nav-game">Игра</div>
-  <div class="nav-item nav-staking">Стейкинг</div>
-  <div class="nav-item nav-tasks">Задания</div>
-  <div class="nav-item nav-profile active">Профиль</div>
+  <div class="nav-item">Market</div>
+  <div class="nav-item">Events</div>
+  <div class="nav-item active">Profile</div>
+  <div class="nav-item">Giveaway</div>
 </div>
 
-<script src="/script.js?v=23"></script>
+<script src="/script.js?v=24"></script>
 </body>
 </html>
