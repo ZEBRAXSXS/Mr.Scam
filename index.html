@@ -7,19 +7,21 @@
 <style>
 body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
 .header { background:#fff; text-align:center; padding:15px; font-size:1.8em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
-.profile-card { background:#fff; border-radius:20px; padding:25px; box-shadow:0 4px 15px rgba(0,0,0,0.1); width:95%; max-width:420px; text-align:center; margin:20px auto; }
-.profile-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-.left-side { display:flex; flex-direction:column; align-items:flex-start; }
-#username { font-size:1.5em; font-weight:bold; color:#000; }
-.balance { font-size:1.6em; font-weight:bold; color:#4caf50; margin-top:10px; text-align:center; width:100%; }
-.right-side { }
-#connect-container { min-width:140px; }
-.container { flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; }
-#payment-section { display:none; margin:30px 10px; width:90%; }
-.green-btn { background:#4caf50; color:#fff; border:none; padding:18px; font-size:1.6em; border-radius:40px; cursor:pointer; width:100%; box-shadow:0 6px 15px rgba(76,175,80,0.3); }
+.container { flex:1; padding:10px; display:flex; flex-direction:column; justify-content:center; align-items:center; overflow-y:auto; }
+.profile-card { background:#fff; border-radius:16px; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.08); width:90%; max-width:380px; text-align:center; }
+.profile-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; }
+#username { font-size:1.4em; font-weight:bold; color:#000; text-align:left; flex:1; }
+#connect-container { flex:1; text-align:right; }
+.balance { font-size:1.5em; font-weight:bold; color:#4caf50; margin:15px 0; text-align:center; }
+.green-btn { background:#4caf50; color:#fff; border:none; padding:16px; font-size:1.4em; border-radius:30px; cursor:pointer; width:100%; box-shadow:0 4px 10px rgba(76,175,80,0.3); margin:20px 0; }
 .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:#fff; display:flex; justify-content:space-around; padding:12px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.08); font-size:0.85em; z-index:1000; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
+#payment-section { display:none; }
+#blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#f5f5f5; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; position:fixed; top:0; left:0; width:100%; z-index:9999; }
+#blocked h1 { font-size:2em; margin-bottom:20px; }
+#blocked p { font-size:1.2em; margin-bottom:30px; }
+.telegram-btn { background:#0088cc; color:#fff; border:none; padding:14px 36px; font-size:1.4em; border-radius:12px; cursor:pointer; text-decoration:none; box-shadow:0 4px 10px rgba(0,136,204,0.3); }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -27,34 +29,40 @@ body { margin:0; padding:0; background:#f5f5f5; font-family:-apple-system,system
 </head>
 <body>
 
-<div class="header">MR. SCAM GAME</div>
+<!-- Блокировка для браузера -->
+<div id="blocked">
+  <h1>🚫 Доступ запрещён</h1>
+  <p>Mr. Scam Game работает только внутри Telegram.</p>
+  <a href="https://t.me/MrScam_bot" class="telegram-btn">Открыть в Telegram</a>
+</div>
 
-<div class="container">
-  <div class="profile-card">
-    <div class="profile-top">
-      <div class="left-side">
+<!-- Основной контент -->
+<div id="app">
+  <div class="header">MR. SCAM GAME</div>
+
+  <div class="container">
+    <div class="profile-card">
+      <div class="profile-top">
         <div id="username">Профиль: Загрузка...</div>
-      </div>
-      <div class="right-side">
         <div id="connect-container"></div>
       </div>
-    </div>
 
-    <div class="balance">Баланс: 0.00 TON</div>
+      <div class="balance">Баланс: 0.00 TON</div>
 
-    <div id="payment-section">
-      <button class="green-btn">💸 Внести 1 TON в игру</button>
+      <div id="payment-section">
+        <button class="green-btn">💸 Внести 1 TON в игру</button>
+      </div>
     </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item">Игра</div>
+    <div class="nav-item">Задания</div>
+    <div class="nav-item active">Профиль</div>
+    <div class="nav-item">Стейкинг</div>
   </div>
 </div>
 
-<div class="bottom-nav">
-  <div class="nav-item">Игра</div>
-  <div class="nav-item">Задания</div>
-  <div class="nav-item active">Профиль</div>
-  <div class="nav-item">Стейкинг</div>
-</div>
-
-<script src="/script.js?v=39"></script>
+<script src="/script.js?v=40"></script>
 </body>
 </html>

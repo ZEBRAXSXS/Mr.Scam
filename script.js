@@ -2,7 +2,8 @@ window.addEventListener('load', () => {
   const tg = window.Telegram?.WebApp;
 
   if (!tg || !tg.initDataUnsafe) {
-    document.body.innerHTML = '<div style="text-align:center;padding:50px;font-size:1.5em;">🚫 Доступ запрещён<br><a href="https://t.me/MrScam_bot" style="background:#0088cc;color:#fff;padding:15px 30px;border-radius:8px;text-decoration:none;margin-top:20px;display:inline-block;">Открыть в Telegram</a></div>';
+    document.getElementById('app').style.display = 'none';
+    document.getElementById('blocked').style.display = 'block';
     return;
   }
 
@@ -36,8 +37,7 @@ window.addEventListener('load', () => {
     }
   });
 
-  const paymentBtn = document.getElementById('payment-btn');
-  paymentBtn.onclick = async () => {
+  document.getElementById('payment-btn').onclick = async () => {
     if (!connectedWallet) {
       alert('⚠️ Подключите кошелёк сначала!');
       return;
@@ -47,7 +47,7 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '1000000000'
+        amount: '1000000000' // 1 TON
       }]
     };
 
