@@ -44,20 +44,29 @@ window.addEventListener('load', () => {
       const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
       const shortAddr = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
 
-      if (dot) dot.classList.remove('status-off'), dot.classList.add('status-on');
-      if (lottie) lottie.classList.add('connected');
+      if (dot) {
+        dot.classList.remove('status-off');
+        dot.classList.add('status-on');
+      }
+      if (lottie) {
+        lottie.classList.add('connected');
+      }
       if (container) {
         container.classList.add('connected');
-        // Добавляем короткий адрес как текст кнопки
-        container.innerHTML = shortAddr;
+        container.innerHTML = shortAddr; // только адрес после подключения
       }
     } else {
       connectedWallet = null;
-      if (dot) dot.classList.remove('status-on'), dot.classList.add('status-off');
-      if (lottie) lottie.classList.remove('connected');
+      if (dot) {
+        dot.classList.remove('status-on');
+        dot.classList.add('status-off');
+      }
+      if (lottie) {
+        lottie.classList.remove('connected');
+      }
       if (container) {
         container.classList.remove('connected');
-        container.innerHTML = ''; // чистим кнопку
+        container.innerHTML = ''; // чистая кнопка
       }
     }
   });
@@ -142,7 +151,7 @@ window.addEventListener('load', () => {
   });
 
   tg.onEvent('invoiceClosed', (event) => {
-    if (event.status = 'paid') {
+    if (event.status === 'paid') {
       alert('✅ Спасибо огромное за поддержку! ❤️');
       document.getElementById('stars-balance').textContent = parseInt(document.getElementById('stars-balance').textContent) + 1;
     }
