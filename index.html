@@ -32,7 +32,7 @@
     .user-details { flex:1; min-width:0; }
     .username-row { display:flex; align-items:center; gap:8px; }
     .username { font-size:0.95em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
-    .status-dot { width:10px; height:10px; border-radius:50%; box-shadow:0 0 8px currentColor; flex-shrink:0; display:none; } /* скрыто по умолчанию, пока не подключили */
+    .status-dot { width:10px; height:10px; border-radius:50%; box-shadow:0 0 8px currentColor; flex-shrink:0; }
     .status-off { background:#ff3b30; }
     .status-on { background:#00c853; }
     .wallet-lottie { width:24px; height:24px; display:none; margin-left:8px; }
@@ -40,8 +40,7 @@
     #connect-container { background:transparent !important; border:none !important; box-shadow:none !important; padding:0 !important; margin:0 !important; min-width:auto !important; width:auto !important; height:auto !important; display:flex; align-items:center; justify-content:center; }
     #connect-container button { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)) !important; border:none !important; border-radius:14px !important; padding:8px 14px !important; color:white !important; font-weight:600 !important; box-shadow:0 3px 8px var(--shadow) !important; font-size:0.85em !important; min-width:100px !important; }
     #connect-container.connected button { background:linear-gradient(135deg, #00c853, #009624) !important; }
-    /* Скрываем текст в кнопке */
-    #connect-container button span, #connect-container button div { display:none !important; }
+    #connect-container button span { display:none !important; } /* скрываем дефолтный текст */
     .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
     .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
@@ -159,6 +158,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=34"></script>
+  <script src="/script.js?v=35"></script>
 </body>
 </html>

@@ -53,7 +53,7 @@ window.addEventListener('load', () => {
       }
       if (container) {
         container.classList.add('connected');
-        container.innerHTML = shortAddr; // только адрес после подключения
+        container.innerHTML = shortAddr; // только короткий адрес
       }
     } else {
       connectedWallet = null;
