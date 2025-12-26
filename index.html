@@ -10,7 +10,7 @@
       --bg: #0a0a1a;
       --card: #121225;
       --text: #e0e0ff;
-      --text-secondary: #8888aa;
+      --text-sec: #8888aa;
       --accent-start: #5e72e4;
       --accent-end: #8ab4f8;
       --shadow: rgba(94, 114, 228, 0.1);
@@ -19,38 +19,42 @@
     #app { flex:1; display:flex; flex-direction:column; overflow:hidden; }
     .main-content { flex:1; overflow-y:auto; padding-bottom:30px; -webkit-overflow-scrolling:touch; }
     .header { padding:10px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; flex-shrink:0; }
-    .header-title { font-size:1.4em; font-weight:700; }
+    .header-title { font-size:1.35em; font-weight:700; }
     .balances { display:flex; gap:8px; }
-    .balance { background:var(--card); padding:5px 10px; border-radius:16px; font-size:0.9em; font-weight:600; display:flex; align-items:center; }
-    .balance img { width:16px; height:16px; margin-right:5px; }
-    .profile-section { padding:12px 14px; flex-shrink:0; }
-    .profile-card { background:var(--card); border-radius:16px; padding:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .balance { background:var(--card); padding:4px 9px; border-radius:14px; font-size:0.85em; font-weight:600; display:flex; align-items:center; }
+    .balance img { width:15px; height:15px; margin-right:4px; }
+    .profile-section { padding:10px 14px; flex-shrink:0; }
+    .profile-card { background:var(--card); border-radius:14px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
-    .avatar { width:48px; height:48px; border-radius:50%; margin-right:10px; flex-shrink:0; }
+    .avatar { width:40px; height:40px; border-radius:50%; margin-right:8px; flex-shrink:0; }
     .user-details { min-width:0; flex:1; }
-    .username { font-size:1em; font-weight:500; color:var(--text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .wallet-address { color:var(--text-secondary); font-size:0.8em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
-    /* Скрываем стрелку ▼ от TonConnect */
+    .username { font-size:0.95em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .wallet-address { color:var(--text-sec); font-size:0.75em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px; }
+    #connect-container { background:var(--card); padding:5px 10px; border-radius:10px; font-size:0.8em; font-weight:600; color:var(--text); }
+    /* Скрываем стрелку от TonConnect */
+    #connect-container * { pointer-events:none; }
     #connect-container ::slotted([part="arrow"]) { display:none !important; }
-    #connect-container { background:var(--card); padding:6px 12px; border-radius:12px; font-size:0.85em; font-weight:600; color:var(--text); }
-    .payments { margin-top:12px; gap:8px; display:flex; flex-direction:column; }
-    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); padding:12px; border-radius:14px; font-size:1em; font-weight:600; }
-    .menu { padding:0 14px; margin-top:6px; }
-    .menu-item { padding:12px; border-radius:14px; margin-bottom:8px; background:var(--card); }
-    .referrals { padding:12px 14px; }
-    .ref-title { font-size:1.1em; margin-bottom:10px; }
-    .ref-stats { margin-bottom:12px; }
-    .ref-stat strong { font-size:1.4em; }
-    .ref-card { padding:12px; border-radius:14px; font-size:0.9em; margin-bottom:12px; }
-    .invite-btn { padding:12px; border-radius:14px; font-size:1.05em; }
-    .bottom-nav { padding:8px 0 18px 0; border-top:1px solid #1e2030; }
-    .nav-item { font-size:0.85em; padding:6px; }
-    .section { display:none; text-align:center; padding:40px 20px; }
+    .payments { margin-top:10px; gap:7px; display:flex; flex-direction:column; }
+    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); padding:11px; border-radius:12px; font-size:0.95em; font-weight:600; }
+    .menu { padding:0 14px; margin-top:4px; }
+    .menu-item { padding:10px; border-radius:12px; margin-bottom:6px; background:var(--card); }
+    .referrals { padding:10px 14px; }
+    .ref-title { font-size:1em; margin-bottom:8px; }
+    .ref-stats { margin-bottom:10px; }
+    .ref-stat strong { font-size:1.3em; }
+    .ref-card { padding:10px; border-radius:12px; font-size:0.85em; margin-bottom:10px; }
+    .invite-btn { padding:11px; border-radius:12px; font-size:1em; }
+    .bottom-nav { padding:6px 0 16px 0; border-top:1px solid #1e2030; }
+    .nav-item { font-size:0.8em; padding:5px; }
+    .section { display:none; text-align:center; padding:20px; }
     .section.active { display:block; }
-    .section img { width:200px; height:200px; margin:20px auto; }
-    .section p { font-size:1.2em; color:var(--text-secondary); }
-    #profile-section { display:block; } /* Профиль по умолчанию */
+    .section img { width:160px; height:160px; margin:15px auto; }
+    .section p { font-size:1.1em; color:var(--text-sec); }
+    #profile-section { display:block; }
   </style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
@@ -64,7 +68,6 @@
     </div>
 
     <div class="main-content">
-      <!-- Профиль -->
       <div id="profile-section" class="section active">
         <div class="profile-section">
           <div class="profile-card">
@@ -101,7 +104,6 @@
         </div>
       </div>
 
-      <!-- Другие разделы -->
       <div id="play-section" class="section">
         <img src="/stickers/2_5361597813799030874.tgs" alt="Sticker">
         <p>Здесь идёт разработка 😈</p>
@@ -124,6 +126,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=20"></script>
+  <script src="/script.js?v=21"></script>
 </body>
 </html>
