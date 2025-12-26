@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
     buttonRootId: 'connect-container',
     actionsConfiguration: {
-      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← ОБЯЗАТЕЛЬНО замени на свой, например https://t.me/mrscamgame_bot
+      twaReturnUrl: 'https://t.me/ТВОЙ_БОТ_ЮЗЕРНЕЙМ'  // ← Замени на свой бот!
     }
   });
 
@@ -70,9 +70,9 @@ window.addEventListener('load', () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         title: 'Поддержка разработчику',
-        description: '10 Telegram Stars для Mr. Scam Game',
-        payload: 'stars_support_10',
-        amount: 10
+        description: '1 Telegram Star для Mr. Scam Game',
+        payload: 'stars_support_1',
+        amount: 1
       })
     })
     .then(res => res.json())
