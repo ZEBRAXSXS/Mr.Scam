@@ -59,15 +59,15 @@ window.addEventListener('load', () => {
     }
   };
 
-  // Новая кнопка оплаты 10 Stars (поддержка разработчику)
+  // Отдельная кнопка Stars (всегда доступна, не зависит от подключения TON)
   document.getElementById('pay-stars-btn').onclick = () => {
     tg.sendInvoice(
       'Поддержка разработчику',
       'Спасибо за поддержку Mr. Scam Game! 10 Telegram Stars',
       'payload_support_10_stars',
-      '', // provider_token пусто для Stars
-      'XTR', // currency = Telegram Stars
-      [{ label: '10 Stars', amount: 1000 }] // 10 Stars = 1000 cents (1 Star = 100 cents)
+      '', // пусто для Stars
+      'XTR',
+      [{ label: '10 Stars', amount: 1000 }] // 10 Stars
     );
   };
 });

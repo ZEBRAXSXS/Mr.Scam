@@ -21,7 +21,8 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
 .nav-item { color:#888; text-align:center; }
 .nav-item.active { color:#4caf50; font-weight:bold; }
-#payment-section { display:none; }
+#payment-section { display:none; } /* TON кнопка после подключения */
+#stars-section { margin:20px 0; } /* Stars всегда видна */
 #blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
 </style>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -53,6 +54,9 @@ body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system
 
     <div id="payment-section">
       <button id="payment-btn" class="green-btn">💸 Внести 1 TON в игру</button>
+    </div>
+
+    <div id="stars-section">
       <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 10 Telegram Stars (поддержка разработчику)</button>
     </div>
   </div>
