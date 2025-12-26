@@ -15,42 +15,33 @@
       --accent-end: #8ab4f8;
       --shadow: rgba(94, 114, 228, 0.1);
     }
-    body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui,sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
-    #app { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-    .main-content { flex:1; overflow-y:auto; padding-bottom:30px; -webkit-overflow-scrolling:touch; }
-    .header { padding:10px 14px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; flex-shrink:0; }
-    .header-title { font-size:1.35em; font-weight:700; }
-    .balances { display:flex; gap:8px; }
-    .balance { background:var(--card); padding:4px 9px; border-radius:14px; font-size:0.85em; font-weight:600; display:flex; align-items:center; }
-    .balance img { width:15px; height:15px; margin-right:4px; }
-    .profile-section { padding:10px 14px; flex-shrink:0; }
-    .profile-card { background:var(--card); border-radius:14px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+    .header { padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; flex-shrink:0; }
+    .header-title { font-size:1.5em; font-weight:700; }
+    .balances { display:flex; gap:10px; align-items:center; }
+    .balance { background:var(--card); padding:6px 12px; border-radius:18px; font-size:0.95em; font-weight:600; display:flex; align-items:center; box-shadow:0 2px 6px var(--shadow); }
+    .balance img { width:18px; height:18px; margin-right:6px; }
+    .container { flex:1; padding:16px; overflow-y:auto; }
+    .profile-card { background:var(--card); border-radius:18px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
-    .avatar { width:40px; height:40px; border-radius:50%; margin-right:8px; flex-shrink:0; }
+    .avatar { width:48px; height:48px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
     .user-details { min-width:0; flex:1; }
-    .username { font-size:0.95em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .wallet-address { color:var(--text-sec); font-size:0.75em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:1px; }
-    #connect-container { background:var(--card); padding:5px 10px; border-radius:10px; font-size:0.8em; font-weight:600; color:var(--text); }
-    /* Скрываем стрелку от TonConnect */
-    #connect-container * { pointer-events:none; }
-    #connect-container ::slotted([part="arrow"]) { display:none !important; }
-    .payments { margin-top:10px; gap:7px; display:flex; flex-direction:column; }
-    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); padding:11px; border-radius:12px; font-size:0.95em; font-weight:600; }
-    .menu { padding:0 14px; margin-top:4px; }
-    .menu-item { padding:10px; border-radius:12px; margin-bottom:6px; background:var(--card); }
-    .referrals { padding:10px 14px; }
-    .ref-title { font-size:1em; margin-bottom:8px; }
-    .ref-stats { margin-bottom:10px; }
-    .ref-stat strong { font-size:1.3em; }
-    .ref-card { padding:10px; border-radius:12px; font-size:0.85em; margin-bottom:10px; }
-    .invite-btn { padding:11px; border-radius:12px; font-size:1em; }
-    .bottom-nav { padding:6px 0 16px 0; border-top:1px solid #1e2030; }
-    .nav-item { font-size:0.8em; padding:5px; }
-    .section { display:none; text-align:center; padding:20px; }
-    .section.active { display:block; }
-    .section img { width:160px; height:160px; margin:15px auto; }
-    .section p { font-size:1.1em; color:var(--text-sec); }
-    #profile-section { display:block; }
+    .username { font-size:1em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .wallet-address { color:var(--text-sec); font-size:0.8em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+    #connect-container { background:var(--card); padding:8px 14px; border-radius:14px; font-size:0.9em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); }
+    .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.1em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); transition:transform 0.2s; }
+    .green-btn:active { transform:scale(0.98); }
+    .tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
+    .tab { background:var(--card); padding:10px 20px; border-radius:25px; font-weight:600; flex:1; text-align:center; max-width:120px; }
+    .tab.active { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; }
+    .tab-content { display:none; text-align:center; }
+    .tab-content.active { display:block; }
+    .tab-content img { width:180px; height:180px; margin:20px auto; }
+    .bottom-nav { display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid #1e2030; background:var(--bg); flex-shrink:0; }
+    .nav-item { text-align:center; color:var(--text-sec); font-size:0.9em; cursor:pointer; }
+    .nav-item.active { color:#fff; font-weight:700; }
+    #blocked { display:none; text-align:center; padding:50px; background:var(--bg); min-height:100vh; color:var(--text); }
   </style>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -58,74 +49,64 @@
 </head>
 <body>
 
-  <div id="app">
-    <div class="header">
-      <div class="header-title">Mr. Scam Game 😈</div>
-      <div class="balances">
-        <div class="balance"><img src="https://telegram.org/img/stars/logo_stars.png"><span id="stars-balance">0</span></div>
-        <div class="balance"><img src="https://ton.org/download/ton_symbol.png"><span id="ton-balance">0.00</span></div>
-      </div>
-    </div>
-
-    <div class="main-content">
-      <div id="profile-section" class="section active">
-        <div class="profile-section">
-          <div class="profile-card">
-            <div class="profile-info">
-              <img id="user-avatar" src="" class="avatar">
-              <div class="user-details">
-                <div id="username" class="username">Загрузка...</div>
-                <div id="wallet-address" class="wallet-address">Not connected</div>
-              </div>
-            </div>
-            <div id="connect-container">Connect</div>
-          </div>
-
-          <div class="payments">
-            <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON</button>
-            <button id="pay-stars-btn" class="green-btn">⭐ 1 Telegram Star</button>
-          </div>
-        </div>
-
-        <div class="menu">
-          <div class="menu-item" id="news-btn"><div class="menu-item-left"><span class="menu-icon">📰</span> News</div>></div>
-          <div class="menu-item" id="support-btn"><div class="menu-item-left"><span class="menu-icon">💬</span> Support</div>></div>
-          <div class="menu-item" id="settings-btn"><div class="menu-item-left"><span class="menu-icon">⚙️</span> Settings</div>></div>
-        </div>
-
-        <div class="referrals">
-          <div class="ref-title">Referrals</div>
-          <div class="ref-stats">
-            <div class="ref-stat"><strong id="invited-friends">0</strong><div>Invited friends</div></div>
-            <div class="ref-stat"><strong id="ref-reward">0 TON</strong><div>Your reward</div></div>
-          </div>
-          <div class="ref-card"><strong>You earn 1.5%</strong><br>from friends activity</div>
-          <button id="invite-btn" class="invite-btn">Invite friends ⭐ +25</button>
-        </div>
-      </div>
-
-      <div id="play-section" class="section">
-        <img src="/stickers/2_5361597813799030874.tgs" alt="Sticker">
-        <p>Здесь идёт разработка 😈</p>
-      </div>
-      <div id="staking-section" class="section">
-        <img src="/stickers/2_5361597813799030875.tgs" alt="Sticker">
-        <p>Здесь идёт разработка 😈</p>
-      </div>
-      <div id="tasks-section" class="section">
-        <img src="/stickers/2_5361597813799030876.tgs" alt="Sticker">
-        <p>Здесь идёт разработка 😈</p>
-      </div>
-    </div>
-
-    <div class="bottom-nav">
-      <div class="nav-item" id="market-btn">Играть</div>
-      <div class="nav-item" id="events-btn">Стейкинг</div>
-      <div class="nav-item active" id="profile-btn">Профиль</div>
-      <div class="nav-item" id="giveaway-btn">Задания</div>
+  <div class="header">
+    <div class="header-title">Mr. Scam Game 😈</div>
+    <div class="balances">
+      <div class="balance"><img src="https://telegram.org/img/stars/logo_stars.png" alt="⭐"><span id="stars-balance">0</span></div>
+      <div class="balance"><img src="https://ton.org/download/ton_symbol.png" alt="TON"><span id="ton-balance">0.00</span></div>
     </div>
   </div>
 
-  <script src="/script.js?v=21"></script>
+  <div class="container">
+    <div class="profile-card">
+      <div class="profile-info">
+        <img id="user-avatar" src="" class="avatar">
+        <div class="user-details">
+          <div id="username" class="username">Загрузка...</div>
+          <div id="wallet-address" class="wallet-address">Not connected</div>
+        </div>
+      </div>
+      <div id="connect-container">Connect</div>
+    </div>
+
+    <div class="payments">
+      <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
+      <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="stickers">Stickers</div>
+      <div class="tab" data-tab="gifts">Gifts</div>
+      <div class="tab" data-tab="plus">+</div>
+    </div>
+
+    <div id="stickers" class="tab-content active">
+      <img src="/stickers/2_5361597813799030874.tgs" alt="Sticker">
+      <p>Здесь будут ваши стикеры 😈</p>
+    </div>
+    <div id="gifts" class="tab-content">
+      <img src="/stickers/2_5361597813799030875.tgs" alt="Sticker">
+      <p>Здесь будут подарки 😈</p>
+    </div>
+    <div id="plus" class="tab-content">
+      <img src="/stickers/2_5361597813799030876.tgs" alt="Sticker">
+      <p>Здесь будет что-то новое 😈</p>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item">Играть</div>
+    <div class="nav-item">Стейкинг</div>
+    <div class="nav-item active">Профиль</div>
+    <div class="nav-item">Задания</div>
+  </div>
+
+  <div id="blocked">
+    <h1>🚫 Доступ запрещён</h1>
+    <p>Mr. Scam Game работает только внутри Telegram.</p>
+    <p>Откройте через бота 😈</p>
+  </div>
+
+  <script src="/script.js?v=22"></script>
 </body>
 </html>
