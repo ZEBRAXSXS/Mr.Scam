@@ -5,36 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Mr. Scam Game</title>
   <style>
-    body { margin:0; padding:0; background:#0d0d1a; color:#fff; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; overflow:hidden; }
-    #app { flex:1; display:flex; flex-direction:column; overflow-y:auto; padding-bottom:70px; }
-    .header { position:sticky; top:0; background:#0d0d1a; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e1e2d; z-index:10; }
+    body { margin:0; padding:0; background:#0d0d1a; color:#fff; font-family:-apple-system,system-ui,sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
+    #app { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+    .main-content { flex:1; overflow-y:auto; padding-bottom:20px; -webkit-overflow-scrolling:touch; }
+    .header { position:sticky; top:0; background:#0d0d1a; padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e1e2d; z-index:10; flex-shrink:0; }
     .header-title { font-size:1.5em; font-weight:bold; }
     .balances { display:flex; gap:10px; align-items:center; }
-    .balance { background:#1e1e2d; padding:6px 12px; border-radius:16px; font-weight:bold; font-size:1em; display:flex; align-items:center; }
+    .balance { background:#1e1e2d; padding:6px 12px; border-radius:16px; font-weight:bold; font-size:1em; display:flex; align-items:center; min-width:70px; justify-content:center; }
     .balance img { width:18px; height:18px; margin-right:6px; }
-    .profile-section { padding:16px; }
-    .profile-card { background:#1a1a2d; border-radius:16px; padding:16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .profile-section { padding:16px; flex-shrink:0; }
+    .profile-card { background:#1a1a2d; border-radius:16px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
     .avatar { width:56px; height:56px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
-    .user-details { min-width:0; }
+    .user-details { min-width:0; flex:1; }
     .username { font-size:1.4em; font-weight:bold; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .wallet-address { color:#aaa; font-size:0.9em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:150px; }
-    #connect-container { background:#2d2d44; padding:8px 16px; border-radius:12px; font-size:0.95em; white-space:nowrap; }
+    .wallet-address { color:#aaa; font-size:0.9em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    #connect-container { background:#2d2d44; padding:8px 16px; border-radius:12px; font-size:0.95em; white-space:nowrap; flex-shrink:0; }
     .payments { margin-top:20px; display:flex; flex-direction:column; gap:12px; }
-    .green-btn { background:linear-gradient(90deg, #6e56ff, #9d7aff); color:#fff; border:none; padding:16px; border-radius:16px; font-size:1.2em; font-weight:bold; width:100%; cursor:pointer; box-shadow:0 4px 10px rgba(110,86,255,0.3); }
-    .menu { padding:0 16px; margin-top:10px; }
+    .green-btn { background:linear-gradient(90deg, #6e56ff, #9d7aff); color:#fff; border:none; padding:16px; border-radius:16px; font-size:1.2em; font-weight:bold; width:100%; cursor:pointer; box-shadow:0 4px 12px rgba(110,86,255,0.3); }
+    .menu { padding:0 16px; margin-top:10px; flex-shrink:0; }
     .menu-item { display:flex; align-items:center; justify-content:space-between; padding:16px; background:#1a1a2d; border-radius:16px; margin-bottom:12px; cursor:pointer; }
-    .menu-item-left { display:flex; align-items:center; }
+    .menu-item-left { display:flex; align-items:center; min-width:0; }
     .menu-icon { font-size:1.5em; margin-right:14px; }
-    .referrals { padding:16px; margin-top:10px; }
+    .referrals { padding:16px; flex-shrink:0; }
     .ref-title { font-size:1.3em; margin-bottom:16px; }
     .ref-stats { display:flex; justify-content:space-around; margin-bottom:20px; }
-    .ref-stat { text-align:center; }
+    .ref-stat { text-align:center; flex:1; }
     .ref-stat strong { font-size:1.8em; display:block; color:#6e56ff; }
     .ref-card { background:#1a1a2d; border-radius:16px; padding:16px; text-align:center; margin-bottom:20px; }
-    .invite-btn { background:linear-gradient(90deg, #6e56ff, #9d7aff); color:#fff; border:none; padding:16px; border-radius:16px; font-size:1.3em; font-weight:bold; width:100%; cursor:pointer; box-shadow:0 4px 10px rgba(110,86,255,0.3); }
-    .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:#0d0d1a; display:flex; justify-content:space-around; padding:10px 0; border-top:1px solid #1e1e2d; z-index:10; }
-    .nav-item { text-align:center; color:#888; font-size:0.9em; cursor:pointer; }
+    .invite-btn { background:linear-gradient(90deg, #6e56ff, #9d7aff); color:#fff; border:none; padding:16px; border-radius:16px; font-size:1.3em; font-weight:bold; width:100%; cursor:pointer; box-shadow:0 4px 12px rgba(110,86,255,0.3); }
+    .bottom-nav { position:sticky; bottom:0; background:#0d0d1a; display:flex; justify-content:space-around; padding:10px 0 20px 0; border-top:1px solid #1e1e2d; z-index:10; flex-shrink:0; }
+    .nav-item { text-align:center; color:#888; font-size:0.9em; cursor:pointer; padding:8px; }
     .nav-item.active { color:#6e56ff; font-weight:bold; }
     #blocked { display:none; text-align:center; padding:50px; background:#0d0d1a; min-height:100vh; color:#fff; }
   </style>
@@ -53,57 +54,66 @@
       </div>
     </div>
 
-    <div class="profile-section">
-      <div class="profile-card">
-        <div class="profile-info">
-          <img id="user-avatar" src="" class="avatar">
-          <div class="user-details">
-            <div id="username" class="username">Загрузка...</div>
-            <div id="wallet-address" class="wallet-address">Not connected</div>
+    <div class="main-content">
+      <div class="profile-section">
+        <div class="profile-card">
+          <div class="profile-info">
+            <img id="user-avatar" src="" class="avatar">
+            <div class="user-details">
+              <div id="username" class="username">Загрузка...</div>
+              <div id="wallet-address" class="wallet-address">Not connected</div>
+            </div>
+          </div>
+          <div id="connect-container"></div>
+        </div>
+
+        <div class="payments">
+          <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
+          <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
+        </div>
+      </div>
+
+      <div class="menu">
+        <div class="menu-item" id="news-btn">
+          <div class="menu-item-left"><span class="menu-icon">📰</span> News</div>
+          <span>></span>
+        </div>
+        <div class="menu-item" id="support-btn">
+          <div class="menu-item-left"><span class="menu-icon">💬</span> Support</div>
+          <span>></span>
+        </div>
+        <div class="menu-item" id="settings-btn">
+          <div class="menu-item-left"><span class="menu-icon">⚙️</span> Settings</div>
+          <span>></span>
+        </div>
+      </div>
+
+      <div class="referrals">
+        <div class="ref-title">Referrals</div>
+        <div class="ref-stats">
+          <div class="ref-stat">
+            <strong id="invited-friends">0</strong>
+            <div>Invited friends</div>
+          </div>
+          <div class="ref-stat">
+            <strong id="ref-reward">0 TON</strong>
+            <div>Your reward</div>
           </div>
         </div>
-        <div id="connect-container"></div>
-      </div>
 
-      <div class="payments">
-        <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
-        <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
+        <div class="ref-card">
+          <strong>You earn 1.5%</strong><br>from friends and their activity
+        </div>
+
+        <button id="invite-btn" class="invite-btn">Invite friends ⭐ +25</button>
       </div>
     </div>
 
-    <div class="menu">
-      <div class="menu-item" id="news-btn">
-        <div class="menu-item-left"><span class="menu-icon">📰</span> News</div>
-        <span>></span>
-      </div>
-      <div class="menu-item" id="support-btn">
-        <div class="menu-item-left"><span class="menu-icon">💬</span> Support</div>
-        <span>></span>
-      </div>
-      <div class="menu-item" id="settings-btn">
-        <div class="menu-item-left"><span class="menu-icon">⚙️</span> Settings</div>
-        <span>></span>
-      </div>
-    </div>
-
-    <div class="referrals">
-      <div class="ref-title">Referrals</div>
-      <div class="ref-stats">
-        <div class="ref-stat">
-          <strong id="invited-friends">0</strong>
-          <div>Invited friends</div>
-        </div>
-        <div class="ref-stat">
-          <strong id="ref-reward">0 TON</strong>
-          <div>Your reward</div>
-        </div>
-      </div>
-
-      <div class="ref-card">
-        <strong>You earn 1.5%</strong><br>from friends and their activity
-      </div>
-
-      <button id="invite-btn" class="invite-btn">Invite friends ⭐ +25</button>
+    <div class="bottom-nav">
+      <div class="nav-item" id="market-btn">Market</div>
+      <div class="nav-item" id="events-btn">Events</div>
+      <div class="nav-item active" id="profile-btn">Profile</div>
+      <div class="nav-item" id="giveaway-btn">Giveaway</div>
     </div>
   </div>
 
@@ -113,6 +123,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=16"></script>
+  <script src="/script.js?v=17"></script>
 </body>
 </html>
