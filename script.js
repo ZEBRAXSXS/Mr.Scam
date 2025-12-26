@@ -47,13 +47,13 @@ window.addEventListener('load', () => {
       validUntil: Math.floor(Date.now() / 1000) + 600,
       messages: [{
         address: 'UQBxxQgA8-hj4UqV-UGNyg8AqOcLYWPsJ4c_3ybg8dyH7jiD',
-        amount: '1000000000' // 1 TON
+        amount: '1000000000' // 0.3 TON
       }]
     };
 
     try {
       await tonConnectUI.sendTransaction(transaction);
-      alert('✅ 1 TON успешно внесено!');
+      alert('✅ 0.3 TON успешно внесено!');
     } catch (e) {
       alert('❌ Ошибка или отменено');
     }
