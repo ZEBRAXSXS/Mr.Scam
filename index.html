@@ -5,24 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mr. Scam Game</title>
   <style>
-    body { margin:0; padding:0; background:#f8f9fa; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
-    .header { background:#fff; text-align:center; padding:20px; font-size:2em; font-weight:bold; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-    .container { flex:1; padding:20px; text-align:center; }
-    .card { background:#fff; border-radius:16px; padding:30px; box-shadow:0 4px 12px rgba(0,0,0,0.08); margin:20px 10px; }
-    #username { font-size:1.6em; font-weight:bold; margin-bottom:30px; }
-    #connect-container { margin:40px 0; }
-    .stats { display:flex; justify-content:space-around; margin:30px 0; }
-    .stat { background:#f0f0f0; padding:12px; border-radius:12px; flex:1; margin:0 8px; text-align:center; }
-    .stat strong { display:block; font-size:1.6em; color:#4caf50; }
-    .green-btn { background:#4caf50; color:#fff; border:none; padding:16px 32px; font-size:1.3em; border-radius:30px; cursor:pointer; width:90%; margin:20px auto; display:block; }
-    .tabs { display:flex; justify-content:center; margin:30px 0; }
-    .tab { background:#e0e0e0; padding:12px 24px; border-radius:25px; margin:0 8px; font-weight:bold; }
-    .tab.active { background:#4caf50; color:#fff; }
-    .bottom-nav { background:#fff; display:flex; justify-content:space-around; padding:15px 0; box-shadow:0 -2px 8px rgba(0,0,0,0.1); font-size:0.9em; }
-    .nav-item { color:#888; text-align:center; }
-    .nav-item.active { color:#4caf50; font-weight:bold; }
-    #payment-section { display:none; }
-    #blocked { display:none; text-align:center; padding:50px; font-size:1.5em; color:#333; background:#fff; min-height:100vh; }
+    body { margin:0; padding:0; background:#0f0f1a; color:#fff; font-family:-apple-system,system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; }
+    .header { background:#0f0f1a; padding:15px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e1e2d; }
+    .header-title { font-size:1.4em; font-weight:bold; }
+    .stars-balance { background:#1e1e2d; padding:8px 16px; border-radius:20px; font-weight:bold; font-size:1.1em; }
+    .stars-balance img { width:20px; vertical-align:middle; margin-right:6px; }
+    .profile-section { padding:20px; background:#141424; }
+    .profile-card { background:#1e1e2d; border-radius:16px; padding:16px; display:flex; align-items:center; justify-content:space-between; }
+    .profile-info { display:flex; align-items:center; }
+    .avatar { width:60px; height:60px; border-radius:50%; margin-right:16px; object-fit:cover; }
+    .username { font-size:1.3em; font-weight:bold; }
+    .status { color:#888; font-size:0.9em; }
+    .connect-btn { background:#2d2d44; padding:10px 20px; border-radius:12px; font-size:0.9em; }
+    .balance-card { background:#1e1e2d; border-radius:16px; padding:16px; margin:16px 0; text-align:center; }
+    .balance-amount { font-size:2em; font-weight:bold; color:#6e56ff; }
+    .menu { padding:10px 0; }
+    .menu-item { display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:#1e1e2d; border-radius:12px; margin:10px 0; }
+    .menu-icon { font-size:1.4em; margin-right:12px; }
+    .referrals { padding:20px; }
+    .ref-card { background:#1e1e2d; border-radius:16px; padding:16px; margin:10px 0; }
+    .ref-stats { display:flex; justify-content:space-between; margin-bottom:20px; }
+    .ref-stat { text-align:center; }
+    .ref-stat strong { font-size:1.6em; display:block; }
+    .invite-btn { background:linear-gradient(90deg, #6e56ff, #9d7aff); color:#fff; border:none; padding:16px; border-radius:16px; font-size:1.3em; font-weight:bold; width:100%; margin-top:20px; }
+    .bottom-nav { background:#0f0f1a; display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid #1e1e2d; }
+    .nav-item { text-align:center; color:#888; font-size:0.9em; }
+    .nav-item.active { color:#6e56ff; font-weight:bold; }
+    #blocked { display:none; text-align:center; padding:50px; background:#0f0f1a; min-height:100vh; color:#fff; }
+    #app { flex:1; display:flex; flex-direction:column; }
   </style>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
@@ -31,47 +41,84 @@
 <body>
 
   <div id="app">
-    <div class="header">MR. SCAM GAME</div>
-
-    <div class="container">
-      <div class="card">
-        <div id="username">Профиль: Загрузка...</div>
-        <div id="connect-container"></div>
+    <!-- Header -->
+    <div class="header">
+      <div class="header-title">Mr. Scam Game 😈</div>
+      <div class="stars-balance">
+        <img src="https://telegram.org/img/stars/logo_stars.png" alt="⭐"> <span id="stars-balance">0</span>
       </div>
-
-      <div class="stats">
-        <div class="stat"><strong>0.00</strong> Wallet</div>
-        <div class="stat"><strong>0</strong> Volume</div>
-        <div class="stat"><strong>0</strong> Referrals</div>
-      </div>
-
-      <div class="tabs">
-        <div class="tab active">Stickers</div>
-        <div class="tab">Gifts</div>
-        <div class="tab">+</div>
-      </div>
-
-      <div id="payment-section">
-        <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
-      </div>
-
-      <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star (поддержка разработчику)</button>
     </div>
 
+    <!-- Profile -->
+    <div class="profile-section">
+      <div class="profile-card">
+        <div class="profile-info">
+          <img id="user-avatar" src="https://via.placeholder.com/60" class="avatar">
+          <div>
+            <div id="username" class="username">Загрузка...</div>
+            <div class="status">Not connected</div>
+          </div>
+        </div>
+        <div id="connect-container" class="connect-btn">Connect</div>
+      </div>
+
+      <div class="balance-card">
+        <div class="balance-amount" id="game-balance">0.00</div>
+        <div>Game Balance</div>
+      </div>
+
+      <div class="menu">
+        <div class="menu-item">
+          <span class="menu-icon">📰</span> News <span>></span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">💬</span> Support <span>></span>
+        </div>
+        <div class="menu-item">
+          <span class="menu-icon">⚙️</span> Settings <span>></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Referrals -->
+    <div class="referrals">
+      <h2>Referrals</h2>
+      <div class="ref-stats">
+        <div class="ref-stat">
+          <strong id="invited-friends">0</strong>
+          <div>Invited friends</div>
+        </div>
+        <div class="ref-stat">
+          <strong id="ref-reward">0</strong>
+          <div>Your reward</div>
+        </div>
+      </div>
+
+      <div class="ref-card">
+        <strong>You earn 1.5%</strong><br>
+        from friends and their activity
+      </div>
+
+      <button class="invite-btn">
+        Invite friends ⭐ +25
+      </button>
+    </div>
+
+    <!-- Bottom Nav -->
     <div class="bottom-nav">
       <div class="nav-item">Market</div>
       <div class="nav-item">Events</div>
       <div class="nav-item active">Profile</div>
-      <div class="nav-item">Giveaway</div>
+      <div class="nav-item">Wallet</div>
     </div>
   </div>
 
   <div id="blocked">
     <h1>🚫 Доступ запрещён</h1>
     <p>Mr. Scam Game работает только внутри Telegram.</p>
-    <p>Откройте через бота и наслаждайтесь игрой 😈</p>
+    <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=13"></script>
+  <script src="/script.js?v=14"></script>
 </body>
 </html>
