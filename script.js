@@ -28,16 +28,41 @@ window.addEventListener('load', () => {
     actionsConfiguration: { twaReturnUrl: 'https://t.me/mrscam_test_bot' }
   });
 
+  // Рендерим кнопку без лишнего текста
+  tonConnectUI.renderButton({
+    containerId: 'connect-container'
+  });
+
   let connectedWallet = null;
   tonConnectUI.onStatusChange(wallet => {
+    const dot = document.getElementById('status-dot');
+    const lottie = document.getElementById('wallet-lottie');
+    const container = document.getElementById('connect-container');
+
     if (wallet) {
       connectedWallet = wallet.account.address;
-      const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
-      const shortAddr = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
-      document.getElementById('wallet-address').textContent = shortAddr;
+      if (dot) {
+        dot.classList.remove('status-off');
+        dot.classList.add('status-on');
+      }
+      if (lottie) {
+        lottie.classList.add('connected');
+      }
+      if (container) {
+        container.classList.add('connected');
+      }
     } else {
       connectedWallet = null;
-      document.getElementById('wallet-address').textContent = 'Not connected';
+      if (dot) {
+        dot.classList.remove('status-on');
+        dot.classList.add('status-off');
+      }
+      if (lottie) {
+        lottie.classList.remove('connected');
+      }
+      if (container) {
+        container.classList.remove('connected');
+      }
     }
   });
 
