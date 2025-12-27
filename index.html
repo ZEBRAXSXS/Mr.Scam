@@ -1,202 +1,157 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mr. Scam</title>
-  <style>
-    * { -webkit-tap-highlight-color: transparent; outline: none; }
-    :root {
-      --bg: #0a0a1a;
-      --card: #121225;
-      --text: #e0e0ff;
-      --text-sec: #8888aa;
-      --accent-start: #5e72e4;
-      --accent-end: #8ab4f8;
-      --shadow: rgba(94, 114, 228, 0.1);
-    }
-    body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family:-apple-system,system-ui,sans-serif; height:100vh; display:flex; flex-direction:column; overflow:hidden; }
-    #app { flex:1; display:flex; flex-direction:column; overflow:hidden; }
-    .header { padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; flex-shrink:0; }
-    .header-title { display:flex; align-items:center; gap:10px; font-size:1.5em; font-weight:700; }
-    .logo-sticker { width:38px; height:38px; }
-    .balances { display:flex; align-items:center; }
-    .combined-balance { background:var(--card); padding:10px 16px; border-radius:20px; border:1px solid #1e2030; display:flex; align-items:center; gap:16px; box-shadow:0 4px 12px var(--shadow); }
-    .balance-item { display:flex; align-items:center; gap:8px; font-size:0.95em; font-weight:600; }
-    .ton-icon { width:24px; height:24px; }
-    .mrscam-icon-container { position:relative; }
-    .mrscam-icon { width:24px; height:24px; border-radius:50%; object-fit:cover; }
-    @keyframes pulse-icon {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-    .mrscam-icon-pulse { animation: pulse-icon 2s infinite ease-in-out; }
-    .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:100px; }
-    .section { display:none; text-align:center; padding:20px; }
-    .section.active { display:block; }
-    .profile-card { background:var(--card); border-radius:18px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; }
-    .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
-    .avatar { width:60px; height:60px; border-radius:50%; margin-right:14px; object-fit:cover; flex-shrink:0; }
-    .user-details { min-width:0; flex:1; }
-    .username { font-size:1.3em; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } /* Юзернейм больше и жирнее */
-    #connect-container { background:var(--card); padding:10px 16px; border-radius:16px; font-size:1em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:180px; }
-    .payments { display:flex; flex-direction:column; gap:14px; margin-bottom:30px; }
-    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:12px; border-radius:20px; font-size:1em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
-    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:100; justify-content:center; align-items:center; }
-    .modal.active { display:flex; }
-    .modal-content { background:var(--card); border-radius:20px; padding:20px; width:90%; max-width:360px; text-align:center; box-shadow:0 8px 32px var(--shadow); }
-    .modal-title { font-size:1.4em; font-weight:700; margin-bottom:20px; }
-    .modal-input { background:var(--bg); color:var(--text); border:1px solid var(--text-sec); border-radius:12px; padding:12px; font-size:1em; width:100%; margin-bottom:20px; text-align:center; }
-    .modal-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.1em; font-weight:600; cursor:pointer; width:100%; }
-    .modal-close { margin-top:20px; color:var(--text-sec); font-size:0.9em; cursor:pointer; }
-    .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
-    .profile-tab { background:var(--card); padding:10px 20px; border-radius:25px; font-weight:600; flex:1; text-align:center; max-width:140px; }
-    .profile-tab.active { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; }
-    .profile-tab-content { display:none; text-align:center; }
-    .profile-tab-content.active { display:block; }
-    .profile-tab-content .section-sticker { width:180px; height:180px; margin:20px auto; }
-    .transactions { margin-top:30px; padding:16px; background:var(--card); border-radius:18px; box-shadow:0 4px 12px var(--shadow); margin-bottom:100px; }
-    .transactions-title { font-size:1.2em; font-weight:600; margin-bottom:12px; text-align:left; }
-    .transaction-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #1e2030; color:var(--text-sec); font-size:0.9em; }
-    .transaction-item:last-child { border-bottom:none; }
-    .section-sticker { width:220px; height:220px; margin:40px auto 20px; }
-    .section-text { font-size:1.3em; color:var(--text-sec); }
-    .bottom-nav { position:fixed; bottom:0; left:0; right:0; background:var(--bg); display:flex; justify-content:space-around; padding:12px 0 24px 0; border-top:1px solid #1e2030; z-index:10; }
-    .nav-item { display:flex; flex-direction:column; align-items:center; color:var(--text-sec); font-size:0.85em; cursor:pointer; gap:4px; }
-    .nav-item.active { color:#fff; font-weight:700; }
-    .nav-icon { font-size:1.4em; }
-    #blocked { display:none; text-align:center; padding:50px; background:var(--bg); min-height:100vh; color:var(--text); }
-  </style>
-  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Mr. Scam</title>
+<link rel="icon" href="/icon.png" />
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --bg:#0a0a1a; --card:#121225; --text:#e0e0ff; --muted:#8888aa;
+    --accent1:#5e72e4; --accent2:#8ab4f8; --shadow:rgba(94,114,228,0.12);
+  }
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto;min-height:100vh;display:flex;flex-direction:column}
+  #app{flex:1;display:flex;flex-direction:column;overflow:hidden}
+  .header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #161621}
+  .header-title{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem}
+  .balances{display:flex;align-items:center;gap:12px}
+  .combined-balance{background:var(--card);padding:8px 12px;border-radius:14px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 18px var(--shadow)}
+  .balance-item{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--text)}
+  .ton-icon{width:20px;height:20px}
+  .main-content{flex:1;overflow:auto;padding:16px}
+  .section{display:none;text-align:center}
+  .section.active{display:block}
+  .profile-card{background:var(--card);padding:14px;border-radius:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 6px 20px var(--shadow);margin-bottom:16px}
+  .profile-info{display:flex;align-items:center;gap:12px}
+  .avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;background:#222}
+  .username{font-weight:700;color:var(--text)}
+  .wallet-address{color:var(--muted);font-size:0.9rem}
+  #connect-container{min-width:140px}
+  .green-btn{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff;border:0;padding:12px;border-radius:12px;font-weight:700;cursor:pointer}
+  .profile-tabs{display:flex;gap:8px;justify-content:center;margin:12px 0}
+  .profile-tab{background:var(--card);padding:10px 14px;border-radius:20px;cursor:pointer}
+  .profile-tab.active{background:linear-gradient(135deg,var(--accent1),var(--accent2));color:#fff}
+  .profile-tab-content{display:none}
+  .profile-tab-content.active{display:block}
+  .transactions{margin-top:12px;background:var(--card);padding:12px;border-radius:12px}
+  .transaction-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #161621;color:var(--muted)}
+  .transaction-item:last-child{border-bottom:none}
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center;z-index:999}
+  .modal.active{display:flex}
+  .modal-content{width:92%;max-width:420px;background:var(--card);padding:18px;border-radius:12px}
+  .modal-input{width:100%;padding:12px;border-radius:10px;border:1px solid #21212b;background:transparent;color:var(--text);text-align:center;margin-bottom:12px}
+  .modal-title{font-weight:800;margin-bottom:8px}
+  .bottom-nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);display:flex;justify-content:space-around;padding:10px 0;border-top:1px solid #161621}
+  .nav-item{color:var(--muted);text-align:center;cursor:pointer}
+  .nav-item.active{color:var(--text);font-weight:800}
+</style>
+
+<!-- libs -->
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+<script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-
-  <div id="app">
-    <div class="header">
-      <div class="header-title">
-        <lottie-player src="/stickers/2_5361597813799030888.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
-        Mr. Scam
-      </div>
-      <div class="balances">
-        <div class="combined-balance">
-          <div class="balance-item">
-            <lottie-player src="/stickers/ton.tgs" background="transparent" speed="0.9" class="ton-icon" loop autoplay></lottie-player>
-            <span id="ton-balance">0.00</span>
-          </div>
-          <div class="balance-item">
-            <div class="mrscam-icon-container">
-              <img src="/stickers/IMG_20251226_235906_749.jpg" alt="Mr.Scam Token" class="mrscam-icon mrscam-icon-pulse">
-            </div>
-            <span id="mrscam-balance">0.00</span>
-          </div>
-        </div>
-      </div>
+<div id="app">
+  <div class="header">
+    <div class="header-title">
+      <lottie-player src="/stickers/2_5361597813799030888.tgs" background="transparent" speed="1" style="width:36px;height:36px" loop autoplay></lottie-player>
+      Mr. Scam
     </div>
-
-    <div class="main-content">
-      <div id="profile-section" class="section active">
-        <div class="profile-card">
-          <div class="profile-info">
-            <img id="user-avatar" src="" class="avatar">
-            <div class="user-details">
-              <div id="username" class="username">Загрузка...</div>
-            </div>
-          </div>
-          <div id="connect-container">Connect</div>
-        </div>
-
-        <div class="payments">
-          <button id="payment-btn" class="green-btn">Внести TON</button>
-          <button id="pay-stars-btn" class="green-btn">Поддержать Stars</button>
-        </div>
-
-        <div class="profile-tabs">
-          <div class="profile-tab active" data-tab="stickers-tab">Стикеры</div>
-          <div class="profile-tab" data-tab="gifts-tab">Подарки</div>
-        </div>
-
-        <div id="stickers-tab" class="profile-tab-content active">
-          <lottie-player src="/stickers/2_5361597813799030874.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
-          <p>Ваши стикеры 😈</p>
-        </div>
-
-        <div id="gifts-tab" class="profile-tab-content">
-          <lottie-player src="/stickers/2_5361597813799030875.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
-          <p>Ваши подарки 😈</p>
-        </div>
-
-        <div class="transactions">
-          <div class="transactions-title">История транзакций</div>
-          <div class="transaction-item"><span>+0.3 TON</span><span>27.12.2025</span></div>
-          <div class="transaction-item"><span>+1 Star</span><span>27.12.2025</span></div>
-          <div class="transaction-item"><span>Нет транзакций</span><span>-</span></div>
-        </div>
-      </div>
-
-      <div id="play-section" class="section">
-        <lottie-player src="/stickers/2_5361597813799030878.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
-        <p class="section-text">Здесь идёт разработка 😈</p>
-      </div>
-
-      <div id="staking-section" class="section">
-        <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
-        <p class="section-text">Здесь идёт разработка 😈</p>
-      </div>
-
-      <div id="tasks-section" class="section">
-        <lottie-player src="/stickers/2_5361597813799030886.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
-        <p class="section-text">Здесь идёт разработка 😈</p>
-      </div>
-    </div>
-
-    <div id="ton-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-title">Введите сумму TON</div>
-        <input type="number" id="ton-amount" class="modal-input" min="0.1" step="0.1" placeholder="0.3">
-        <button id="ton-submit" class="modal-btn">Отправить</button>
-        <div class="modal-close">Отмена</div>
-      </div>
-    </div>
-
-    <div id="stars-modal" class="modal">
-      <div class="modal-content">
-        <div class="modal-title">Введите количество Stars</div>
-        <input type="number" id="stars-amount" class="modal-input" min="1" step="1" placeholder="1">
-        <button id="stars-submit" class="modal-btn">Отправить</button>
-        <div class="modal-close">Отмена</div>
-      </div>
-    </div>
-
-    <div class="bottom-nav">
-      <div class="nav-item" id="market-btn">
-        <div class="nav-icon">🎮</div>
-        Играть
-      </div>
-      <div class="nav-item" id="events-btn">
-        <div class="nav-icon">📈</div>
-        Стейкинг
-      </div>
-      <div class="nav-item active" id="profile-btn">
-        <div class="nav-icon">👤</div>
-        Профиль
-      </div>
-      <div class="nav-item" id="giveaway-btn">
-        <div class="nav-icon">📋</div>
-        Задания
+    <div class="balances">
+      <div class="combined-balance">
+        <div class="balance-item"><lottie-player src="/stickers/ton.tgs" background="transparent" speed="0.9" style="width:20px;height:20px" loop autoplay></lottie-player><span id="wallet-ton-balance">--</span></div>
+        <div class="balance-item"><img src="/stickers/IMG_20251226_235906_749.jpg" style="width:24px;height:24px;border-radius:6px" /><span id="mrscam-balance">0.00</span></div>
       </div>
     </div>
   </div>
 
-  <div id="blocked">
-    <h1>Доступ запрещён</h1>
-    <p>Mr. Scam работает только внутри Telegram.</p>
-    <p>Откройте через бота 😈</p>
+  <div class="main-content">
+    <div id="profile-section" class="section active">
+      <div class="profile-card">
+        <div class="profile-info">
+          <img id="user-avatar" class="avatar" src="/stickers/default.jpg" alt="avatar" />
+          <div>
+            <div id="username" class="username">Загрузка...</div>
+            <div id="wallet-address" class="wallet-address"></div>
+          </div>
+        </div>
+        <div id="connect-container"></div>
+      </div>
+
+      <div style="display:flex;gap:10px;flex-direction:column;max-width:420px;margin:0 auto 8px;">
+        <button id="add-ton-btn" class="green-btn">Внести TON</button>
+        <button id="pay-stars-btn" class="green-btn">Поддержать Stars</button>
+      </div>
+
+      <div class="profile-tabs">
+        <div class="profile-tab active" data-tab="stickers-tab">Стикеры</div>
+        <div class="profile-tab" data-tab="gifts-tab">Подарки</div>
+      </div>
+
+      <div id="stickers-tab" class="profile-tab-content active">
+        <lottie-player src="/stickers/2_5361597813799030874.tgs" background="transparent" speed="1" style="width:160px;height:160px;margin:10px auto" loop autoplay></lottie-player>
+        <p>Ваши стикеры</p>
+      </div>
+      <div id="gifts-tab" class="profile-tab-content">
+        <lottie-player src="/stickers/2_5361597813799030875.tgs" background="transparent" speed="1" style="width:160px;height:160px;margin:10px auto" loop autoplay></lottie-player>
+        <p>Ваши подарки</p>
+      </div>
+
+      <div class="transactions" style="max-width:720px;margin:18px auto">
+        <div class="transactions-title">История транзакций</div>
+        <div id="tx-list">
+          <div class="transaction-item"><span>Пока нет транзакций</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="play-section" class="section">
+      <lottie-player src="/stickers/2_5361597813799030878.tgs" background="transparent" speed="1" style="width:200px;height:200px;margin:20px auto" loop autoplay></lottie-player>
+      <p>Здесь идёт разработка 😈</p>
+    </div>
+
+    <div id="staking-section" class="section">
+      <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" style="width:200px;height:200px;margin:20px auto" loop autoplay></lottie-player>
+      <p>Здесь идёт разработка 😈</p>
+    </div>
+
+    <div id="tasks-section" class="section">
+      <lottie-player src="/stickers/2_5361597813799030886.tgs" background="transparent" speed="1" style="width:200px;height:200px;margin:20px auto" loop autoplay></lottie-player>
+      <p>Здесь идёт разработка 😈</p>
+    </div>
   </div>
 
-  <script src="/script.js?v=53"></script>
+  <!-- TON modal -->
+  <div id="ton-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-title">Внесите TON</div>
+      <input id="ton-amount" class="modal-input" type="number" min="0.1" step="0.1" placeholder="0.3" />
+      <button id="ton-submit" class="modal-btn">Отправить</button>
+      <div class="modal-close" id="ton-cancel" style="text-align:center;margin-top:12px;color:var(--muted);cursor:pointer">Отмена</div>
+    </div>
+  </div>
+
+  <!-- Stars modal -->
+  <div id="stars-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-title">Поддержать Stars</div>
+      <input id="stars-amount" class="modal-input" type="number" min="1" step="1" placeholder="1" />
+      <button id="stars-submit" class="modal-btn">Оплатить</button>
+      <div class="modal-close" id="stars-cancel" style="text-align:center;margin-top:12px;color:var(--muted);cursor:pointer">Отмена</div>
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active" id="profile-btn" data-section="profile-section">👤<br>Профиль</div>
+    <div class="nav-item" id="market-btn" data-section="play-section">🎮<br>Играть</div>
+    <div class="nav-item" id="events-btn" data-section="staking-section">📈<br>Стейкинг</div>
+    <div class="nav-item" id="giveaway-btn" data-section="tasks-section">📋<br>Задания</div>
+  </div>
+</div>
+
+<script src="/script.js?v=140"></script>
 </body>
 </html>
