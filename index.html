@@ -22,17 +22,17 @@
     .header-title { display:flex; align-items:center; gap:10px; font-size:1.5em; font-weight:700; }
     .logo-sticker { width:38px; height:38px; }
     .balances { display:flex; align-items:center; }
-    .combined-balance { display:flex; flex-direction:column; align-items:center; background:transparent; padding:8px 16px; }
-    .balance-icons { display:flex; align-items:center; gap:14px; margin-bottom:6px; }
+    .combined-balance { background:var(--card); padding:10px 16px; border-radius:20px; display:flex; flex-direction:column; align-items:center; box-shadow:0 4px 12px var(--shadow); }
+    .balance-icons { display:flex; align-items:center; gap:14px; margin-bottom:8px; }
     .ton-icon { width:26px; height:26px; }
     .mrscam-icon-container { position:relative; }
     .mrscam-icon { width:30px; height:30px; border-radius:50%; object-fit:cover; }
     @keyframes pulse-icon {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(94, 114, 228, 0); }
-      70% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(94, 114, 228, 0.3); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(94, 114, 228, 0); }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
     }
-    .mrscam-icon-pulse { animation: pulse-icon 2s infinite; }
+    .mrscam-icon-pulse { animation: pulse-icon 2s infinite ease-in-out; }
     .balance-values { display:flex; gap:24px; font-size:0.95em; font-weight:600; }
     .balance-value { text-align:center; }
     .balance-value span { display:block; font-size:0.8em; color:var(--text-sec); margin-top:2px; }
@@ -102,7 +102,6 @@
     </div>
 
     <div class="main-content">
-      <!-- Профиль -->
       <div id="profile-section" class="section active">
         <div class="profile-card">
           <div class="profile-info">
@@ -143,19 +142,16 @@
         </div>
       </div>
 
-      <!-- Играть -->
       <div id="play-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030878.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
 
-      <!-- Стейкинг -->
       <div id="staking-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
 
-      <!-- Задания -->
       <div id="tasks-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030886.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка 😈</p>
@@ -188,6 +184,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=36"></script>
+  <script src="/script.js?v=37"></script>
 </body>
 </html>
