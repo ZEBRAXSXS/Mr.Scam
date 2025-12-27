@@ -48,8 +48,8 @@
     .modal.active { display:flex; }
     .modal-content { background:var(--card); border-radius:20px; padding:20px; width:90%; max-width:360px; text-align:center; box-shadow:0 8px 32px var(--shadow); }
     .modal-title { font-size:1.4em; font-weight:700; margin-bottom:20px; }
-    .modal-options { display:flex; flex-direction:column; gap:12px; }
-    .modal-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.1em; font-weight:600; cursor:pointer; }
+    .modal-input { background:var(--bg); color:var(--text); border:1px solid var(--text-sec); border-radius:12px; padding:12px; font-size:1em; width:100%; margin-bottom:20px; text-align:center; }
+    .modal-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.1em; font-weight:600; cursor:pointer; width:100%; }
     .modal-close { margin-top:20px; color:var(--text-sec); font-size:0.9em; cursor:pointer; }
     .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
     .profile-tab { background:var(--card); padding:10px 20px; border-radius:25px; font-weight:600; flex:1; text-align:center; max-width:140px; }
@@ -80,7 +80,7 @@
   <div id="app">
     <div class="header">
       <div class="header-title">
-        <lottie-player src="/stickers/2_5361597813799030889.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
+        <lottie-player src="/stickers/2_5361597813799030888.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
         Mr. Scam
       </div>
       <div class="balances">
@@ -156,30 +156,20 @@
       </div>
     </div>
 
-    <!-- Модальное окно для TON -->
     <div id="ton-modal" class="modal">
       <div class="modal-content">
-        <div class="modal-title">Выберите сумму TON</div>
-        <div class="modal-options">
-          <button class="modal-btn" data-amount="0.1">0.1 TON</button>
-          <button class="modal-btn" data-amount="0.3">0.3 TON</button>
-          <button class="modal-btn" data-amount="0.5">0.5 TON</button>
-          <button class="modal-btn" data-amount="1.0">1.0 TON</button>
-        </div>
+        <div class="modal-title">Введите сумму TON</div>
+        <input type="number" id="ton-amount" class="modal-input" min="0.1" step="0.1" placeholder="0.3">
+        <button id="ton-submit" class="modal-btn">Отправить</button>
         <div class="modal-close">Отмена</div>
       </div>
     </div>
 
-    <!-- Модальное окно для Stars -->
     <div id="stars-modal" class="modal">
       <div class="modal-content">
-        <div class="modal-title">Выберите количество Stars</div>
-        <div class="modal-options">
-          <button class="modal-btn" data-stars="1">1 Star</button>
-          <button class="modal-btn" data-stars="5">5 Stars</button>
-          <button class="modal-btn" data-stars="10">10 Stars</button>
-          <button class="modal-btn" data-stars="25">25 Stars</button>
-        </div>
+        <div class="modal-title">Введите количество Stars</div>
+        <input type="number" id="stars-amount" class="modal-input" min="1" step="1" placeholder="1">
+        <button id="stars-submit" class="modal-btn">Отправить</button>
         <div class="modal-close">Отмена</div>
       </div>
     </div>
@@ -206,10 +196,10 @@
 
   <div id="blocked">
     <h1>🚫 Доступ запрещён</h1>
-    <p>Mr. Scam работает только внутри Telegram.</p>
+    <p>Mr. Scam Game работает только внутри Telegram.</p>
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=40"></script>
+  <script src="/script.js?v=41"></script>
 </body>
 </html>
