@@ -35,20 +35,7 @@
     .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:100px; }
     .section { display:none; text-align:center; padding:20px; }
     .section.active { display:block; }
-    /* Карточка профиля — ещё шире (99%), чуть уже по бокам (4px), ещё ближе к хедеру (4px сверху) */
-    .profile-card { 
-      background:var(--card); 
-      border-radius:18px; 
-      padding:10px; 
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between; 
-      gap:10px; 
-      box-shadow:0 4px 12px var(--shadow); 
-      margin:4px 4px; /* Минимальный зазор сверху и по бокам */
-      max-width:99%; /* Ещё шире, почти как хедер */
-      align-self:center; 
-    }
+    .profile-card { background:var(--card); border-radius:18px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; box-shadow:0 4px 12px var(--shadow); margin:4px 4px; max-width:99%; align-self:center; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
     .avatar { width:60px; height:60px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
     .user-details { min-width:0; flex:1; }
@@ -83,8 +70,7 @@
   </style>
   <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
-  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+  <script type="module" src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
 
@@ -204,7 +190,6 @@
     </div>
   </div>
 
-  <!-- Блокировка для браузера — стикер из стейкинга + кнопка на бота -->
   <div id="blocked">
     <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
     <h1>Доступ запрещён</h1>
@@ -212,6 +197,6 @@
     <a href="https://t.me/MrScam_bot" class="green-btn" style="display:inline-block; width:90%; max-width:300px; text-decoration:none;">Mr. Scam</a>
   </div>
 
-  <script src="/script.js?v=53"></script>
+  <script type="module" src="/script.js?v=53"></script>
 </body>
 </html>
