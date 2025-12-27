@@ -22,8 +22,8 @@
     .header-title { display:flex; align-items:center; gap:10px; font-size:1.5em; font-weight:700; }
     .logo-sticker { width:38px; height:38px; }
     .balances { display:flex; align-items:center; }
-    .combined-balance { background:var(--card); padding:10px 16px; border-radius:20px; border:1px solid #1e2030; display:flex; flex-direction:column; align-items:center; box-shadow:0 4px 12px var(--shadow); }
-    .balance-icons { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+    .combined-balance { background:var(--card); padding:10px 16px; border-radius:20px; border:1px solid #1e2030; display:flex; align-items:center; gap:16px; box-shadow:0 4px 12px var(--shadow); }
+    .balance-item { display:flex; align-items:center; gap:8px; font-size:0.95em; font-weight:600; }
     .ton-icon { width:24px; height:24px; }
     .mrscam-icon-container { position:relative; }
     .mrscam-icon { width:24px; height:24px; border-radius:50%; object-fit:cover; }
@@ -33,9 +33,6 @@
       100% { transform: scale(1); }
     }
     .mrscam-icon-pulse { animation: pulse-icon 2s infinite ease-in-out; }
-    .balance-values { display:flex; gap:20px; font-size:0.95em; font-weight:600; }
-    .balance-value { text-align:center; }
-    .balance-value span { display:block; font-size:0.8em; color:var(--text-sec); margin-top:2px; }
     .section { display:none; padding:20px; text-align:center; }
     .section.active { display:block; }
     .profile-card { background:var(--card); border-radius:18px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; }
@@ -81,21 +78,15 @@
       </div>
       <div class="balances">
         <div class="combined-balance">
-          <div class="balance-icons">
+          <div class="balance-item">
             <lottie-player src="/stickers/ton.tgs" background="transparent" speed="0.9" class="ton-icon" loop autoplay></lottie-player>
+            <span id="ton-balance">0.00</span>
+          </div>
+          <div class="balance-item">
             <div class="mrscam-icon-container">
               <img src="/stickers/IMG_20251226_235906_749.jpg" alt="Mr.Scam Token" class="mrscam-icon mrscam-icon-pulse">
             </div>
-          </div>
-          <div class="balance-values">
-            <div class="balance-value">
-              <span id="ton-balance">0.00</span>
-              <span>TON</span>
-            </div>
-            <div class="balance-value">
-              <span id="mrscam-balance">0.00</span>
-              <span>Mr.Scam</span>
-            </div>
+            <span id="mrscam-balance">0.00</span>
           </div>
         </div>
       </div>
@@ -184,6 +175,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=38"></script>
+  <script src="/script.js?v=39"></script>
 </body>
 </html>
