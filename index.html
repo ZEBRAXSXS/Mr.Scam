@@ -35,12 +35,25 @@
     .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:100px; }
     .section { display:none; text-align:center; padding:20px; }
     .section.active { display:block; }
-    .profile-card { background:var(--card); border-radius:18px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; box-shadow:0 4px 12px var(--shadow); margin:4px 4px; max-width:99%; align-self:center; }
+    /* Карточка профиля — ещё шире (99%), чуть уже по бокам (4px), ещё ближе к хедеру (4px сверху) */
+    .profile-card { 
+      background:var(--card); 
+      border-radius:18px; 
+      padding:10px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      gap:10px; 
+      box-shadow:0 4px 12px var(--shadow); 
+      margin:4px 4px; /* Минимальный зазор сверху и по бокам */
+      max-width:99%; /* Ещё шире, почти как хедер */
+      align-self:center; 
+    }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
     .avatar { width:60px; height:60px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
     .user-details { min-width:0; flex:1; }
     .username { font-size:1.3em; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    #connect-container { margin:0; } /* Текст "Connect" убран, контейнер чистый для кнопки SDK */
+    #connect-container { margin:0; }
     .payments { display:flex; flex-direction:column; gap:14px; margin:20px 0 30px 0; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:12px; border-radius:20px; font-size:1em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
     .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:100; justify-content:center; align-items:center; }
@@ -191,6 +204,7 @@
     </div>
   </div>
 
+  <!-- Блокировка для браузера — стикер из стейкинга + кнопка на бота -->
   <div id="blocked">
     <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
     <h1>Доступ запрещён</h1>
