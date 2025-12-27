@@ -32,8 +32,8 @@
       100% { transform: scale(1); }
     }
     .mrscam-icon-pulse { animation: pulse-icon 2s infinite ease-in-out; }
-    .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
-    .section { display:none; text-align:center; padding:20px; }
+    .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:100px; } /* Добавлен padding-bottom для нижней навигации */
+    .section { display:none; text-align:center; }
     .section.active { display:block; }
     .profile-card { background:var(--card); border-radius:18px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
@@ -57,7 +57,7 @@
     .profile-tab-content { display:none; text-align:center; }
     .profile-tab-content.active { display:block; }
     .profile-tab-content .section-sticker { width:180px; height:180px; margin:20px auto; }
-    .transactions { margin-top:30px; padding:16px; background:var(--card); border-radius:18px; box-shadow:0 4px 12px var(--shadow); }
+    .transactions { margin-top:30px; padding:16px; background:var(--card); border-radius:18px; box-shadow:0 4px 12px var(--shadow); margin-bottom:100px; } /* Добавлен margin-bottom для скролла */
     .transactions-title { font-size:1.2em; font-weight:600; margin-bottom:12px; text-align:left; }
     .transaction-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #1e2030; color:var(--text-sec); font-size:0.9em; }
     .transaction-item:last-child { border-bottom:none; }
@@ -199,6 +199,6 @@
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=50"></script>
+  <script src="/script.js?v=51"></script>
 </body>
 </html>
