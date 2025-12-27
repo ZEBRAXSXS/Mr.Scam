@@ -32,30 +32,18 @@
       100% { transform: scale(1); }
     }
     .mrscam-icon-pulse { animation: pulse-icon 2s infinite ease-in-out; }
-    .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:100px; }
+    .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
     .section { display:none; text-align:center; padding:20px; }
     .section.active { display:block; }
-    /* Карточка профиля — ещё шире (99%), чуть уже по бокам (4px), ещё ближе к хедеру (4px сверху) */
-    .profile-card { 
-      background:var(--card); 
-      border-radius:18px; 
-      padding:10px; 
-      display:flex; 
-      align-items:center; 
-      justify-content:space-between; 
-      gap:10px; 
-      box-shadow:0 4px 12px var(--shadow); 
-      margin:4px 4px; /* Минимальный зазор сверху и по бокам */
-      max-width:99%; /* Ещё шире, почти как хедер */
-      align-self:center; 
-    }
+    .profile-card { background:var(--card); border-radius:18px; padding:16px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 4px 12px var(--shadow); margin-bottom:20px; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
-    .avatar { width:60px; height:60px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
+    .avatar { width:60px; height:60px; border-radius:50%; margin-right:14px; object-fit:cover; flex-shrink:0; }
     .user-details { min-width:0; flex:1; }
-    .username { font-size:1.3em; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    #connect-container { margin:0; }
-    .payments { display:flex; flex-direction:column; gap:14px; margin:20px 0 30px 0; }
-    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:12px; border-radius:20px; font-size:1em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
+    .username { font-size:1.1em; font-weight:500; color:var(--text-sec); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .wallet-address { color:var(--text-sec); font-size:0.85em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-top:2px; }
+    #connect-container { background:var(--card); padding:8px 16px; border-radius:14px; font-size:0.95em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); }
+    .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
+    .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
     .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:100; justify-content:center; align-items:center; }
     .modal.active { display:flex; }
     .modal-content { background:var(--card); border-radius:20px; padding:20px; width:90%; max-width:360px; text-align:center; box-shadow:0 8px 32px var(--shadow); }
@@ -69,7 +57,7 @@
     .profile-tab-content { display:none; text-align:center; }
     .profile-tab-content.active { display:block; }
     .profile-tab-content .section-sticker { width:180px; height:180px; margin:20px auto; }
-    .transactions { margin-top:30px; padding:16px; background:var(--card); border-radius:18px; box-shadow:0 4px 12px var(--shadow); margin-bottom:100px; }
+    .transactions { margin-top:30px; padding:16px; background:var(--card); border-radius:18px; box-shadow:0 4px 12px var(--shadow); }
     .transactions-title { font-size:1.2em; font-weight:600; margin-bottom:12px; text-align:left; }
     .transaction-item { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #1e2030; color:var(--text-sec); font-size:0.9em; }
     .transaction-item:last-child { border-bottom:none; }
@@ -117,9 +105,10 @@
             <img id="user-avatar" src="" class="avatar">
             <div class="user-details">
               <div id="username" class="username">Загрузка...</div>
+              <div id="wallet-address" class="wallet-address">Not connected</div>
             </div>
           </div>
-          <div id="connect-container"></div>
+          <div id="connect-container">Connect</div>
         </div>
 
         <div class="payments">
@@ -134,12 +123,12 @@
 
         <div id="stickers-tab" class="profile-tab-content active">
           <lottie-player src="/stickers/2_5361597813799030874.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
-          <p>Ваши стикеры</p>
+          <p>Ваши стикеры 😈</p>
         </div>
 
         <div id="gifts-tab" class="profile-tab-content">
           <lottie-player src="/stickers/2_5361597813799030875.tgs" background="transparent" speed="1" style="width:180px; height:180px; margin:20px auto;" loop autoplay></lottie-player>
-          <p>Ваши подарки</p>
+          <p>Ваши подарки 😈</p>
         </div>
 
         <div class="transactions">
@@ -152,17 +141,17 @@
 
       <div id="play-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030878.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
-        <p class="section-text">Здесь идёт разработка</p>
+        <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
 
       <div id="staking-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
-        <p class="section-text">Здесь идёт разработка</p>
+        <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
 
       <div id="tasks-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030886.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
-        <p class="section-text">Здесь идёт разработка</p>
+        <p class="section-text">Здесь идёт разработка 😈</p>
       </div>
     </div>
 
@@ -204,14 +193,12 @@
     </div>
   </div>
 
-  <!-- Блокировка для браузера — стикер из стейкинга + кнопка на бота -->
   <div id="blocked">
-    <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
     <h1>Доступ запрещён</h1>
     <p>Mr. Scam работает только внутри Telegram.</p>
-    <a href="https://t.me/MrScam_bot" class="green-btn" style="display:inline-block; width:90%; max-width:300px; text-decoration:none;">Mr. Scam</a>
+    <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=53"></script>
+  <script src="/script.js?v=50"></script>
 </body>
 </html>
