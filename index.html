@@ -35,7 +35,7 @@
     .main-content { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; padding-bottom:100px; }
     .section { display:none; text-align:center; padding:20px; }
     .section.active { display:block; }
-    /* Карточка профиля — почти в упор к хедеру, почти как хедер по ширине, но чуть уже */
+    /* Карточка профиля — ещё шире (99%), чуть уже по бокам (4px), ещё ближе к хедеру (4px сверху) */
     .profile-card { 
       background:var(--card); 
       border-radius:18px; 
@@ -45,8 +45,8 @@
       justify-content:space-between; 
       gap:10px; 
       box-shadow:0 4px 12px var(--shadow); 
-      margin:4px 8px; /* Почти в упор к хедеру (4px сверху), боковые отступы 8px */
-      max-width:98%; /* Почти как хедер по ширине, но чуть уже */
+      margin:4px 4px; /* Минимальный зазор сверху и по бокам */
+      max-width:99%; /* Ещё шире, почти как хедер */
       align-self:center; 
     }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
