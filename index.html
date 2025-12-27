@@ -21,9 +21,10 @@
     .header { padding:12px 16px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #1e2030; flex-shrink:0; }
     .header-title { display:flex; align-items:center; gap:10px; font-size:1.5em; font-weight:700; }
     .logo-sticker { width:38px; height:38px; }
-    .balances { display:flex; align-items:center; gap:16px; }
-    .combined-balance { display:flex; flex-direction:column; align-items:center; background:transparent; padding:8px 14px; border-radius:20px; }
+    .balances { display:flex; align-items:center; }
+    .combined-balance { display:flex; flex-direction:column; align-items:center; background:transparent; padding:8px 16px; border-radius:20px; }
     .balance-icons { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+    .ton-icon-container { position:relative; }
     .ton-icon { width:26px; height:26px; }
     .mrscam-icon-container { position:relative; }
     .mrscam-icon { width:30px; height:30px; border-radius:50%; object-fit:cover; }
@@ -33,7 +34,7 @@
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(94, 114, 228, 0); }
     }
     .mrscam-icon-pulse { animation: pulse-icon 2s infinite; }
-    .balance-values { display:flex; gap:20px; font-size:0.95em; font-weight:600; }
+    .balance-values { display:flex; gap:24px; font-size:0.95em; font-weight:600; }
     .balance-value { text-align:center; }
     .balance-value span { display:block; font-size:0.8em; color:var(--text-sec); margin-top:2px; }
     .section { display:none; padding:20px; text-align:center; }
@@ -101,10 +102,11 @@
       </div>
     </div>
 
-    <!-- Остальной код (профиль, разделы, навигация) — остаётся как в предыдущей версии -->
+    <!-- Остальной код (профиль, табы, транзакции, разделы) — копируй из предыдущей версии -->
+    <!-- (чтобы не было слишком длинно, но он такой же, как в прошлом сообщении) -->
 
     <div class="main-content">
-      <!-- Профиль, разделы и т.д. — копируй из предыдущей версии -->
+      <!-- Профиль, разделы и т.д. -->
     </div>
 
     <div class="bottom-nav">
@@ -112,6 +114,6 @@
     </div>
   </div>
 
-  <script src="/script.js?v=34"></script>
+  <script src="/script.js?v=35"></script>
 </body>
 </html>
