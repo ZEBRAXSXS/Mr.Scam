@@ -16,49 +16,29 @@ window.addEventListener('load', async () => {
 
     // TON Connect
     let tonConnectUI, connectedWallet=null;
-    const walletBtn=document.getElementById('wallet-btn');
-    function setConnectedUI(addr){
-        if(addr){
-            walletBtn.textContent='Отключить';
-            walletBtn.className='disconnect-btn small';
-            document.getElementById('connect-status').textContent='Статус: подключено';
-            document.getElementById('wallet-address').textContent=addr.slice(0,6)+'...'+addr.slice(-4);
-            connectedWallet=addr;
-            updateWalletTonBalance(addr);
-        } else {
-            walletBtn.textContent='Подключить кошелёк';
-            walletBtn.className='connect-btn small';
-            document.getElementById('connect-status').textContent='Статус: не подключено';
-            document.getElementById('wallet-address').textContent='Not connected';
-            connectedWallet=null;
-            document.getElementById('wallet-ton-balance').textContent='--';
-        }
-    }
-
-    walletBtn.addEventListener('click', async ()=>{
-        if(connectedWallet){
-            try{ if(tonConnectUI.disconnect) await tonConnectUI.disconnect(); }catch{}
-            setConnectedUI(null);
-        } else {
-            try{ await tonConnectUI.connect(); }catch(e){ alert('Ошибка подключения'); }
-        }
-    });
 
     try{
-        tonConnectUI=new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl:'https://mr-scam.vercel.app/tonconnect-manifest.json',
-            buttonRootId:'connect-container'
+        tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
+            buttonRootId: 'connect-container'
         });
+
         tonConnectUI.onStatusChange(wallet=>{
-            if(wallet) setConnectedUI(wallet.account.address);
-            else setConnectedUI(null);
+            if(wallet){
+                connectedWallet = wallet.account.address;
+                document.getElementById('wallet-address').textContent = connectedWallet.slice(0,6)+'...'+connectedWallet.slice(-4);
+                updateWalletTonBalance(connectedWallet);
+            } else {
+                connectedWallet = null;
+                document.getElementById('wallet-address').textContent = '--';
+            }
         });
-    }catch(e){ console.error(e); }
+    } catch(e){ console.error('TonConnect error', e); }
 
     async function updateWalletTonBalance(addr){
         try{
-            const res=await fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${addr}`);
-            const data=await res.json();
+            const res = await fetch(`https://toncenter.com/api/v2/getAddressBalance?address=${addr}`);
+            const data = await res.json();
             if(data.ok) document.getElementById('wallet-ton-balance').textContent=(data.result/1e9).toFixed(3);
         }catch{ document.getElementById('wallet-ton-balance').textContent='--'; }
     }
