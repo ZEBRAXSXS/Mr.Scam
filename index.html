@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Mr. Scam Game</title>
+  <title>Mr. Scam</title>
   <style>
     * { -webkit-tap-highlight-color: transparent; outline: none; }
     :root {
@@ -44,6 +44,13 @@
     #connect-container { background:var(--card); padding:8px 16px; border-radius:14px; font-size:0.95em; font-weight:600; color:var(--text); box-shadow:0 2px 6px var(--shadow); }
     .payments { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
     .green-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:15px; border-radius:18px; font-size:1.15em; font-weight:600; cursor:pointer; box-shadow:0 4px 12px var(--shadow); }
+    .modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:100; justify-content:center; align-items:center; }
+    .modal.active { display:flex; }
+    .modal-content { background:var(--card); border-radius:20px; padding:20px; width:90%; max-width:360px; text-align:center; box-shadow:0 8px 32px var(--shadow); }
+    .modal-title { font-size:1.4em; font-weight:700; margin-bottom:20px; }
+    .modal-options { display:flex; flex-direction:column; gap:12px; }
+    .modal-btn { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; border:none; padding:14px; border-radius:16px; font-size:1.1em; font-weight:600; cursor:pointer; }
+    .modal-close { margin-top:20px; color:var(--text-sec); font-size:0.9em; cursor:pointer; }
     .profile-tabs { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
     .profile-tab { background:var(--card); padding:10px 20px; border-radius:25px; font-weight:600; flex:1; text-align:center; max-width:140px; }
     .profile-tab.active { background:linear-gradient(135deg, var(--accent-start), var(--accent-end)); color:#fff; }
@@ -73,8 +80,8 @@
   <div id="app">
     <div class="header">
       <div class="header-title">
-        <lottie-player src="/stickers/2_5361597813799030887.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
-        Mr. Scam Game
+        <lottie-player src="/stickers/2_5361597813799030889.tgs" background="transparent" speed="1" class="logo-sticker" loop autoplay></lottie-player>
+        Mr. Scam
       </div>
       <div class="balances">
         <div class="combined-balance">
@@ -106,8 +113,8 @@
         </div>
 
         <div class="payments">
-          <button id="payment-btn" class="green-btn">💸 Внести 0.3 TON в игру</button>
-          <button id="pay-stars-btn" class="green-btn">⭐ Оплатить 1 Telegram Star</button>
+          <button id="payment-btn" class="green-btn">💸 Внести TON</button>
+          <button id="pay-stars-btn" class="green-btn">⭐ Поддержать Stars</button>
         </div>
 
         <div class="profile-tabs">
@@ -149,6 +156,34 @@
       </div>
     </div>
 
+    <!-- Модальное окно для TON -->
+    <div id="ton-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-title">Выберите сумму TON</div>
+        <div class="modal-options">
+          <button class="modal-btn" data-amount="0.1">0.1 TON</button>
+          <button class="modal-btn" data-amount="0.3">0.3 TON</button>
+          <button class="modal-btn" data-amount="0.5">0.5 TON</button>
+          <button class="modal-btn" data-amount="1.0">1.0 TON</button>
+        </div>
+        <div class="modal-close">Отмена</div>
+      </div>
+    </div>
+
+    <!-- Модальное окно для Stars -->
+    <div id="stars-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-title">Выберите количество Stars</div>
+        <div class="modal-options">
+          <button class="modal-btn" data-stars="1">1 Star</button>
+          <button class="modal-btn" data-stars="5">5 Stars</button>
+          <button class="modal-btn" data-stars="10">10 Stars</button>
+          <button class="modal-btn" data-stars="25">25 Stars</button>
+        </div>
+        <div class="modal-close">Отмена</div>
+      </div>
+    </div>
+
     <div class="bottom-nav">
       <div class="nav-item" id="market-btn">
         <div class="nav-icon">🎮</div>
@@ -171,10 +206,10 @@
 
   <div id="blocked">
     <h1>🚫 Доступ запрещён</h1>
-    <p>Mr. Scam Game работает только внутри Telegram.</p>
+    <p>Mr. Scam работает только внутри Telegram.</p>
     <p>Откройте через бота 😈</p>
   </div>
 
-  <script src="/script.js?v=39"></script>
+  <script src="/script.js?v=40"></script>
 </body>
 </html>
