@@ -38,9 +38,8 @@
     .section.active { display:block; }
     .profile-card { background:var(--card); border-radius:18px; padding:10px; display:flex; align-items:center; justify-content:space-between; gap:10px; box-shadow:0 4px 12px var(--shadow); margin:4px 4px; max-width:99%; align-self:center; }
     .profile-info { display:flex; align-items:center; min-width:0; flex:1; }
-    .avatar-container { position:relative; }
     .avatar { width:60px; height:60px; border-radius:50%; margin-right:12px; object-fit:cover; flex-shrink:0; }
-    .premium-border { box-shadow: var(--premium-glow); border: 2px solid #ffd700; }
+    .premium-avatar { box-shadow: var(--premium-glow); border: 2px solid #ffd700; }
     .user-details { min-width:0; flex:1; }
     .username { font-size:1.3em; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     #connect-container { margin:0; }
@@ -104,9 +103,7 @@
       <div id="profile-section" class="section active">
         <div class="profile-card">
           <div class="profile-info">
-            <div class="avatar-container">
-              <img id="user-avatar" src="" class="avatar">
-            </div>
+            <img id="user-avatar" src="" class="avatar">
             <div class="user-details">
               <div id="username" class="username">Загрузка...</div>
             </div>
@@ -136,13 +133,12 @@
 
         <div class="transactions">
           <div class="transactions-title">История транзакций</div>
-          <div id="transactions-list">
-            <div class="transaction-item"><span>Нет транзакций</span><span>-</span></div>
-          </div>
+          <div class="transaction-item"><span>+0.3 TON</span><span>27.12.2025</span></div>
+          <div class="transaction-item"><span>+1 Star</span><span>27.12.2025</span></div>
+          <div class="transaction-item"><span>Нет транзакций</span><span>-</span></div>
         </div>
       </div>
 
-      <!-- Остальные разделы как были -->
       <div id="play-section" class="section">
         <lottie-player src="/stickers/2_5361597813799030878.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
         <p class="section-text">Здесь идёт разработка</p>
@@ -197,7 +193,7 @@
     </div>
   </div>
 
-  <!-- Блокировка для браузера -->
+  <!-- Блокировка для браузера — стикер из стейкинга + кнопка на бота -->
   <div id="blocked">
     <lottie-player src="/stickers/2_5361597813799030884.tgs" background="transparent" speed="1" class="section-sticker" loop autoplay></lottie-player>
     <h1>Доступ запрещён</h1>
