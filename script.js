@@ -10,55 +10,71 @@ window.addEventListener('load', () => {
   tg.expand();
   tg.ready();
 
-  // Аватар и имя
-  let username = 'Guest';
-  let avatarUrl = '';
-  if (tg.initDataUnsafe.user) {
-    const user = tg.initDataUnsafe.user;
-    username = user.username ? user.username : (user.first_name || 'User');
-    if (user.photo_url) avatarUrl = user.photo_url;
-  }
-  const usernameEl = document.getElementById('username');
-  const avatarEl = document.getElementById('user-avatar');
-  if (usernameEl) usernameEl.textContent = username;
-  if (avatarEl && avatarUrl) avatarEl.src = avatarUrl;
+  const user = tg.initDataUnsafe.user;
+  const userId = user.id;
+  const username = user.username ? user.username : (user.first_name || 'User');
+  const isPremium = user.is_premium || false;
+  const avatarUrl = user.photo_url || '';
 
-  // TonConnect
-  const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+  document.getElementById('username').textContent = username;
+  const avatarEl = document.getElementById('user-avatar');
+  if (avatarUrl) avatarEl.src = avatarUrl;
+
+  // Подсветка премиум
+  const avatarContainer = document.querySelector('.avatar-container');
+  if (isPremium) {
+    avatarEl.classList.add('premium-border');
+    avatarContainer.style.boxShadow = 'var(--premium-glow)';
+  }
+
+  // TON Connect
+  const tonConnectUI = new TonConnectUI({
     manifestUrl: 'https://mr-scam.vercel.app/tonconnect-manifest.json',
-    buttonRootId: 'connect-container',
-    actionsConfiguration: { twaReturnUrl: 'https://t.me/mrscam_test_bot' }
+    buttonRootId: 'connect-container'
   });
 
   let connectedWallet = null;
-  tonConnectUI.onStatusChange(wallet => {
-    const walletEl = document.getElementById('wallet-address');
-    if (!walletEl) return;
+  tonConnectUI.onStatusChange(async (wallet) => {
     if (wallet) {
       connectedWallet = wallet.account.address;
-      const cleanAddr = connectedWallet.replace(/[^a-zA-Z0-9]/g, '');
-      walletEl.textContent = cleanAddr.substring(0, 6) + '...' + cleanAddr.substring(cleanAddr.length - 4);
+      // Реальный баланс TON
+      const provider = tonConnectUI.provider;
+      const balance = await provider.getBalance(wallet.account.address);
+      const tonBalance = (balance / 1e9).toFixed(4);
+      document.getElementById('ton-balance').textContent = tonBalance;
+      document.getElementById('payment-section').style.display = 'block';
     } else {
       connectedWallet = null;
-      walletEl.textContent = 'Not connected';
+      document.getElementById('ton-balance').textContent = '0.00';
     }
   });
 
-  // Модальные окна
-  const tonModal = document.getElementById('ton-modal');
-  const starsModal = document.getElementById('stars-modal');
+  // История транзакций (локально)
+  const transactionsList = document.getElementById('transactions-list');
+  let transactions = JSON.parse(localStorage.getItem(`transactions_${userId}`) || '[]');
 
-  const closeModals = () => {
-    tonModal.classList.remove('active');
-    starsModal.classList.remove('active');
-  };
+  function updateTransactions() {
+    if (transactions.length === 0) {
+      transactionsList.innerHTML = '<div class="transaction-item"><span>Нет транзакций</span><span>-</span></div>';
+    } else {
+      transactionsList.innerHTML = transactions.map(t => 
+        `<div class="transaction-item"><span>${t.amount} \( {t.type}</span><span> \){t.date}</span></div>`
+      ).join('');
+    }
+  }
+  updateTransactions();
 
-  document.getElementById('payment-btn').onclick = () => tonModal.classList.add('active');
-  document.getElementById('pay-stars-btn').onclick = () => starsModal.classList.add('active');
-
-  document.querySelectorAll('.modal-close').forEach(el => el.onclick = closeModals);
+  // Добавление транзакции
+  function addTransaction(amount, type) {
+    const date = new Date().toLocaleDateString();
+    transactions.unshift({ amount, type, date });
+    localStorage.setItem(`transactions_${userId}`, JSON.stringify(transactions));
+    updateTransactions();
+  }
 
   // Оплата TON
+  document.getElementById('payment-btn').onclick = () => document.getElementById('ton-modal').classList.add('active');
+
   document.getElementById('ton-submit').onclick = () => {
     const amount = parseFloat(document.getElementById('ton-amount').value);
     if (isNaN(amount) || amount < 0.1) return alert('Минимальная сумма 0.1 TON');
@@ -75,14 +91,17 @@ window.addEventListener('load', () => {
     tonConnectUI.sendTransaction(transaction)
       .then(() => {
         alert(`${amount} TON успешно внесено!`);
-        document.getElementById('ton-balance').textContent = (parseFloat(document.getElementById('ton-balance').textContent) + amount).toFixed(2);
+        addTransaction(`+${amount}`, 'TON');
+        document.getElementById('ton-balance').textContent = (parseFloat(document.getElementById('ton-balance').textContent) + amount).toFixed(4);
         document.getElementById('mrscam-balance').textContent = (parseFloat(document.getElementById('mrscam-balance').textContent) + amount * 30).toFixed(2);
       })
       .catch(() => alert('Транзакция отменена'));
-    closeModals();
+    document.getElementById('ton-modal').classList.remove('active');
   };
 
   // Оплата Stars
+  document.getElementById('pay-stars-btn').onclick = () => document.getElementById('stars-modal').classList.add('active');
+
   document.getElementById('stars-submit').onclick = () => {
     const amount = parseInt(document.getElementById('stars-amount').value);
     if (isNaN(amount) || amount < 1) return alert('Минимально 1 Star');
@@ -103,16 +122,22 @@ window.addEventListener('load', () => {
         tg.openInvoice(data.invoice_link, status => {
           if (status === 'paid') {
             alert(`Спасибо за ${amount} Stars! ❤️`);
+            addTransaction(`+${amount}`, 'Stars');
             document.getElementById('mrscam-balance').textContent = (parseFloat(document.getElementById('mrscam-balance').textContent) + amount * 5).toFixed(2);
           }
         });
       }
     })
     .catch(() => alert('Ошибка'));
-    closeModals();
+    document.getElementById('stars-modal').classList.remove('active');
   };
 
-  // Переключение табов в профиле
+  // Закрытие модалей
+  document.querySelectorAll('.modal-close').forEach(el => el.onclick = () => {
+    document.querySelectorAll('.modal').forEach(m => m.classList.remove('active'));
+  });
+
+  // Навигация и табы (как было)
   const initProfileTabs = () => {
     document.querySelectorAll('.profile-tab').forEach(tab => {
       tab.onclick = () => {
@@ -124,10 +149,8 @@ window.addEventListener('load', () => {
     });
   };
 
-  // Навигация по разделам
   document.querySelectorAll('.nav-item').forEach(item => {
     item.onclick = () => {
-      closeModals();
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
@@ -142,9 +165,7 @@ window.addEventListener('load', () => {
       document.getElementById(sectionId).classList.add('active');
       item.classList.add('active');
 
-      if (sectionId === 'profile-section') {
-        initProfileTabs();
-      }
+      if (sectionId === 'profile-section') initProfileTabs();
     };
   });
 
